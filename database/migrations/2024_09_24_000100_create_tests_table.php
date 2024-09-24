@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('user')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('topic_id')->constrained('topics')->cascadeOnDelete();
             $table->string('title');
             $table->string('url')->unique();
