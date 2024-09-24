@@ -23,7 +23,7 @@ class BlankQuestFactory extends Factory
 
         // Генерируем случайный JSON массив правильных ответов
         $correct = $this->faker->randomElements(
-            $this->faker->words(), // случайное слов
+            $this->faker->words(10), // случайное слов
             $this->faker->numberBetween(2, 5) // от 2 до 5 элементов в массиве
         );
 

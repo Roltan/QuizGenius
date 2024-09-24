@@ -27,7 +27,7 @@ class FillQuestFactory extends Factory
         for ($i = 0; $i < 3; $i++) {
             $index = $this->faker->numberBetween(0, count($words) - 1);
             $replacements[] = $index;
-            $words[$index] = 's?:' . ($i + 1);
+            $words[$index] = 's?:' . $i;
         }
         $quest = implode(' ', $words);
 

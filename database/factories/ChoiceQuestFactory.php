@@ -23,13 +23,13 @@ class ChoiceQuestFactory extends Factory
 
         // Генерируем случайный JSON массив правильных ответов
         $correct = $this->faker->randomElements(
-            $this->faker->words(1), // 10 случайных слов
+            $this->faker->words(10), // 10 случайных слов
             $this->faker->numberBetween(1, 3) // от 1 до 3 элементов в массиве
         );
 
         // Генерируем случайный JSON массив неправильных ответов
         $uncorrect = $this->faker->randomElements(
-            $this->faker->words(1), // 10 случайных слов
+            $this->faker->words(10), // 10 случайных слов
             $this->faker->numberBetween(3, 6) // от 3 до 6 элементов в массиве
         );
 

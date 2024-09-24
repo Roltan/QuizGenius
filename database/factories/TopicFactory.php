@@ -17,7 +17,7 @@ class TopicFactory extends Factory
     public function definition(): array
     {
         return [
-            'topic' => $this->faker->sentence(40), // Генерируем случайное предложение из 3 слов
+            'topic' => $this->faker->sentence(3), // Генерируем случайное предложение из 3 слов
         ];
     }
 }
