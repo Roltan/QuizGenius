@@ -10,7 +10,7 @@ class QuestAnswer extends Model
 {
     use HasFactory;
 
-    private $fillable = [
+    protected $fillable = [
         'solved_test_id ',
         'quest_test_id',
         'answer'

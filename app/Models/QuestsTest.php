@@ -11,7 +11,7 @@ class QuestsTest extends Model
 {
     use HasFactory;
 
-    private $fillable = [
+    protected $fillable = [
         'test_id',
         'quest_id',
         'type_quest'

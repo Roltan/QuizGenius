@@ -11,7 +11,7 @@ class Topic extends Model
 {
     use HasFactory;
 
-    private $fillable = [
+    protected $fillable = [
         'topic',
     ];
 

@@ -11,7 +11,7 @@ class SolvedTest extends Model
 {
     use HasFactory;
 
-    private $fillable = [
+    protected $fillable = [
         'test_id',
         'user_id',
         'score',

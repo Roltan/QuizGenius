@@ -11,7 +11,7 @@ class BlankQuest extends Model
 {
     use HasFactory;
 
-    private $fillable = [
+    protected $fillable = [
         'topic_id',
         'vis',
         'quest',
