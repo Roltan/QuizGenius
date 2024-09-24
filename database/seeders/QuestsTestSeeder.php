@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\QuestsTest;
+use App\Models\Test;
 
 class QuestsTestSeeder extends Seeder
 {
@@ -13,9 +14,17 @@ class QuestsTestSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 1; $i <= 10000; $i++) {
-            QuestsTest::factory()->create();
-            $this->command->info("Created quests_test #$i");
+        $tests = Test::all();
+        $j = 1;
+
+        foreach ($tests as $test) {
+            for ($i = 1; $i <= 10; $i++) { // Создаем 10 вопросов для каждого теста
+                QuestsTest::factory()->create([
+                    'test_id' => $test->id,
+                ]);
+                $this->command->info("Created quests test  #" . $j);
+                $j++;
+            }
         }
     }
 }

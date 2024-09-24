@@ -25,6 +25,12 @@ class TestFactory extends Factory
         // Генерируем уникальный URL из названия теста
         $url = Str::slug($title);
 
+        // Проверяем уникальность URL
+        while (Test::query()->where('url', $url)->exists()) {
+            $title = $this->faker->sentence(3);
+            $url = Str::slug($title);
+        }
+
         return [
             'user_id' => 3, // Фиксированный user_id
             'topic_id' => Topic::inRandomOrder()->first()->id,
