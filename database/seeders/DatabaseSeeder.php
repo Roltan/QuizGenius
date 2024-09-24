@@ -12,15 +12,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call(UserSeeder::class);
-        // $this->call(TopicSeeder::class);
+        $this->call(UserSeeder::class);
+        $this->call(TopicSeeder::class);
 
-        // $this->call(BlankQuestSeeder::class);
-        // $this->call(ChoiceQuestSeeder::class);
-        // $this->call(FillQuestSeeder::class);
-        // $this->call(RelationQuestSeeder::class);
+        $this->call(BlankQuestSeeder::class);
+        $this->call(ChoiceQuestSeeder::class);
+        $this->call(FillQuestSeeder::class);
+        $this->call(RelationQuestSeeder::class);
 
-        // $this->call(TestSeeder::class);
+        $this->call(TestSeeder::class);
         $this->call(QuestsTestSeeder::class);
     }
 }
