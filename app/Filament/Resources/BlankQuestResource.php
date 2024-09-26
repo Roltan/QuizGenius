@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Admin\Resources;
+namespace App\Filament\Resources;
 
-use App\Filament\Admin\Resources\BlankQuestResource\Pages;
-use App\Filament\Admin\Resources\BlankQuestResource\RelationManagers;
+use App\Filament\Resources\BlankQuestResource\Pages;
+use App\Filament\Resources\BlankQuestResource\RelationManagers;
 use App\Models\BlankQuest;
 use Filament\Forms;
 use Filament\Forms\Form;

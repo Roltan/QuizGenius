@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Admin\Resources;
+namespace App\Filament\Resources;
 
-use App\Filament\Admin\Resources\ChoiceQuestResource\Pages;
-use App\Filament\Admin\Resources\ChoiceQuestResource\RelationManagers;
+use App\Filament\Resources\ChoiceQuestResource\Pages;
+use App\Filament\Resources\ChoiceQuestResource\RelationManagers;
 use App\Models\ChoiceQuest;
 use Filament\Forms;
 use Filament\Forms\Form;

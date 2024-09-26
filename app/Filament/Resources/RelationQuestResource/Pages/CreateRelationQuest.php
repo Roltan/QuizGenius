@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Admin\Resources\RelationQuestResource\Pages;
+namespace App\Filament\Resources\RelationQuestResource\Pages;
 
-use App\Filament\Admin\Resources\RelationQuestResource;
+use App\Filament\Resources\RelationQuestResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 

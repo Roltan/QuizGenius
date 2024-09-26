@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Admin\Resources\FillQuestResource\Pages;
+namespace App\Filament\Resources\FillQuestResource\Pages;
 
-use App\Filament\Admin\Resources\FillQuestResource;
+use App\Filament\Resources\FillQuestResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 

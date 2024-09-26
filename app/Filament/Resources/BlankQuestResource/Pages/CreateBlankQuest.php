@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Admin\Resources\BlankQuestResource\Pages;
+namespace App\Filament\Resources\BlankQuestResource\Pages;
 
-use App\Filament\Admin\Resources\BlankQuestResource;
+use App\Filament\Resources\BlankQuestResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
