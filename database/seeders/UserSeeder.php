@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -17,25 +18,25 @@ class UserSeeder extends Seeder
             [
                 'name' => 'admin',
                 'email' => 'admin@admin.ru',
-                'password' => hash('sha256', 'admin'),
+                'password' => Hash::make('admin'),
                 'is_admin' => true
             ],
             [
                 'name' => 'tester',
                 'email' => 'test@test.ru',
-                'password' => hash('sha256', 'test1234'),
+                'password' => Hash::make('test1234'),
                 'is_admin' => false
             ],
             [
                 'name' => 'teacher',
                 'email' => 'teacher@teacher.ru',
-                'password' => hash('sha256', 'teacher1'),
+                'password' => Hash::make('teacher1'),
                 'is_admin' => false
             ],
             [
                 'name' => 'student',
                 'email' => 'student@student.ru',
-                'password' => hash('sha256', 'student1'),
+                'password' => Hash::make('student1'),
                 'is_admin' => false
             ],
         ]);
