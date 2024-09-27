@@ -15,9 +15,14 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Models\Topic;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Tabs;
+use Filament\Forms\Components\Tabs\Tab;
 
 class BlankQuestResource extends Resource
 {
@@ -28,22 +33,44 @@ class BlankQuestResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+
             ->schema([
-                Select::make('topic_id')
-                    ->label('Topic')
-                    ->options(Topic::all()->pluck('topic', 'id'))
-                    ->required(),
-                Toggle::make('vis')
-                    ->label('Visibility')
-                    ->default(false),
-                Textarea::make('quest')
-                    ->label('Question')
-                    ->required()
-                    ->rows(3),
-                Textarea::make('correct')
-                    ->label('Correct Answer')
-                    ->required()
-                    ->rows(3),
+                Grid::make([
+                    'lg' => 1,
+                ])->schema([
+                    Tabs::make('Основные')->tabs([
+                        Tab::make('Основные')
+                            ->schema([
+                                Select::make('topic_id')
+                                    ->label('Тема')
+                                    ->options(Topic::all()->pluck('topic', 'id'))
+                                    ->required()
+                                    ->columnSpan(2),
+                                Textarea::make('quest')
+                                    ->label('Задание')
+                                    ->required()
+                                    ->columnSpan(2),
+                                Toggle::make('vis')
+                                    ->label('Активность')
+                                    ->columnSpan(2)
+                                    ->default(false),
+                            ]),
+                        Tab::make('Ответы')
+                            ->schema([
+                                Repeater::make('correct')
+                                    ->label('Правильные ответы')
+                                    ->required()
+                                    ->schema([
+                                        TextInput::make('answer')
+                                            ->label('Ответ')
+                                            ->required(),
+                                    ])
+                                    ->columnSpan(2)
+                                    ->defaultItems(1), // По умолчанию будет одно поле для ответа
+                            ])
+                    ])
+                ])
+
             ]);
     }
 
@@ -51,16 +78,17 @@ class BlankQuestResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('topic.topic')
-                    ->label('Topic'),
                 ToggleColumn::make('vis')
-                    ->label('Visibility'),
+                    ->label('Активность'),
+                TextColumn::make('topic.topic')
+                    ->label('Тема'),
                 TextColumn::make('quest')
-                    ->label('Question')
+                    ->label('Задание')
                     ->limit(50),
-                TextColumn::make('correct')
-                    ->label('Correct Answer')
-                    ->limit(50),
+                // TextColumn::make('correct')
+                //     ->label('Правильные ответы')
+                //     ->formatStateUsing(fn($state) => implode(', ', $state))
+                //     ->limit(50),
             ])
             ->filters([
                 //
@@ -89,5 +117,15 @@ class BlankQuestResource extends Resource
             'create' => Pages\CreateBlankQuest::route('/create'),
             'edit' => Pages\EditBlankQuest::route('/{record}/edit'),
         ];
+    }
+
+    public static function mutateFormDataBeforeFill(array $data): array
+    {
+        // Преобразуем JSON-строку обратно в массив
+        if (is_string($data['correct'])) {
+            $data['correct'] = json_decode($data['correct'], true);
+        }
+
+        return $data;
     }
 }
