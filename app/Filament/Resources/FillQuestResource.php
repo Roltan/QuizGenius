@@ -24,6 +24,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Tabs\Tab;
+use App\Rules\HasCorrectAnswer;
 
 class FillQuestResource extends Resource
 {
@@ -73,11 +74,12 @@ class FillQuestResource extends Resource
                                                     ->label('Правильный')
                                                     ->default(false),
                                             ])
-                                            ->columnSpan(2)
+                                            ->columnSpan(1)
                                             ->required(),
                                     ])
                                     ->columnSpan(2)
                                     ->required()
+                                    ->rules([new HasCorrectAnswer])
                             ])
                     ])
                 ])

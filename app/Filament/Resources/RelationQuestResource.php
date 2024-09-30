@@ -23,6 +23,8 @@ use Filament\Tables\Columns\ToggleColumn;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Tabs\Tab;
+use Closure;
+use Filament\Forms\Get;
 
 class RelationQuestResource extends Resource
 {
@@ -64,7 +66,18 @@ class RelationQuestResource extends Resource
                                             ->required(),
                                     ])
                                     ->columns(1)
-                                    ->required(),
+                                    ->required()
+                                    ->rules([
+                                        fn(Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
+                                            $otherValue = $get('secondRepeater');
+
+                                            if (is_array($value) && is_array($otherValue)) {
+                                                if (count($value) !== count($otherValue)) {
+                                                    $fail('Количество элементов в репитерах должно совпадать.');
+                                                }
+                                            }
+                                        },
+                                    ]),
                                 Repeater::make('second_column')
                                     ->label('Вторая колонка ответов')
                                     ->schema([
@@ -73,7 +86,18 @@ class RelationQuestResource extends Resource
                                             ->required(),
                                     ])
                                     ->columns(1)
-                                    ->required(),
+                                    ->required()
+                                    ->rules([
+                                        fn(Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
+                                            $otherValue = $get('first_column');
+
+                                            if (is_array($value) && is_array($otherValue)) {
+                                                if (count($value) !== count($otherValue)) {
+                                                    $fail('Количество элементов в репитерах должно совпадать.');
+                                                }
+                                            }
+                                        },
+                                    ]),
                             ])
                     ])
                 ])
