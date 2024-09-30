@@ -40,6 +40,7 @@ class BlankQuestResource extends Resource
                 ])->schema([
                     Tabs::make('Основные')->tabs([
                         Tab::make('Основные')
+                            ->columns(2)
                             ->schema([
                                 Select::make('topic_id')
                                     ->label('Тема')
@@ -53,9 +54,10 @@ class BlankQuestResource extends Resource
                                 Toggle::make('vis')
                                     ->label('Активность')
                                     ->columnSpan(2)
-                                    ->default(false),
+                                    ->default(true),
                             ]),
                         Tab::make('Ответы')
+                            ->columns(2)
                             ->schema([
                                 Repeater::make('correct')
                                     ->label('Правильные ответы')
@@ -85,10 +87,6 @@ class BlankQuestResource extends Resource
                 TextColumn::make('quest')
                     ->label('Задание')
                     ->limit(50),
-                // TextColumn::make('correct')
-                //     ->label('Правильные ответы')
-                //     ->formatStateUsing(fn($state) => implode(', ', $state))
-                //     ->limit(50),
             ])
             ->filters([
                 //

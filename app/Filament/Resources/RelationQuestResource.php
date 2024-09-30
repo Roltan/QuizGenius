@@ -20,6 +20,9 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Tabs;
+use Filament\Forms\Components\Tabs\Tab;
 
 class RelationQuestResource extends Resource
 {
@@ -31,35 +34,49 @@ class RelationQuestResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('topic_id')
-                    ->label('Topic')
-                    ->options(Topic::all()->pluck('topic', 'id'))
-                    ->required(),
-                Toggle::make('vis')
-                    ->label('Visibility')
-                    ->default(false),
-                Textarea::make('quest')
-                    ->label('Question')
-                    ->required()
-                    ->rows(3),
-                Repeater::make('first_column')
-                    ->label('First Column')
-                    ->schema([
-                        TextInput::make('item')
-                            ->label('Item')
-                            ->required(),
+                Grid::make([
+                    'lg' => 1,
+                ])->schema([
+                    Tabs::make('Основные')->tabs([
+                        Tab::make('Основные')
+                            ->columns(2)
+                            ->schema([
+                                Select::make('topic_id')
+                                    ->label('Тема')
+                                    ->options(Topic::all()->pluck('topic', 'id'))
+                                    ->required(),
+                                Textarea::make('quest')
+                                    ->label('Задание')
+                                    ->required()
+                                    ->rows(3),
+                                Toggle::make('vis')
+                                    ->label('Видимость')
+                                    ->default(true),
+                            ]),
+                        Tab::make('Ответы')
+                            ->columns(2)
+                            ->schema([
+                                Repeater::make('first_column')
+                                    ->label('Первая колонка ответов')
+                                    ->schema([
+                                        TextInput::make('answer')
+                                            ->label('Ответ')
+                                            ->required(),
+                                    ])
+                                    ->columns(1)
+                                    ->required(),
+                                Repeater::make('second_column')
+                                    ->label('Вторая колонка ответов')
+                                    ->schema([
+                                        TextInput::make('answer')
+                                            ->label('Ответ')
+                                            ->required(),
+                                    ])
+                                    ->columns(1)
+                                    ->required(),
+                            ])
                     ])
-                    ->columns(1)
-                    ->required(),
-                Repeater::make('second_column')
-                    ->label('Second Column')
-                    ->schema([
-                        TextInput::make('item')
-                            ->label('Item')
-                            ->required(),
-                    ])
-                    ->columns(1)
-                    ->required(),
+                ])
             ]);
     }
 
@@ -67,19 +84,19 @@ class RelationQuestResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('topic.topic')
-                    ->label('Topic'),
                 ToggleColumn::make('vis')
-                    ->label('Visibility'),
+                    ->label('Видимость'),
+                TextColumn::make('topic.topic')
+                    ->label('Тема'),
                 TextColumn::make('quest')
-                    ->label('Question')
+                    ->label('Задание')
                     ->limit(50),
-                TextColumn::make('first_column')
-                    ->label('First Column')
-                    ->limit(50),
-                TextColumn::make('second_column')
-                    ->label('Second Column')
-                    ->limit(50),
+                // TextColumn::make('first_column')
+                //     ->label('First Column')
+                //     ->limit(50),
+                // TextColumn::make('second_column')
+                //     ->label('Second Column')
+                //     ->limit(50),
             ])
             ->filters([
                 //

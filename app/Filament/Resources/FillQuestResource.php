@@ -21,6 +21,9 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Tabs;
+use Filament\Forms\Components\Tabs\Tab;
 
 class FillQuestResource extends Resource
 {
@@ -32,32 +35,53 @@ class FillQuestResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('topic_id')
-                    ->label('Topic')
-                    ->options(Topic::all()->pluck('topic', 'id'))
-                    ->required(),
-                Toggle::make('vis')
-                    ->label('Visibility')
-                    ->default(false),
-                Textarea::make('quest')
-                    ->label('Question')
-                    ->required()
-                    ->rows(3),
-                Repeater::make('options')
-                    ->label('Options')
-                    ->schema([
-                        TextInput::make('str')
-                            ->label('Option')
-                            ->required(),
-                        Toggle::make('correct')
-                            ->label('Correct')
-                            ->default(false),
+                Grid::make([
+                    'lg' => 1,
+                ])->schema([
+                    Tabs::make('Основные')->tabs([
+                        Tab::make('Основные')
+                            ->columns(2)
+                            ->schema([
+                                Select::make('topic_id')
+                                    ->label('Тема')
+                                    ->options(Topic::all()->pluck('topic', 'id'))
+                                    ->required(),
+                                Textarea::make('quest')
+                                    ->label('Задание')
+                                    ->required()
+                                    ->rows(3),
+                                Toggle::make('vis')
+                                    ->label('Видимость')
+                                    ->default(true),
+                                Toggle::make('is_multiple')
+                                    ->label('Повторяющиеся ответы')
+                                    ->default(false),
+                            ]),
+                        Tab::make('Ответы')
+                            ->columns(2)
+                            ->schema([
+                                Repeater::make('options')
+                                    ->label('Список ответов')
+                                    ->schema([
+                                        Repeater::make('answer')
+                                            ->label('Ответы')
+                                            ->schema([
+                                                TextInput::make('str')
+                                                    ->label('Вариант')
+                                                    ->required(),
+                                                Toggle::make('correct')
+                                                    ->label('Правильный')
+                                                    ->default(false),
+                                            ])
+                                            ->columnSpan(2)
+                                            ->required(),
+                                    ])
+                                    ->columnSpan(2)
+                                    ->required()
+                            ])
                     ])
-                    ->columns(2)
-                    ->required(),
-                Toggle::make('is_multiple')
-                    ->label('Multiple Answers')
-                    ->default(false),
+                ])
+
             ]);
     }
 
@@ -65,15 +89,15 @@ class FillQuestResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('topic.topic')
-                    ->label('Topic'),
                 ToggleColumn::make('vis')
-                    ->label('Visibility'),
+                    ->label('Видимость'),
+                TextColumn::make('topic.topic')
+                    ->label('Тема'),
                 TextColumn::make('quest')
-                    ->label('Question')
+                    ->label('Задание')
                     ->limit(50),
                 BooleanColumn::make('is_multiple')
-                    ->label('Multiple Answers'),
+                    ->label('Повторяющиеся ответы'),
             ])
             ->filters([
                 //

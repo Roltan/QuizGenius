@@ -29,15 +29,4 @@ class BlankQuest extends Model
     {
         return $this->morphOne(QuestsTest::class, 'quest');
     }
-
-    // методы
-    public function save(array $options = []): bool
-    {
-        if (is_array($this->correct)) {
-            // Преобразуем массив ["answer" => "dolores"] в ["dolores"]
-            $this->correct = json_encode(array_column($this->correct, 'answer'));
-        }
-
-        return parent::save($options);
-    }
 }

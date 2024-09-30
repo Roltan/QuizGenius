@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\BooleanColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -20,6 +21,9 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Tabs;
+use Filament\Forms\Components\Tabs\Tab;
 
 class ChoiceQuestResource extends Resource
 {
@@ -31,38 +35,52 @@ class ChoiceQuestResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('topic_id')
-                    ->label('Topic')
-                    ->options(Topic::all()->pluck('topic', 'id'))
-                    ->required(),
-                Toggle::make('vis')
-                    ->label('Visibility')
-                    ->default(false),
-                Textarea::make('quest')
-                    ->label('Question')
-                    ->required()
-                    ->rows(3),
-                Repeater::make('correct')
-                    ->label('Correct Answers')
-                    ->schema([
-                        TextInput::make('answer')
-                            ->label('Answer')
-                            ->required(),
+                Grid::make([
+                    'lg' => 1,
+                ])->schema([
+                    Tabs::make('Основные')->tabs([
+                        Tab::make('Основные')
+                            ->columns(2)
+                            ->schema([
+                                Select::make('topic_id')
+                                    ->label('Тема')
+                                    ->options(Topic::all()->pluck('topic', 'id'))
+                                    ->required(),
+                                Textarea::make('quest')
+                                    ->label('Задание')
+                                    ->required()
+                                    ->rows(3),
+                                Toggle::make('vis')
+                                    ->label('Видимость')
+                                    ->default(true),
+                                Toggle::make('is_multiple')
+                                    ->label('Несколько ответов')
+                                    ->default(false),
+                            ]),
+                        Tab::make('Ответы')
+                            ->columns(2)
+                            ->schema([
+                                Repeater::make('correct')
+                                    ->label('Правильные ответы')
+                                    ->schema([
+                                        TextInput::make('answer')
+                                            ->label('Ответ')
+                                            ->required(),
+                                    ])
+                                    ->columns(1)
+                                    ->required(),
+                                Repeater::make('uncorrect')
+                                    ->label('Неправильные ответы')
+                                    ->schema([
+                                        TextInput::make('answer')
+                                            ->label('Ответ')
+                                            ->required(),
+                                    ])
+                                    ->columns(1)
+                                    ->required(),
+                            ])
                     ])
-                    ->columns(1)
-                    ->required(),
-                Repeater::make('uncorrect')
-                    ->label('Incorrect Answers')
-                    ->schema([
-                        TextInput::make('answer')
-                            ->label('Answer')
-                            ->required(),
-                    ])
-                    ->columns(1)
-                    ->required(),
-                Toggle::make('is_multiple')
-                    ->label('Multiple Answers')
-                    ->default(false),
+                ])
             ]);
     }
 
@@ -70,21 +88,15 @@ class ChoiceQuestResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('topic.topic')
-                    ->label('Topic'),
                 ToggleColumn::make('vis')
-                    ->label('Visibility'),
+                    ->label('Видимость'),
+                TextColumn::make('topic.topic')
+                    ->label('Тема'),
                 TextColumn::make('quest')
-                    ->label('Question')
+                    ->label('Задание')
                     ->limit(50),
-                TextColumn::make('correct')
-                    ->label('Correct Answers')
-                    ->limit(50),
-                TextColumn::make('uncorrect')
-                    ->label('Incorrect Answers')
-                    ->limit(50),
-                ToggleColumn::make('is_multiple')
-                    ->label('Multiple Answers'),
+                BooleanColumn::make('is_multiple')
+                    ->label('Несколько ответов'),
             ])
             ->filters([
                 //
