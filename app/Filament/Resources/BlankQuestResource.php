@@ -23,6 +23,8 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Tabs\Tab;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 
 class BlankQuestResource extends Resource
 {
@@ -86,11 +88,23 @@ class BlankQuestResource extends Resource
                     ->label('Тема'),
                 TextColumn::make('quest')
                     ->label('Задание')
-                    ->limit(50),
+                    ->limit(50)
+                    ->searchable(),
             ])
             ->filters([
-                //
+                TernaryFilter::make('vis')
+                    ->label('Видимость'),
+                SelectFilter::make('topic_id')
+                    ->multiple()
+                    ->options(fn(): array => Topic::query()->pluck('topic', 'id')->all())
+                    ->label('Тема'),
             ])
+            ->persistFiltersInSession()
+            ->filtersApplyAction(
+                fn() => Tables\Actions\Action::make('apply')
+                    ->button()
+                    ->label('применить'),
+            )
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
@@ -98,7 +112,8 @@ class BlankQuestResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('id', 'desc');
     }
 
     public static function getRelations(): array

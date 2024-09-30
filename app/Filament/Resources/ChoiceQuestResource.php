@@ -24,6 +24,8 @@ use Filament\Tables\Columns\ToggleColumn;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Tabs\Tab;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 
 class ChoiceQuestResource extends Resource
 {
@@ -94,13 +96,27 @@ class ChoiceQuestResource extends Resource
                     ->label('Тема'),
                 TextColumn::make('quest')
                     ->label('Задание')
+                    ->searchable()
                     ->limit(50),
                 BooleanColumn::make('is_multiple')
                     ->label('Несколько ответов'),
             ])
             ->filters([
-                //
+                TernaryFilter::make('vis')
+                    ->label('Видимость'),
+                TernaryFilter::make('is_multiple')
+                    ->label('Повторяющиеся ответы'),
+                SelectFilter::make('topic_id')
+                    ->multiple()
+                    ->options(fn(): array => Topic::query()->pluck('topic', 'id')->all())
+                    ->label('Тема'),
             ])
+            ->persistFiltersInSession()
+            ->filtersApplyAction(
+                fn() => Tables\Actions\Action::make('apply')
+                    ->button()
+                    ->label('применить'),
+            )
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
@@ -108,7 +124,8 @@ class ChoiceQuestResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('id', 'desc');
     }
 
     public static function getRelations(): array

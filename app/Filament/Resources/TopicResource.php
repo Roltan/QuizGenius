@@ -37,7 +37,8 @@ class TopicResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('topic')
-                    ->label('Topic'),
+                    ->label('Topic')
+                    ->searchable(),
             ])
             ->filters([
                 //
@@ -49,7 +50,8 @@ class TopicResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('id', 'desc');
     }
 
     public static function getRelations(): array
