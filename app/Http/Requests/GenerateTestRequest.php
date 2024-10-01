@@ -30,4 +30,18 @@ class GenerateTestRequest extends FormRequest
             'relationCount' => ['nullable', 'numeric', 'min:0'],
         ];
     }
+
+    public function withValidator($validator): void
+    {
+        $validator->after(function ($validator) {
+            $fill = request()->input('fillCount', 0);
+            $choice = request()->input('choiceCount', 0);
+            $blank = request()->input('blankCount', 0);
+            $relation = request()->input('relationCount', 0);
+            $over = request()->input('overCount');
+
+            if (($fill + $choice + $blank + $relation) != $over)
+                $validator->errors()->add('general', 'the amount of fillCount, choiceCount, blankCount, relationCount must be equal to overCount');
+        });
+    }
 }
