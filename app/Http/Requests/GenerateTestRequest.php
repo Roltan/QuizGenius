@@ -40,7 +40,7 @@ class GenerateTestRequest extends FormRequest
             $relation = request()->input('relationCount', 0);
             $over = request()->input('overCount');
 
-            if (($fill + $choice + $blank + $relation) != $over)
+            if (($fill + $choice + $blank + $relation) != $over and ($fill + $choice + $blank + $relation) != 0)
                 $validator->errors()->add('general', 'the amount of fillCount, choiceCount, blankCount, relationCount must be equal to overCount');
         });
     }

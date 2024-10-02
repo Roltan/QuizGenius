@@ -15,7 +15,11 @@ class FillResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'type' => $this->type
+            'id' => $this->id,
+            'type' => $this->type,
+            'quest' => $this->quest,
+            'options' => json_decode($this->options),
+            'is_multiple' => $this->is_multiple
         ];
     }
 }

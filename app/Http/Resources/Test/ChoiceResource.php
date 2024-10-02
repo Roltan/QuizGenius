@@ -15,7 +15,11 @@ class ChoiceResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'type' => $this->type
+            'id' => $this->id,
+            'type' => $this->type,
+            'correct' => json_decode($this->correct),
+            'uncorrect' => json_decode($this->uncorrect),
+            'is_multiple' => $this->is_multiple
         ];
     }
 }

@@ -15,7 +15,10 @@ class BlankResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'type' => $this->type
+            'id' => $this->id,
+            'type' => $this->type,
+            'quest' => $this->quest,
+            'correct' => json_decode($this->correct)
         ];
     }
 }

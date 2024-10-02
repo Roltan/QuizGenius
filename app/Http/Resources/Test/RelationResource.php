@@ -15,7 +15,11 @@ class RelationResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'type' => $this->type
+            'id' => $this->id,
+            'type' => $this->type,
+            'quest' => $this->quest,
+            'first_column' => json_decode($this->first_column),
+            'second_column' => json_decode($this->second_column)
         ];
     }
 }

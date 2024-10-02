@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
-class TestServices
+class GenerateServices
 {
     public function generateTest(GenerateTestRequest $request)
     {
@@ -76,6 +76,7 @@ class TestServices
     {
         $quests = DB::table($type . '_quests')
             ->where('topic_id', $topic)
+            ->where('vis', true)
             ->inRandomOrder()
             ->take($count)
             ->get()

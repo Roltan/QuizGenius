@@ -16,20 +16,20 @@ class HasCorrectAnswer implements ValidationRule
     {
         foreach ($value as $group) {
             if (!isset($group['answer']) || !is_array($group['answer'])) {
-                $fail('В каждом массиве ответов должен быть хотя бы один правильный ответ.');
+                $fail('В каждом массиве ответов должен быть один правильный ответ.');
                 return;
             }
 
-            $hasCorrect = false;
+            $hasCorrect = 0;
             foreach ($group['answer'] as $answer) {
                 if (isset($answer['correct']) && $answer['correct'] === true) {
-                    $hasCorrect = true;
+                    $hasCorrect++;
                     break;
                 }
             }
 
-            if (!$hasCorrect) {
-                $fail('В каждом массиве ответов должен быть хотя бы один правильный ответ.');
+            if ($hasCorrect != 1) {
+                $fail('В каждом массиве ответов должен быть один правильный ответ.');
                 return;
             }
         }
