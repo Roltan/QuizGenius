@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,4 +22,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'test'], function () {
     Route::post('/generate', [TestController::class, 'generateTest']);
+});
+
+Route::group(['prefix' => 'auth'], function () {
+    Route::post('login', [UserController::class, 'login']);
+    Route::post('logout', [UserController::class, 'logout']);
+    Route::post('register', [UserController::class, 'register']);
 });
