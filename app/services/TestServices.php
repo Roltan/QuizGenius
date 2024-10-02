@@ -10,6 +10,8 @@ use App\Models\FillQuest;
 use App\Models\RelationQuest;
 use App\Models\Topic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class TestServices
 {
@@ -30,49 +32,17 @@ class TestServices
             ];
         } else {
             $countArr = [
-                'fillCount' => $request->has('fillCount') ? $request->fillCount : 0,
-                'choiceCount' => $request->has('choiceCount') ? $request->choiceCount : 0,
-                'blankCount' => $request->has('blankCount') ? $request->blankCount : 0,
-                'relationCount' => $request->has('relationCount') ? $request->relationCount : 0
+                'fillCount' => $request->input('fillCount', 0),
+                'choiceCount' => $request->input('choiceCount', 0),
+                'blankCount' => $request->input('blankCount', 0),
+                'relationCount' => $request->input('relationCount', 0)
             ];
         }
 
-        $fill = FillQuest::query()
-            ->where('topic_id', $topic->id)
-            ->inRandomOrder()
-            ->take($countArr['fillCount'])
-            ->get()
-            ->map(function ($question) {
-                $question->type = 'fill';
-                return $question;
-            });
-        $choice = ChoiceQuest::query()
-            ->where('topic_id', $topic->id)
-            ->inRandomOrder()
-            ->take($countArr['choiceCount'])
-            ->get()
-            ->map(function ($question) {
-                $question->type = 'choice';
-                return $question;
-            });
-        $blank = BlankQuest::query()
-            ->where('topic_id', $topic->id)
-            ->inRandomOrder()
-            ->take($countArr['blankCount'])
-            ->get()
-            ->map(function ($question) {
-                $question->type = 'blank';
-                return $question;
-            });
-        $relation = RelationQuest::query()
-            ->where('topic_id', $topic->id)
-            ->inRandomOrder()
-            ->take($countArr['relationCount'])
-            ->get()
-            ->map(function ($question) {
-                $question->type = 'relation';
-                return $question;
-            });
+        $fill = $this->getQuest('fill', $countArr['fillCount'], $topic->id);
+        $choice = $this->getQuest('choice', $countArr['choiceCount'], $topic->id);
+        $blank = $this->getQuest('blank', $countArr['blankCount'], $topic->id);
+        $relation = $this->getQuest('relation', $countArr['relationCount'], $topic->id);
 
         $response = collect()
             ->merge($fill)
@@ -100,5 +70,19 @@ class TestServices
         }
 
         return $parts;
+    }
+
+    public function getQuest(string $type, int $count, int $topic): Collection
+    {
+        $quests = DB::table($type . '_quests')
+            ->where('topic_id', $topic)
+            ->inRandomOrder()
+            ->take($count)
+            ->get()
+            ->map(function ($question) use ($type) {
+                $question->type = $type;
+                return $question;
+            });
+        return $quests;
     }
 }
