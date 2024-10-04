@@ -55,4 +55,13 @@ class TestServices
         }
         return response(['status' => true]);
     }
+
+    public function deleteTest(int $id): Response|ResponseFactory
+    {
+        $test = Test::find($id);
+        if ($test->user_id != Auth::user()->id)
+            return response(['status' => false, 'error' => 'forbidden delete test'], 403);
+        $test->delete();
+        return response(['status' => true]);
+    }
 }

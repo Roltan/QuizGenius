@@ -27,4 +27,9 @@ class TestController extends Controller
     {
         return $this->testServices->createTest($createTestRequest);
     }
+
+    public function delete(int $id): Response|ResponseFactory
+    {
+        return $this->testServices->deleteTest($id);
+    }
 }

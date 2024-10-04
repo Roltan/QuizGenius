@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'test'], function () {
     Route::post('/generate', [TestController::class, 'generateTest']);
     Route::post('/create', [TestController::class, 'create']);
+    Route::delete('/delete/{id}', [TestController::class, 'delete']);
 });
 
 Route::group(['prefix' => 'auth'], function () {
