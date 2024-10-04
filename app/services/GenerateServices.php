@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Http\Requests\GenerateTestRequest;
+use App\Http\Requests\Test\GenerateTestRequest;
 use App\Http\Resources\Test\TestResource;
 use App\Models\BlankQuest;
 use App\Models\ChoiceQuest;

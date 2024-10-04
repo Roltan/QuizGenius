@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'test'], function () {
     Route::post('/generate', [TestController::class, 'generateTest']);
+    Route::post('/create', [TestController::class, 'create']);
 });
 
 Route::group(['prefix' => 'auth'], function () {
