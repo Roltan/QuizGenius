@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Http\Requests\Test\GenerateTestRequest;
-use App\Http\Resources\Test\TestResource;
+use App\Http\Resources\Test\QuestResource;
 use App\Models\BlankQuest;
 use App\Models\ChoiceQuest;
 use App\Models\FillQuest;
@@ -51,7 +51,7 @@ class GenerateServices
             ->merge($relation)
             ->shuffle();
 
-        return new TestResource($response);
+        return new QuestResource($response);
     }
 
     public function divideIntoParts(int $number, int $count): array

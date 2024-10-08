@@ -29,6 +29,8 @@ class CreateTestRequest extends FormRequest
             'quest' => ['required', 'array'],
             'quest.*.id' => ['required', 'integer', 'min:1'],
             'quest.*.type' => ['required', Rule::in(['fill', 'blank', 'choice', 'relation'])],
+            'only_user' => ['nullable', 'boolean'],
+            'leave' => ['nullable', 'boolean']
         ];
     }
 }

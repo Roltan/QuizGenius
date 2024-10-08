@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreignId('topic_id')->constrained('topics')->cascadeOnDelete();
             $table->string('title');
             $table->string('url')->unique();
+            $table->boolean('only_user')->default(false);
+            $table->boolean('leave')->default(false);
             $table->timestamps();
         });
     }

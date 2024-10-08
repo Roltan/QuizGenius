@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Test\CreateTestRequest;
 use App\Http\Requests\Test\GenerateTestRequest;
+use App\Http\Resources\Test\QuestResource;
 use App\Http\Resources\Test\TestResource;
 use App\Services\GenerateServices;
 use App\Services\TestServices;
@@ -18,7 +19,12 @@ class TestController extends Controller
         public TestServices $testServices
     ) {}
 
-    public function generateTest(GenerateTestRequest $request): Response|ResponseFactory|TestResource
+    public function getTest(string $alias)
+    {
+        return $this->testServices->getTest($alias);
+    }
+
+    public function generateTest(GenerateTestRequest $request): Response|ResponseFactory|QuestResource
     {
         return $this->generateServices->generateTest($request);
     }

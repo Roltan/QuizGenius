@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Requests\Test\CreateTestRequest;
+use App\Http\Resources\Test\TestResource;
 use App\Models\BlankQuest;
 use App\Models\ChoiceQuest;
 use App\Models\FillQuest;
@@ -18,6 +19,18 @@ use Illuminate\Support\Str;
 
 class TestServices
 {
+    public function getTest(string $alias)
+    {
+        $test = Test::query()
+            ->where('url', $alias)
+            ->first();
+
+        if ($test->only_user == true and !Auth::check())
+            return response(['status' => false, 'error' => 'log in first']);
+
+        return new TestResource($test);
+    }
+
     public function createTest(CreateTestRequest $request): Response|ResponseFactory
     {
         foreach ($request->quest as $quest) {
@@ -37,7 +50,7 @@ class TestServices
             }
         }
 
-        $data = $request->only('title');
+        $data = $request->only('title', 'only_user', 'leave');
         $topic = Topic::where('topic', $request->topic)->first();
         if ($topic == null) return response(['status' => false, 'error' => 'topic not found'], 404);
 
