@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\QuestController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -25,6 +26,10 @@ Route::group(['prefix' => 'test'], function () {
     Route::post('/generate', [TestController::class, 'generateTest']);
     Route::post('/create', [TestController::class, 'create']);
     Route::delete('/delete/{id}', [TestController::class, 'delete']);
+});
+
+Route::group(['prefix' => 'quest'], function () {
+    Route::post('/generate', [QuestController::class, 'reGenerate']);
 });
 
 Route::group(['prefix' => 'auth'], function () {

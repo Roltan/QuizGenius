@@ -10,12 +10,13 @@ use App\Models\FillQuest;
 use App\Models\RelationQuest;
 use App\Models\Topic;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class GenerateServices
 {
-    public function generateTest(GenerateTestRequest $request)
+    public function generateTest(GenerateTestRequest $request): QuestResource|Response
     {
         $topic = Topic::query()->where('topic', $request->topic)->first();
         if ($topic == null)
