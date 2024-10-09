@@ -12,8 +12,6 @@ use App\Models\ChoiceQuest;
 use App\Models\FillQuest;
 use App\Models\RelationQuest;
 use App\Models\Topic;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -56,5 +54,43 @@ class QuestServices
             ->inRandomOrder()
             ->first();
         return $question;
+    }
+
+    public function create(Request $request): Response
+    {
+        $topic = Topic::query()
+            ->where('topic', $request->topic)
+            ->first();
+        if ($topic == null)
+            return response(['status' => false, 'error' => 'topic not found'], 404);
+
+        $data = [];
+        switch ($request->type) {
+            case 'fill':
+                $data = $request->only(['quest', 'options', 'is_multiple']);
+                $this->createQuest(FillQuest::class, $data, $topic->id);
+                break;
+            case 'blank':
+                $data = $request->only(['quest', 'correct']);
+                $this->createQuest(BlankQuest::class, $data, $topic->id);
+                break;
+            case 'choice':
+                $data = $request->only(['quest', 'correct', 'uncorrect', 'is_multiple']);
+                $this->createQuest(ChoiceQuest::class, $data, $topic->id);
+                break;
+            case 'relation':
+                $data = $request->only(['quest', 'first_column', 'second_column']);
+                $this->createQuest(RelationQuest::class, $data, $topic->id);
+                break;
+            default:
+                return response(['status' => false, 'error' => 'unknown type'], 400);
+        }
+        return response(['status' => true]);
+    }
+
+    protected function createQuest(string $model, array $data, int $topic): void
+    {
+        $data['topic_id'] = $topic;
+        $model::create($data);
     }
 }

@@ -30,6 +30,7 @@ Route::group(['prefix' => 'test'], function () {
 
 Route::group(['prefix' => 'quest'], function () {
     Route::post('/generate', [QuestController::class, 'reGenerate']);
+    Route::post('/create', [QuestController::class, 'create']);
 });
 
 Route::group(['prefix' => 'auth'], function () {
