@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('solved_tests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('test_id')->constrained('tests')->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->integer('score');
-            $table->integer('grade');
-            $table->integer('percent');
+            $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete();
+            $table->integer('score')->default(0);
+            $table->integer('grade')->default(0);
+            $table->integer('percent')->default(0);
             $table->boolean('is_escapee');
             $table->timestamp('solved_time');
             $table->timestamps();

@@ -36,6 +36,8 @@ class TestFactory extends Factory
             'topic_id' => Topic::inRandomOrder()->first()->id,
             'title' => $title,
             'url' => $url,
+            'only_user' => $this->faker->boolean(),
+            'leave' => $this->faker->boolean(),
         ];
     }
 }

@@ -2,7 +2,11 @@
 
 namespace App\Http\Resources\Test;
 
+use App\Models\BlankQuest;
+use App\Models\ChoiceQuest;
+use App\Models\FillQuest;
 use App\Models\QuestsTest;
+use App\Models\RelationQuest;
 use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -17,28 +21,24 @@ class TestResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $quest = collect();
+        $quest = [];
         foreach ($this->quest as $q) {
-            $quest = $quest->merge($this->getQuest($q->type_quest, $this->id));
+            $quest[] = $this->getQuest($q);
         }
+        $quest = collect($quest)->shuffle();
         return [
+            'id' => $this->id,
             'title' => $this->title,
             'quest' => new QuestResource($quest)
         ];
     }
 
-    public function getQuest(string $type, int $testId): Collection
+    protected function getQuest(QuestsTest $questsTest): BlankQuest|FillQuest|RelationQuest|ChoiceQuest
     {
-        $quests = DB::table($type . '_quests')
-            ->join('quests_tests', $type . '_quests.id', '=', 'quests_tests.quest_id')
-            ->where('quests_tests.type_quest', $type)
-            ->where('quests_tests.test_id', $testId)
-            ->inRandomOrder()
-            ->get()
-            ->map(function ($question) use ($type) {
-                $question->type = $type;
-                return $question;
-            });
-        return $quests;
+        $quest = $questsTest->quest;
+
+        $quest->type = $questsTest->type_quest;
+        $quest->id = $questsTest->id;
+        return $quest;
     }
 }

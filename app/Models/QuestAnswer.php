@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\AnswerServices;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -25,5 +26,18 @@ class QuestAnswer extends Model
     public function questsTest(): BelongsTo
     {
         return $this->belongsTo(QuestsTest::class);
+    }
+
+    // методы
+    public function checkAnswer(): array
+    {
+        $service = new AnswerServices();
+        return $service->indexCheck($this);
+    }
+
+    public function countCorrect(): int
+    {
+        $service = new AnswerServices();
+        return $service->countCorrect($this);
     }
 }

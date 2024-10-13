@@ -19,7 +19,7 @@ use Illuminate\Support\Str;
 
 class TestServices
 {
-    public function getTest(string $alias)
+    public function getTest(string $alias): Response|TestResource
     {
         $test = Test::query()
             ->where('url', $alias)
@@ -31,7 +31,7 @@ class TestServices
         return new TestResource($test);
     }
 
-    public function createTest(CreateTestRequest $request): Response|ResponseFactory
+    public function createTest(CreateTestRequest $request): Response
     {
         foreach ($request->quest as $quest) {
             switch ($quest->type) {
@@ -69,7 +69,7 @@ class TestServices
         return response(['status' => true]);
     }
 
-    public function deleteTest(int $id): Response|ResponseFactory
+    public function deleteTest(int $id): Response
     {
         $test = Test::find($id);
         if ($test->user_id != Auth::user()->id)

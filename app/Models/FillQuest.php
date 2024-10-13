@@ -33,4 +33,17 @@ class FillQuest extends Model
     }
 
     // методы
+    public function getCorrectAnswer(): array
+    {
+        $options = json_decode($this->options, true);
+        $response = [];
+        foreach ($options as $selector) {
+            foreach ($selector as $answer) {
+                if ($answer['correct'] == true)
+                    $response[] = $answer['str'];
+                break;
+            }
+        }
+        return $response;
+    }
 }
