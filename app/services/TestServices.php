@@ -35,19 +35,19 @@ class TestServices
     public function createTest(CreateTestRequest $request): Response
     {
         foreach ($request->quest as $quest) {
-            switch ($quest->type) {
+            switch ($quest['type']) {
                 case 'fill':
-                    if (!FillQuest::find($quest->id)->exists())
-                        return response(['status' => false, 'error' => "there is no question like '$quest->type' with id '$quest->id'"]);
+                    if (!FillQuest::find($quest['id'])->exists())
+                        return response(['status' => false, 'error' => "there is no question like " . $quest['type'] . " with id " . $quest['id']]);
                 case 'blank':
-                    if (!BlankQuest::find($quest->id)->exists())
-                        return response(['status' => false, 'error' => "there is no question like '$quest->type' with id '$quest->id'"]);
+                    if (!BlankQuest::find($quest['id'])->exists())
+                        return response(['status' => false, 'error' => "there is no question like " . $quest['type'] . " with id " . $quest['id']]);
                 case 'choice':
-                    if (!ChoiceQuest::find($quest->id)->exists())
-                        return response(['status' => false, 'error' => "there is no question like '$quest->type' with id '$quest->id'"]);
+                    if (!ChoiceQuest::find($quest['id'])->exists())
+                        return response(['status' => false, 'error' => "there is no question like " . $quest['type'] . " with id " . $quest['id']]);
                 case 'relation':
-                    if (!RelationQuest::find($quest->id)->exists())
-                        return response(['status' => false, 'error' => "there is no question like '$quest->type' with id '$quest->id'"]);
+                    if (!RelationQuest::find($quest['id'])->exists())
+                        return response(['status' => false, 'error' => "there is no question like " . $quest['type'] . " with id " . $quest['id']]);
             }
         }
 
@@ -58,13 +58,15 @@ class TestServices
         $data['user_id'] = Auth::user()->id;
         $data['url'] = Str::slug($request->title);
         $data['topic_id'] = $topic->id;
+        if (Test::query()->where('url', $data['url'])->exists())
+            return response(['status' => false, 'error' => 'this title is already in use'], 400);
         $test = Test::create($data);
 
         foreach ($request->quest as $quest) {
             QuestsTest::create([
                 'test_id' => $test->id,
-                'quest_id' => $quest->id,
-                'type_quest' => $quest->type
+                'quest_id' => $quest['id'],
+                'type_quest' => $quest['type']
             ]);
         }
         return response(['status' => true]);
@@ -73,6 +75,8 @@ class TestServices
     public function deleteTest(int $id): Response
     {
         $test = Test::find($id);
+        if ($test == null)
+            return response(['status' => false, 'error' => 'test not found'], 404);
         if ($test->user_id != Auth::user()->id)
             return response(['status' => false, 'error' => 'forbidden delete test'], 403);
         $test->delete();

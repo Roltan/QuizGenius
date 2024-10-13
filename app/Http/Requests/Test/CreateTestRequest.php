@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Test;
 
+use App\Rules\UniqueQuestPairRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -26,7 +27,7 @@ class CreateTestRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'topic' => ['required', 'string', 'max:255'],
-            'quest' => ['required', 'array'],
+            'quest' => ['required', 'array', new UniqueQuestPairRule()],
             'quest.*.id' => ['required', 'integer', 'min:1'],
             'quest.*.type' => ['required', Rule::in(['fill', 'blank', 'choice', 'relation'])],
             'only_user' => ['nullable', 'boolean'],
