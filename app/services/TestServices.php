@@ -24,6 +24,7 @@ class TestServices
         $test = Test::query()
             ->where('url', $alias)
             ->first();
+        if ($test == null) return response(['status' => false, 'error' => 'test not found']);
 
         if ($test->only_user == true and !Auth::check())
             return response(['status' => false, 'error' => 'log in first']);

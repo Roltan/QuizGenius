@@ -12,7 +12,7 @@ class QuestAnswer extends Model
     use HasFactory;
 
     protected $fillable = [
-        'solved_test_id ',
+        'solved_test_id',
         'quest_test_id',
         'answer'
     ];
@@ -20,12 +20,12 @@ class QuestAnswer extends Model
     // связи
     public function solvedTest(): BelongsTo
     {
-        return $this->belongsTo(SolvedTest::class);
+        return $this->belongsTo(SolvedTest::class, 'solved_test_id');
     }
 
     public function questsTest(): BelongsTo
     {
-        return $this->belongsTo(QuestsTest::class);
+        return $this->belongsTo(QuestsTest::class, 'quest_test_id');
     }
 
     // методы

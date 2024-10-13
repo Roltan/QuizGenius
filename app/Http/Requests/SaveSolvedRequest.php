@@ -22,12 +22,13 @@ class SaveSolvedRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'test_id' => ['required', 'number', 'min:1'],
-            'time' => ['required', 'number', 'min:1'],
+            'test_id' => ['required', 'numeric', 'min:1'],
+            'time' => ['required', 'numeric', 'min:1'],
             'is_escape' => ['required', 'boolean'],
             'answer' => ['required', 'array'],
-            'answer.id' => ['required', 'number', 'min:1'],
-            'answer.text' => ['required', 'string', 'filled', 'min:1']
+            'answer.*' => ['required', 'array'],
+            'answer.*.id' => ['required', 'numeric', 'min:1'],
+            'answer.*.text' => ['required']
         ];
     }
 }

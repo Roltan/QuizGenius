@@ -76,7 +76,7 @@ class AnswerServices
 
     public function checkRelationQuest(RelationQuest $relationQuest, array $answer): array
     {
-        $correct = json_decode($relationQuest->secondColumn, true);
+        $correct = json_decode($relationQuest->second_column, true);
         $response = [];
         for ($i = 0; $i < count($answer); $i++) {
             $response[] = [

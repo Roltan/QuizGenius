@@ -29,14 +29,14 @@ class SolvedTestServices
             'solved_time' => $solved_time,
         ]);
 
-        $count = count($request->answer);
+        $count = $solvedTest->test->maxScore();
 
         // ответы на вопросы
         foreach ($request->answer as $answer) {
             $questAnswer = QuestAnswer::create([
-                'solved_test_id ' => $solvedTest->id,
-                'quest_test_id' => $answer->id,
-                'answer' => json_encode($answer->text)
+                'solved_test_id' => $solvedTest->id,
+                'quest_test_id' => $answer['id'],
+                'answer' => json_encode($answer['text'])
             ]);
 
             $correct += $questAnswer->countCorrect();
@@ -49,7 +49,13 @@ class SolvedTestServices
         $solvedTest->grade = $grade;
         $solvedTest->save();
 
-        return response(['status' => true]);
+        return response([
+            'status' => true,
+            'score' => $correct,
+            'percent' => $percent,
+            'maxCorrect' => $count,
+            'grade' => $grade
+        ]);
     }
 
     protected function getGrade(int $percent, int $end2, int $end3, int $end4): int

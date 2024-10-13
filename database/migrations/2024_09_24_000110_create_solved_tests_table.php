@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('grade')->default(0);
             $table->integer('percent')->default(0);
             $table->boolean('is_escapee');
-            $table->timestamp('solved_time');
+            $table->integer('solved_time');
             $table->timestamps();
         });
     }

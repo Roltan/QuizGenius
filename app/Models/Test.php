@@ -35,4 +35,30 @@ class Test extends Model
     {
         return $this->hasMany(QuestsTest::class, 'test_id');
     }
+
+    // методы
+    public function maxScore(): int
+    {
+        $quests = $this->quest;
+        $count = 0;
+        foreach ($quests as $quest) {
+            switch ($quest->type_quest) {
+                case "blank":
+                    $count++;
+                    break;
+                case "choice":
+                    $count += count(json_decode($quest->quest->correct));
+                    $count += count(json_decode($quest->quest->uncorrect));
+                    break;
+                case "fill":
+                    $count += count(json_decode($quest->quest->options));
+                    break;
+
+                case "relation":
+                    $count += count(json_decode($quest->quest->second_column));
+                    break;
+            }
+        }
+        return $count;
+    }
 }
