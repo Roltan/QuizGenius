@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\AnswerTextRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class SaveSolvedRequest extends FormRequest
 {
@@ -25,10 +27,12 @@ class SaveSolvedRequest extends FormRequest
             'test_id' => ['required', 'numeric', 'min:1'],
             'time' => ['required', 'numeric', 'min:1'],
             'is_escape' => ['required', 'boolean'],
+
             'answer' => ['required', 'array'],
             'answer.*' => ['required', 'array'],
             'answer.*.id' => ['required', 'numeric', 'min:1'],
-            'answer.*.text' => ['required']
+            'answer.*.type' => ['required', Rule::in(['fill', 'relation', 'choice', 'blank'])],
+            'answer.*.text' => ['required', new AnswerTextRule]
         ];
     }
 }
