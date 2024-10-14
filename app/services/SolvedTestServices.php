@@ -6,6 +6,7 @@ use App\Http\Requests\SaveSolvedRequest;
 use App\Models\QuestAnswer;
 use App\Models\SolvedTest;
 use App\Models\Test;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
@@ -66,9 +67,12 @@ class SolvedTestServices
         ]);
     }
 
-    public function getMySolvedTest(int $testId): Collection|Response
+    public function getSolvedTest(int $testId, int $user = null): Collection|Response
     {
-        $user = Auth::user();
+        if ($user == null) $user = Auth::user()->id;
+        if ($user == null)
+            return response(['status' => true, 'error' => 'not found user'], 500);
+        $user = User::find($user);
         if (Test::find($testId) == null)
             return response(['status' => false, 'error' => 'test not found'], 404);
 

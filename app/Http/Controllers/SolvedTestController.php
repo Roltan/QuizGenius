@@ -7,6 +7,7 @@ use App\Services\SolvedTestServices;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class SolvedTestController extends Controller
 {
@@ -21,6 +22,6 @@ class SolvedTestController extends Controller
 
     public function getMySolvedTest(int $testId): Collection|Response
     {
-        return $this->solvedTestServices->getMySolvedTest($testId);
+        return $this->solvedTestServices->getSolvedTest($testId, Auth::user()->id);
     }
 }
