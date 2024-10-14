@@ -24,10 +24,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'test'], function () {
     Route::get('/solve/{alias}', [TestController::class, 'getTest']);
-    Route::post('/save/solved', [SolvedTestController::class, 'saveSolvedTest']);
     Route::post('/generate', [TestController::class, 'generateTest']);
-    Route::put('/create', [TestController::class, 'create']);
-    Route::delete('/delete/{id}', [TestController::class, 'delete']);
+    Route::put('/create', [TestController::class, 'create'])->middleware('authChecked');
+    Route::delete('/delete/{id}', [TestController::class, 'delete'])->middleware('authChecked');
+
+    Route::group(['prefix' => '/solved'], function () {
+        Route::post('/save', [SolvedTestController::class, 'saveSolvedTest']);
+        Route::get('/my/{testId}', [SolvedTestController::class, 'getMySolvedTest'])->middleware('authChecked');
+    });
 });
 
 Route::group(['prefix' => 'quest'], function () {
@@ -37,6 +41,6 @@ Route::group(['prefix' => 'quest'], function () {
 
 Route::group(['prefix' => 'auth'], function () {
     Route::post('login', [UserController::class, 'login']);
-    Route::post('logout', [UserController::class, 'logout']);
+    Route::post('logout', [UserController::class, 'logout'])->middleware('authChecked');
     Route::post('register', [UserController::class, 'register']);
 });

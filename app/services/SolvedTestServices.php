@@ -5,8 +5,10 @@ namespace App\Services;
 use App\Http\Requests\SaveSolvedRequest;
 use App\Models\QuestAnswer;
 use App\Models\SolvedTest;
+use App\Models\Test;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class SolvedTestServices
@@ -22,6 +24,12 @@ class SolvedTestServices
         $grade = 0;
         $percent = 0;
 
+        if (
+            Auth::check() and SolvedTest::query()
+            ->where('test_id', $test_id)
+            ->where('user_id', $student_id)
+            ->exists()
+        ) return response(['status' => false, 'error' => 'Have you already solved this test'], 400);
         $solvedTest = SolvedTest::create([
             'test_id' => $test_id,
             'user_id' => $student_id,
@@ -56,6 +64,29 @@ class SolvedTestServices
             'maxCorrect' => $count,
             'grade' => $grade
         ]);
+    }
+
+    public function getMySolvedTest(int $testId): Collection|Response
+    {
+        $user = Auth::user();
+        if (Test::find($testId) == null)
+            return response(['status' => false, 'error' => 'test not found'], 404);
+
+        $solvedTest = $user->solvedTests()->where('test_id', $testId)->first();
+        if ($solvedTest == null)
+            return response(['status' => false, 'error' => 'You haven`t solved this test yet'], 400);
+
+        $response = [];
+        foreach ($solvedTest->questAnswer as $answer) {
+            $out = [
+                'id' => $answer->questsTest->id,
+                'quest' => $answer->questsTest->quest->quest,
+                'answer' => $answer->checkAnswer()
+            ];
+            $response[] = $out;
+        }
+        $response = collect($response);
+        return $response;
     }
 
     protected function getGrade(int $percent, int $end2, int $end3, int $end4): int

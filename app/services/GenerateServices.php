@@ -55,7 +55,7 @@ class GenerateServices
         return new QuestResource($response);
     }
 
-    public function divideIntoParts(int $number, int $count): array
+    protected function divideIntoParts(int $number, int $count): array
     {
         $basePart = intdiv($number, $count);
         // Вычисляем остаток
@@ -73,7 +73,7 @@ class GenerateServices
         return $parts;
     }
 
-    public function getQuest(string $type, int $count, int $topic): Collection
+    protected function getQuest(string $type, int $count, int $topic): Collection
     {
         $quests = DB::table($type . '_quests')
             ->where('topic_id', $topic)
