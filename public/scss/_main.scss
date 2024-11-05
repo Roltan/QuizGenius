@@ -1,0 +1,55 @@
+@font-face {
+	font-family: Evolventa;
+	src: url("../fonts/Evolventa/Evolventa-Regular.ttf");
+}
+$darkBlue: #123a60;
+$white: #ffffff;
+
+* {
+	box-sizing: border-box;
+	padding: 0px;
+	margin: 0px;
+	color: inherit;
+	font-family: Evolventa;
+}
+
+html {
+	font-size: 16px;
+
+	@media (max-width: 768px) {
+		font-size: 14px; // Уменьшаем размер шрифта на 10% на экранах шириной до 768px
+	}
+
+	@media (max-width: 480px) {
+		font-size: 12px; // Уменьшаем размер шрифта на 20% на экранах шириной до 480px
+	}
+}
+
+.button {
+	height: 3.125rem;
+	border-radius: 15px;
+	padding: 3px 1.5625rem 3px 1.5625rem;
+	font-size: 1.25rem;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+
+	border: none;
+
+	&__blue {
+		background: $darkBlue;
+		color: $white;
+	}
+	&__image {
+		display: flex;
+		flex-direction: row;
+		gap: 10px;
+
+		> img {
+			height: 5rem;
+			width: 5rem;
+		}
+	}
+}

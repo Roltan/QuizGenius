@@ -1,0 +1,97 @@
+@font-face {
+  font-family: Evolventa;
+  src: url("../fonts/Evolventa/Evolventa-Regular.ttf");
+}
+* {
+  box-sizing: border-box;
+  padding: 0px;
+  margin: 0px;
+  color: inherit;
+  font-family: Evolventa;
+}
+
+html {
+  font-size: 16px;
+}
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
+@media (max-width: 480px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+.button {
+  height: 3.125rem;
+  border-radius: 15px;
+  padding: 3px 1.5625rem 3px 1.5625rem;
+  font-size: 1.25rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: none;
+}
+.button__blue {
+  background: #123a60;
+  color: #ffffff;
+}
+.button__image {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.button__image > img {
+  height: 5rem;
+  width: 5rem;
+}
+
+.header > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 2px;
+  min-height: 80px;
+  width: 100vw;
+}
+.header--logo {
+  height: 105px;
+}
+.header--logo > img {
+  height: 100%;
+}
+.header--logo > img:nth-child(2) {
+  display: none;
+}
+@media (max-width: 768px) {
+  .header--logo {
+    height: 41px;
+  }
+}
+@media (max-width: 480px) {
+  .header--logo {
+    height: 40px;
+  }
+}
+.header--buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+.header--text {
+  color: #123a60;
+  font-size: 2.5rem;
+  text-align: end;
+}
+@media (max-width: 768px) {
+  .header--lk .header--logo > img:nth-child(1) {
+    display: none;
+  }
+  .header--lk .header--logo > img:nth-child(2) {
+    display: block;
+  }
+}/*# sourceMappingURL=index.css.map */
