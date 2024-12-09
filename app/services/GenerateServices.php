@@ -20,7 +20,7 @@ class GenerateServices
     {
         $topic = Topic::query()->where('topic', $request->topic)->first();
         if ($topic == null)
-            return response(['status' => false, 'error' => 'topic not found']);
+            return response(['status' => false, 'error' => 'topic not found'], 404);
 
         $countQuest = $request->overCount;
         if (!$request->has('fillCount') and !$request->has('choiceCount') and !$request->has('blankCount') and !$request->has('relationCount')) {

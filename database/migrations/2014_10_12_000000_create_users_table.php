@@ -25,7 +25,7 @@ return new class extends Migration
         // триггеры. проверяют что emil или tg_id должны быть у пользователя. и что пароль обязателен если tg_id пустое
         DB::unprepared('
             CREATE TRIGGER before_insert_check_tg_id_email_password
-            BEFORE INSERT ON your_table_name
+            BEFORE INSERT ON users
             FOR EACH ROW
             BEGIN
                 IF NEW.tg_id IS NULL AND NEW.email IS NULL THEN
@@ -42,7 +42,7 @@ return new class extends Migration
 
         DB::unprepared('
             CREATE TRIGGER before_update_check_tg_id_email_password
-            BEFORE UPDATE ON your_table_name
+            BEFORE UPDATE ON users
             FOR EACH ROW
             BEGIN
                 IF NEW.tg_id IS NULL AND NEW.email IS NULL THEN
