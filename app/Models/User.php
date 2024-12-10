@@ -18,13 +18,11 @@ class User extends Authenticatable implements FilamentUser
         'name',
         'email',
         'password',
-        'is_admin',
-        'tg_id',
+        'is_admin'
     ];
 
     protected $hidden = [
         'password',
-        'tg_id',
     ];
 
     // связи
