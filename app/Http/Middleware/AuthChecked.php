@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,24 +16,7 @@ class AuthChecked
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $tg_id = $request->cookie('tg-id');
-        if ($tg_id) {
-            $user = User::query()
-                ->where('tg_id', $tg_id)
-                ->first();
-
-            if ($user == null) {
-                $user = User::create([
-                    'name' => $request->cookie('user_name'),
-                    'tg_id' => $tg_id
-                ]);
-            }
-
-            if (!Auth::check())
-                Auth::login($user);
-        }
-
-        if (!Auth::check()) {
+        if(!Auth::check()){
             return response([
                 'status' => false,
                 'error' => 'you are not logged in'
