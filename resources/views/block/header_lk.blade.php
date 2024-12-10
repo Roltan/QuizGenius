@@ -10,3 +10,9 @@
         </div>
     </div>
 </header>
+<div class="modalka modalka--wrapper" id="modal1">
+    @include('/block/navLK', [
+        'active'=>$active,
+        'class' =>'navLK__bar'
+    ])
+</div>

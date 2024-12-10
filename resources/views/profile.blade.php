@@ -6,19 +6,12 @@
 @endsection
 
 @section('mainContent')
-    @include('/block/header_lk')
-    <div class="modalka modalka--wrapper" id="modal1">
-        <div class="navLK navLK__bar">
-            @include('/block/navLK', ['active'=>1])
-        </div>
-    </div>
+    @include('/block/header_lk', ['active'=>1])
 
     <figure class="background"></figure>
 
     <main class="container">
-        <nav class="navLK">
-            @include('/block/navLK', ['active'=>1])
-        </nav>
+        @include('/block/navLK', ['active'=>1])
 
         <div class="main">
             <div>
