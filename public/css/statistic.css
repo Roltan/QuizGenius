@@ -499,6 +499,10 @@ main {
   nav.navLK {
     display: none;
   }
+  .navLK figure {
+    right: auto;
+    left: 0;
+  }
 }
 .main {
   gap: 20px;
