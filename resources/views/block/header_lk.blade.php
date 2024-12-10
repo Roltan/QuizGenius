@@ -10,9 +10,11 @@
         </div>
     </div>
 </header>
-<div class="modalka modalka--wrapper" id="modal1">
-    @include('/block/navLK', [
-        'active'=>$active,
-        'class' =>'navLK__bar'
-    ])
-</div>
+@if (!isset($notNav))
+    <div class="modalka modalka--wrapper" id="modal1">
+        @include('/block/navLK', [
+            'active'=>$active,
+            'class' =>'navLK__bar'
+        ])
+    </div>
+@endif
