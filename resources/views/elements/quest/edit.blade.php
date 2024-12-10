@@ -9,6 +9,14 @@
                 'answers'=>$answers
             ])
             @break
+        @case('blank')
+            @include('/elements/quest/blank', [
+                'id'=>$id,
+                'quest'=>$quest,
+                'disabled'=>'disabled',
+                'answer'=>$answer
+            ])
+            @break
     @endswitch
     <div class="buttons">
         <button>
@@ -25,23 +33,21 @@
 <div class="modalka modalka--wrapper" id="questEdit{{$id}}">
     <form class="quest--modal form">
         @switch($type)
-        @case('choice')
-            @include('/elements/quest/modal/choice', [
-                'quest'=>$quest,
-                'id'=>$id,
-                'is_multiple'=> $is_multiple,
-                'answers'=>$answers
-            ])
-            @break
-    @endswitch
-        <div class="test--button test--button__max">
-            <button class="test--add test--add__light">
-                <div>
-                    <img src="/img/edit/add.png" alt="" />
-                </div>
-                Добавить вопрос
-            </button>
-            <button class="button button__blue button__bold">Сохранить</button>
-        </div>
+            @case('choice')
+                @include('/elements/quest/modal/choice', [
+                    'quest'=>$quest,
+                    'id'=>$id,
+                    'is_multiple'=> $is_multiple,
+                    'answers'=>$answers
+                ])
+                @break
+            @case('blank')
+                @include('/elements/quest/modal/blank', [
+                    'quest'=>$quest,
+                    'id'=>$id,
+                    'answer'=>$answer
+                ])
+                @break
+        @endswitch
     </form>
 </div>

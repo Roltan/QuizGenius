@@ -88,49 +88,12 @@
             ]
         ])
 
-        <div class="quest__edit">
-            <div class="quest quest__blank">
-                <span>задание задание задание задание задание задание задание задание задание задание задание задание задание</span>
-                <div class="input">
-                    <label for="quest3">Ответ</label>
-                    <input type="text" name="quest3" id="quest3" class="input--field" disabled />
-                </div>
-            </div>
-            <div class="buttons">
-                <button>
-                    <img src="/img/edit/reset.png" alt="" />
-                </button>
-                <button>
-                    <img src="/img/edit/edit.png" alt="" class="openModalBtn" data-modal="questEdit2" />
-                </button>
-                <button>
-                    <img src="/img/edit/delet.png" alt="" />
-                </button>
-            </div>
-        </div>
-        <div class="modalka modalka--wrapper" id="questEdit2">
-            <form class="quest--modal form">
-                <div class="input">
-                    <label for="questEdit2Quest">Задание</label>
-                    <input type="text" name="questEdit2Quest" id="questEdit2Quest" class="input--field" />
-                </div>
-                <div class="answer answer__blank">
-                    <div class="input">
-                        <label for="questEdit2answer">Ответ</label>
-                        <input type="text" name="questEdit2answer" id="questEdit2answer" class="input--field" />
-                    </div>
-                </div>
-                <div class="test--button test--button__max">
-                    <button class="test--add test--add__light">
-                        <div>
-                            <img src="/img/edit/add.png" alt="" />
-                        </div>
-                        Добавить вопрос
-                    </button>
-                    <button class="button button__blue button__bold">Сохранить</button>
-                </div>
-            </form>
-        </div>
+        @include('/elements/quest/edit', [
+            'type' => 'blank',
+            'id'=>3,
+            'quest'=>'задание задание задание задание задание задание задание задание задание задание задание задание задание',
+            'answer'=>'ответ'
+        ])
 
         <div class="quest__edit">
             <div class="quest quest__fill">

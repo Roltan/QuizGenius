@@ -25,3 +25,12 @@
         </div>
     @endforeach
 </div>
+<div class="test--button test--button__max">
+    <button class="test--add test--add__light">
+        <div>
+            <img src="/img/edit/add.png" alt="" />
+        </div>
+        Добавить ответ
+    </button>
+    <button class="button button__blue button__bold">Сохранить</button>
+</div>
