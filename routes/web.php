@@ -16,3 +16,28 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
+
+Route::group(['prefix' => '/profile'], function () {
+    Route::get('/', function () {
+        return view('profile');
+    });
+    Route::get('/create', function () {
+        return view('profile-create');
+    });
+    Route::get('/solved', function () {
+        return view('profile-solved');
+    });
+    Route::get('/statistic', function () {
+        return view('profile-statistic');
+    });
+});
+
+Route::get('/edit', function () {
+    return view('edit');
+});
+Route::get('/solved', function () {
+    return view('solved');
+});
+Route::get('/test', function () {
+    return view('test');
+});

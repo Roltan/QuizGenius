@@ -416,71 +416,182 @@ body.modalka-open {
   }
 }
 
-.slogan {
-  color: #123a60;
-  font-size: 3rem;
-  text-align: center;
-  width: 100%;
-}
-
-.index--main {
+main {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  gap: 10px;
-  width: 100%;
+  justify-content: start;
+  gap: 60px;
+  height: 75vh;
 }
 
-.descriptions {
+.navLK {
+  position: relative;
+  max-width: 500px;
+  width: 50vw;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  height: 100%;
-  width: 100%;
-  max-width: 600px;
-  color: #123a60;
-  font-size: 1.5rem;
+  justify-content: space-between;
+  padding: 30px 30px 30px 0px;
 }
-.descriptions > div {
+.navLK a {
   display: flex;
   flex-direction: row;
+  gap: 25px;
   align-items: center;
-  gap: 30px;
-  padding: 1rem 1.5rem;
-  border: solid #123a60;
-  border-radius: 35px;
+  color: #c9ddff;
+  text-decoration: none;
+  font-size: 1.5rem;
+}
+.navLK a > img {
+  width: 60px;
+}
+.navLK a:hover {
+  color: #97b0dc;
+}
+.navLK a.active {
+  color: #ffffff !important;
+}
+.navLK div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.navLK figure {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50vw;
+  height: 100%;
+  z-index: -1;
+  background: linear-gradient(120deg, #123a60 26%, #2578c6 65%);
+  border-top-right-radius: 45px;
+  border-bottom-right-radius: 45px;
+}
+.navLK__bar {
+  display: flex;
+  max-width: 300px;
+  width: 60vw;
+  max-height: 400px;
+  height: 60vh;
+  z-index: 4;
+  position: absolute;
+  top: 20px;
+  left: 0;
+  padding-left: 20px;
+}
+.navLK__bar a {
+  gap: 10px;
+}
+.navLK__bar a > img {
+  width: 40px;
 }
 
-.line {
-  width: 3px;
-  background-color: #2b76bc;
+.main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
 }
 
-.form {
-  justify-content: space-between;
+@media (max-width: 768px) {
+  nav.navLK {
+    display: none;
+  }
 }
-.form > div {
+.main {
+  gap: 20px;
+}
+
+.statistic--header {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+}
+.statistic--header > .input {
+  width: 300px;
+}
+
+.window {
+  width: 100%;
+  max-height: -moz-fit-content;
+  max-height: fit-content;
+  overflow-y: auto;
+}
+.window::-webkit-scrollbar {
+  width: 10px; /* Ширина скроллбара */
+}
+.window::-webkit-scrollbar-track {
+  background: #123a60; /* Цвет фона трека */
+  border-radius: 15px;
+}
+.window::-webkit-scrollbar-thumb {
+  background: #c9ddff; /* Цвет ползунка */
+  border-radius: 15px; /* Скругление углов ползунка */
+}
+.window::-webkit-scrollbar-thumb:hover {
+  background: #bbcff3; /* Цвет ползунка при наведении */
+}
+
+.list {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  width: 100%;
+  padding-right: 10px;
 }
 
-@media (max-width: 990px) {
-  .index--main {
-    flex-direction: column-reverse;
-    align-items: center;
-    gap: 30px;
+.list--card {
+  width: 100%;
+  height: -moz-fit-content;
+  height: fit-content;
+  background-color: #2b76bc;
+  border-radius: 20px;
+  padding: 5px 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-content: space-between;
+  color: #fff;
+  font-size: 2rem;
+  text-decoration: none;
+}
+.list--card:hover {
+  color: #bfddf8;
+}
+.list--card > span:nth-child(2),
+.list--card span:nth-child(4) {
+  justify-self: end;
+}
+.list--card > span:nth-child(4) {
+  align-self: end;
+}
+
+.filter {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 40px;
+  width: 450px;
+  height: 300px;
+  background: linear-gradient(40deg, #123a60 26%, #2578c6 65%);
+}
+.filter > .input {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .statistic--header .input {
+    width: 100%;
   }
-  .descriptions {
-    max-width: 600px;
+  .window {
+    overflow-y: unset;
     padding-bottom: 50px;
   }
-  .index--main > form {
-    max-width: 600px;
+  .filter {
     width: 100%;
   }
-  .line {
-    width: 100%;
-    height: 3px;
-  }
-}/*# sourceMappingURL=index.css.map */
+}/*# sourceMappingURL=statistic.css.map */
