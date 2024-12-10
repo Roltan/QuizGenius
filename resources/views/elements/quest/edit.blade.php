@@ -17,6 +17,15 @@
                 'answer'=>$answer
             ])
             @break
+        @case('fill')
+            @include('/elements/quest/fill', [
+                'id'=>$id,
+                'quest'=>$quest,
+                'disabled'=>'disabled',
+                'options'=>$options
+            ])
+            @break
+
     @endswitch
     <div class="buttons">
         <button>
@@ -46,6 +55,12 @@
                     'quest'=>$quest,
                     'id'=>$id,
                     'answer'=>$answer
+                ])
+                @break
+            @case('fill')
+                @include('/elements/quest/modal/fill', [
+                    'quest'=>$quest,
+                    'id'=>$id,
                 ])
                 @break
         @endswitch
