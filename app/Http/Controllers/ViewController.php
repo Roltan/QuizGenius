@@ -33,17 +33,15 @@ class ViewController extends Controller
         if ($user === null)
             return view('index');
 
-        $tests = Test::query()
-            ->where('user_id', $user->id)
-            ->get()
-            ->pluck('title');
-
         $solvedTest = SolvedTest::query()
             ->where('user_id', $user->id)
             ->get();
 
+        $tests = $solvedTest->map(function ($solved) {
+            return $solved->test->title;
+        });
         return view('profile-solved', [
-            'tests' => $tests,
+            'tests' => json_decode(json_encode($tests), true),
             'cards' => json_decode(json_encode(SolvedResource::collection($solvedTest)), true)
         ]);
     }
