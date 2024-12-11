@@ -24,7 +24,7 @@
             <div class="window">
                 <div class="list">
                     @for($i=0; $i<10; $i++)
-                        @include('/elements/solved', [
+                        @include('/elements/card', [
                             'href'=>'#',
                             'span'=>[
                                 'Автор',
