@@ -12,9 +12,13 @@
     <figure class="background"></figure>
 
     <main class="container">
-        <h1 class="main--header">Название теста</h1>
+        <h1 class="main--header">{{$title}}</h1>
 
-        @include('/elements/quest/solve', [
+        @foreach ($quest as $item)
+            @include('/elements/quest/solve', $item)
+        @endforeach
+
+        {{-- @include('/elements/quest/solve', [
             'type' => 'choice',
             'id'=> 1,
             'quest'=>'задание задание задание задание задание задание задание задание задание задание задание задание задание',
@@ -154,7 +158,7 @@
                 "Cum repellat.",
                 "Non vel natus."
             ]
-        ])
+        ]) --}}
 
         <div class="test--button">
             <button class="button button__blue button__bold">Завершить тест</button>

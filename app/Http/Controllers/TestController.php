@@ -19,7 +19,7 @@ class TestController extends Controller
         public TestServices $testServices
     ) {}
 
-    public function getTest(string $alias)
+    public function getTest(string $alias): Response|TestResource
     {
         return $this->testServices->getTest($alias);
     }

@@ -36,9 +36,7 @@ Route::get('/edit', function () {
 Route::get('/solved', function () {
     return view('solved');
 });
-Route::get('/test', function () {
-    return view('test');
-});
+Route::get('/test/{alias}', [ViewController::class, 'viewTest']);
 
 
 Route::get('/logout', [UserController::class, 'logout']);
