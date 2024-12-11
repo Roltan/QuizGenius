@@ -68,6 +68,8 @@ a:hover {
   display: flex;
   flex-direction: row;
   gap: 10px;
+  text-decoration: none;
+  max-height: 50px;
 }
 .button__image > img {
   height: 5rem;

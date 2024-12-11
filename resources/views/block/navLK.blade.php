@@ -3,7 +3,7 @@
         <figure></figure>
 
         <a href="/profile" class="{{ $active == 1 ? 'active' : '' }}">
-            <img src="/img/humen.png" alt="" />
+            <img src="/img/human.png" alt="" />
             <span>Данные аккаунта</span>
         </a>
         <a href="/profile/create" class="{{ $active == 2 ? 'active' : '' }}">

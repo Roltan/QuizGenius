@@ -5,10 +5,10 @@
         </div>
         <div class="header--buttons">
             @if (Auth::check())
-                <button class="button button__blue button__image">
+                <a class="button button__blue button__image" href="/profile">
                     <span>Личный кабинет</span>
-                    <img src="img/human.png" alt="" />
-                </button>
+                    <img src="/img/human.png" alt="" />
+                </a>
             @else
                 <button class="button button__blue openModalBtn" data-modal="modal1">Вход</button>
                 <button class="button button__blue openModalBtn" data-modal="modal2">Регистрация</button>
@@ -18,6 +18,7 @@
 </header>
 
 @if (!Auth::check())
+    <script defer src="/js/register.js"></script>
     <div class="modalka modalka--wrapper" id="modal1">
         <form class="form--login form" id="login">
             <h1>Вход</h1>

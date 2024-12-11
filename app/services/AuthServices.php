@@ -5,14 +5,14 @@ namespace App\Services;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegRequest;
 use App\Models\User;
-use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 
 class AuthServices
 {
-    public function login(LoginRequest $request): Response|ResponseFactory
+    public function login(LoginRequest $request): Response
     {
         $credentials = [
             'email' => $request->email,
@@ -29,15 +29,15 @@ class AuthServices
         return response(['status' => true], 200);
     }
 
-    public function logout(): Response|ResponseFactory
+    public function logout(): Redirector
     {
-        if (Auth::user() == null)
-            return response(['status' => false, 'error' => 'You are not logged in']);
+        // if (Auth::user() == null)
+        // return response(['status' => false, 'error' => 'You are not logged in']);
         Auth::logout();
-        return response(['status' => true], 200);
+        return redirect('/');
     }
 
-    public function register(RegRequest $request): Response|ResponseFactory
+    public function register(RegRequest $request): Response
     {
         $user = user::create([
             'name' => $request->name,

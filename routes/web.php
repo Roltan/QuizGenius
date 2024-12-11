@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,7 +27,7 @@ Route::group(['prefix' => '/profile'], function () {
         return view('profile-create');
     });
     Route::get('/solved', function () {
-        return view('profile-solveds');
+        return view('profile-solved');
     });
     Route::get('/statistic', function () {
         return view('profile-statistic');
@@ -41,3 +43,6 @@ Route::get('/solved', function () {
 Route::get('/test', function () {
     return view('test');
 });
+
+
+Route::get('/logout', [UserController::class, 'logout']);
