@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SaveSolvedRequest;
+use App\Models\SolvedTest;
 use App\Services\SolvedTestServices;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -22,6 +23,15 @@ class SolvedTestController extends Controller
 
     public function getMySolvedTest(int $testId): Collection|Response
     {
-        return $this->solvedTestServices->getSolvedTest($testId, Auth::user()->id);
+        return $this->solvedTestServices->getSolvedTest($testId);
+    }
+
+    public function getSolvedTest(int $solvedId): Collection|Response
+    {
+        $solved = SolvedTest::find($solvedId);
+        if ($solved == null)
+            return response(['status' => false, 'error' => 'solved not found'], 404);
+
+        return $this->solvedTestServices->getSolvedTest($solved->test_id, $solved->user_id);
     }
 }

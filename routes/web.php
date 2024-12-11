@@ -36,6 +36,10 @@ Route::get('/edit', function () {
 Route::get('/solved', function () {
     return view('solved');
 });
+Route::group(['prefix' => '/solved'], function () {
+    Route::get('/my/{testId}', [ViewController::class, 'viewMySolvedTest']);
+    Route::get('/{solvedId}', [ViewController::class, 'viewSolvedTest']);
+});
 Route::get('/test/{alias}', [ViewController::class, 'viewTest']);
 
 

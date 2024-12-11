@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Requests\SaveSolvedRequest;
+use App\Http\Resources\Solved\SolvedQuestResource;
 use App\Models\QuestAnswer;
 use App\Models\SolvedTest;
 use App\Models\Test;
@@ -73,24 +74,33 @@ class SolvedTestServices
         if ($user == null)
             return response(['status' => true, 'error' => 'not found user'], 500);
         $user = User::find($user);
-        if (Test::find($testId) == null)
+        $test = Test::find($testId);
+        if ($test == null)
             return response(['status' => false, 'error' => 'test not found'], 404);
 
         $solvedTest = $user->solvedTests()->where('test_id', $testId)->first();
         if ($solvedTest == null)
             return response(['status' => false, 'error' => 'You haven`t solved this test yet'], 400);
 
-        $response = [];
-        foreach ($solvedTest->questAnswer as $answer) {
-            $out = [
-                'id' => $answer->questsTest->id,
-                'quest' => $answer->questsTest->quest->quest,
-                'answer' => $answer->checkAnswer()
-            ];
-            $response[] = $out;
-        }
-        $response = collect($response);
-        return $response;
+        // формируем данные об ответах на вопросы теста
+        $answer = new SolvedQuestResource([
+            'solved_id' => $solvedTest->id,
+            'quest' => $test->quest
+        ]);
+
+        return response([
+            'title' => $test->title,
+            'topic' => $test->topic->topic,
+            'student' => $solvedTest->student->name,
+            'grade' => $solvedTest->grade,
+            'percent' => $solvedTest->percent,
+            'date' => $solvedTest->created_at->format('d-m-Y'),
+            'score' => $solvedTest->score,
+            'solved_time' => $solvedTest->solved_time,
+            // 'isLeave' => $solvedTest->isLeave
+            'isLeave' => false,
+            'answer' => $answer
+        ]);
     }
 
     protected function getGrade(int $percent, int $end2, int $end3, int $end4): int

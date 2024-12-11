@@ -7,7 +7,7 @@
 @endsection
 
 @section('mainContent')
-    @include('/block/header_lk', ['notNav'=>true])
+    @include('block.header')
 
     <figure class="background"></figure>
 

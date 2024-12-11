@@ -39,7 +39,7 @@ class ViewController extends Controller
         return $data;
     }
 
-    public function viewProfile()
+    public function viewProfile(): RedirectResponse|View
     {
         $user = Auth::user();
         if ($user === null)
@@ -50,7 +50,7 @@ class ViewController extends Controller
         ]);
     }
 
-    public function viewSolved()
+    public function viewSolved(): RedirectResponse|View
     {
         $user = Auth::user();
         if ($user === null)
@@ -69,7 +69,7 @@ class ViewController extends Controller
         ]));
     }
 
-    public function viewStatistic()
+    public function viewStatistic(): RedirectResponse|View
     {
         $user = Auth::user();
         if ($user === null)
@@ -91,14 +91,25 @@ class ViewController extends Controller
         ]));
     }
 
-    public function viewTest(string $alias)
+    public function viewTest(string $alias): RedirectResponse|View
     {
         $test = Http::get(env('APP_URL') . "/api/test/solve/" . $alias);
         if (!$test->successful()) {
             return redirect('/');
         }
         $test = $test->json();
-        // dd($test);
+
         return view('test', $this->convertObjectsToArray($test));
+    }
+
+    public function viewSolvedTest(int $solvedId)
+    {
+        $response = Http::get(env('APP_URL') . "/api/test/solved/" . $solvedId);
+        if (!$response->successful()) {
+            return redirect('/');
+        }
+        $response = $response->json();
+
+        return view('solved', $this->convertObjectsToArray($response));
     }
 }

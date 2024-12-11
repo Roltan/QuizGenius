@@ -17,7 +17,7 @@ class StatisticResource extends JsonResource
         $test = $this->test;
 
         return [
-            'href' => '/solved/my/' . $test->id,
+            'href' => '/solved' . '/' . $this->id,
             'span' => [
                 $this->student->name,
                 $this->score . '/' . $test->maxScore(),

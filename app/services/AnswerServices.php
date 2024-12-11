@@ -65,10 +65,11 @@ class AnswerServices
     {
         $correct = $fillQuest->getCorrectAnswer();
         $response = [];
-        for ($i = 0; $i < count($answer); $i++) {
+        for ($i = 0; $i < count($correct); $i++) {
+            $ans = $answer[$i] ?? '';
             $response[] = [
-                "answer" => $answer[$i],
-                "correct" => $answer[$i] == $correct[$i]
+                "answer" => $ans,
+                "correct" => $ans == $correct[$i]
             ];
         }
         return $response;
@@ -78,10 +79,11 @@ class AnswerServices
     {
         $correct = json_decode($relationQuest->second_column, true);
         $response = [];
-        for ($i = 0; $i < count($answer); $i++) {
+        for ($i = 0; $i < count($correct); $i++) {
+            $ans = $answer[$i] ?? '';
             $response[] = [
-                "answer" => $answer[$i],
-                "correct" => $answer[$i] == $correct[$i]
+                "answer" => $ans,
+                "correct" => $ans == $correct[$i]
             ];
         }
         return $response;

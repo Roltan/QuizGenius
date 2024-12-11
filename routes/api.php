@@ -31,6 +31,7 @@ Route::group(['prefix' => '/test'], function () {
     Route::group(['prefix' => '/solved'], function () {
         Route::post('/save', [SolvedTestController::class, 'saveSolvedTest']);
         Route::get('/my/{testId}', [SolvedTestController::class, 'getMySolvedTest'])->middleware('authChecked');
+        Route::get('/{solvedId}', [SolvedTestController::class, 'getSolvedTest']);
     });
 });
 

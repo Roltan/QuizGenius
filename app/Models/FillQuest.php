@@ -39,9 +39,10 @@ class FillQuest extends Model
         $response = [];
         foreach ($options as $selector) {
             foreach ($selector as $answer) {
-                if ($answer['correct'] == true)
+                if ($answer['correct'] == true) {
                     $response[] = $answer['str'];
-                break;
+                    break;
+                }
             }
         }
         return $response;
