@@ -1,6 +1,11 @@
 <div class="quest quest__choice">
     <span>{{$quest}}</span>
     <div>
+        @php
+            // Перемешиваем массив ответов случайным образом
+            shuffle($answers);
+        @endphp
+
         @foreach ($answers as $key => $answer)
             <div class="input input__{{ $is_multiple ? 'checkbox' : 'radio' }}">
                 <input

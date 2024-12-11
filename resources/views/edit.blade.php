@@ -157,79 +157,25 @@
             ],
         ])
 
-        <div class="quest__edit">
-            <div class="quest quest__relation">
-                <span>задание задание задание задание задание задание задание задание задание задание задание задание задание</span>
-                <div class="quest__relation--grid">
-                    <div>Текст варианта</div>
-                    <div class="interactive second-column" id="quest5choice1">Вариант 1</div>
-
-                    <div>Текст варианта</div>
-                    <div class="interactive second-column" id="quest5choice2">Вариант 2</div>
-
-                    <div>Текст варианта</div>
-                    <div class="interactive second-column" id="quest5choice3">Вариант 3</div>
-
-                    <div>Текст варианта</div>
-                    <div class="interactive second-column" id="quest5choice4">Вариант 4</div>
-                </div>
-            </div>
-            <div class="buttons">
-                <button>
-                    <img src="/img/edit/reset.png" alt="" />
-                </button>
-                <button>
-                    <img src="/img/edit/edit.png" alt="" class="openModalBtn" data-modal="questEdit4" />
-                </button>
-                <button>
-                    <img src="/img/edit/delet.png" alt="" />
-                </button>
-            </div>
-        </div>
-        <div class="modalka modalka--wrapper" id="questEdit4">
-            <form class="quest--modal form">
-                <div class="input">
-                    <label for="questEdit2Quest">Задание</label>
-                    <input type="text" name="questEdit2Quest" id="questEdit2Quest" class="input--field" />
-                </div>
-                <div class="answer answer__relation">
-                    <div class="input">
-                        <input type="text" name="" id="" class="input--field" />
-                    </div>
-                    <div class="input">
-                        <input type="text" name="" id="" class="input--field" />
-                    </div>
-                    <div class="input">
-                        <input type="text" name="" id="" class="input--field" />
-                    </div>
-                    <div class="input">
-                        <input type="text" name="" id="" class="input--field" />
-                    </div>
-
-                    <div class="input">
-                        <input type="text" name="" id="" class="input--field" />
-                    </div>
-                    <div class="input">
-                        <input type="text" name="" id="" class="input--field" />
-                    </div>
-                    <div class="input">
-                        <input type="text" name="" id="" class="input--field" />
-                    </div>
-                    <div class="input">
-                        <input type="text" name="" id="" class="input--field" />
-                    </div>
-                </div>
-                <div class="test--button test--button__max">
-                    <button class="test--add test--add__light">
-                        <div>
-                            <img src="/img/edit/add.png" alt="" />
-                        </div>
-                        Добавить пару
-                    </button>
-                    <button class="button button__blue button__bold">Сохранить</button>
-                </div>
-            </form>
-        </div>
+        @include('/elements/quest/edit', [
+            'type'=>'relation',
+            'id'=>5,
+            'quest'=>'Манилов совершенно растерялся. Он чувствовал, что — боже храни. — Однако ж согласитесь сами: ведь это не — отдавал хозяин. Я ему сулил каурую кобылу, которую, помнишь, выменял — у Хвостырева… — Чичиков, впрочем, отроду не видел ни каурой кобылы, — ни груша, ни слива, ни иная ягода, до которого, впрочем, не без удовольствия взглянул на стены и на ноги его, походившие на чугунные тумбы, которые ставят на тротуарах, не мог получить такого блестящего образования, — какое, так сказать, паренье.',
+            "first_column"=> [
+                "Voluptatem rerum.",
+                "Nostrum cumque optio.",
+                "Nisi amet.",
+                "Recusandae ad.",
+                "Officiis tempore alias."
+            ],
+            "second_column"=> [
+                "Dolorem nisi.",
+                "Molestias ut.",
+                "Illo dolorem.",
+                "Cum repellat.",
+                "Non vel natus."
+            ]
+        ])
 
         <div class="test--button test--button__max">
             <button class="test--add">
