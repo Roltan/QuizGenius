@@ -41,6 +41,5 @@ Route::group(['prefix' => '/quest'], function () {
 
 Route::group(['prefix' => '/auth'], function () {
     Route::post('/login', [UserController::class, 'login']);
-    Route::post('/logout', [UserController::class, 'logout'])->middleware('authChecked');
     Route::post('/register', [UserController::class, 'register']);
 });

@@ -18,7 +18,7 @@
 </header>
 
 @if (!Auth::check())
-    <script defer src="/js/register.js"></script>
+    <script defer src="/js/login.js"></script>
     <div class="modalka modalka--wrapper" id="modal1">
         <form class="form--login form" id="login">
             <h1>Вход</h1>
@@ -28,11 +28,12 @@
             </div>
             <div class="input">
                 <label for="password_login">Пароль</label>
-                <input type="password" name="email" id="password_login" class="input--field" />
+                <input type="password" name="password" id="password_login" class="input--field" />
             </div>
             <button type="submit" class="button button__blue button__bold">Войти</button>
         </form>
     </div>
+    <script defer src="/js/register.js"></script>
     <div class="modalka modalka--wrapper" id="modal2">
         <form class="form--login form" id="register">
             <h1>Регистрация</h1>
