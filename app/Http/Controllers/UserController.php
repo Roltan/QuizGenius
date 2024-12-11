@@ -31,15 +31,4 @@ class UserController extends Controller
     {
         return $this->authServices->register($regRequest);
     }
-
-    public function viewProfile(): View
-    {
-        $user = Auth::user();
-        if ($user === null)
-            return view('index');
-        return view('profile', [
-            'name' => $user->name,
-            'email' => $user->email
-        ]);
-    }
 }

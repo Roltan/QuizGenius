@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ViewController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -20,14 +21,12 @@ Route::get('/', function () {
 })->name('index');
 
 Route::group(['prefix' => '/profile'], function () {
-    Route::get('/', [UserController::class, 'viewProfile']);
+    Route::get('/', [ViewController::class, 'viewProfile']);
 
     Route::get('/create', function () {
         return view('profile-create');
     });
-    Route::get('/solved', function () {
-        return view('profile-solved');
-    });
+    Route::get('/solved', [ViewController::class, 'viewSolved']);
     Route::get('/statistic', function () {
         return view('profile-statistic');
     });

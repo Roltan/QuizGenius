@@ -14,26 +14,13 @@
         @include('/block/navLK', ['active'=>4])
 
         <div class="main">
-            @include('/block/list_header', ['tests'=>[
-                'тест 1',
-                'тест 2',
-                'тест 3',
-                'тест 4',
-            ]])
+            @include('/block/list_header', ['tests'=>$tests])
 
             <div class="window">
                 <div class="list">
-                    @for($i=0; $i<10; $i++)
-                        @include('/elements/card', [
-                            'href'=>'#',
-                            'span'=>[
-                                'Автор',
-                                'XX/XX',
-                                'Название теста',
-                                'Дата'
-                            ]
-                        ])
-                    @endfor
+                    @foreach($cards as $card)
+                        @include('/elements/card', $card)
+                    @endforeach
                 </div>
             </div>
         </div>

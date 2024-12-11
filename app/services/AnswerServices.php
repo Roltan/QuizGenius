@@ -42,10 +42,10 @@ class AnswerServices
 
     public function checkBlankQuest(BlankQuest $blankQuest, string $answer): array
     {
-        return [
+        return [[
             'answer' => $answer,
             'correct' => in_array($answer, json_decode($blankQuest->correct))
-        ];
+        ]];
     }
 
     public function checkChoiceQuest(ChoiceQuest $choiceQuest, array|string $answer): array
