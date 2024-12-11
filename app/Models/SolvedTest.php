@@ -29,7 +29,7 @@ class SolvedTest extends Model
 
     public function student(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function questAnswer(): HasMany

@@ -36,6 +36,11 @@ class Test extends Model
         return $this->hasMany(QuestsTest::class, 'test_id');
     }
 
+    public function solved(): HasMany
+    {
+        return $this->HasMany(SolvedTest::class);
+    }
+
     // методы
     public function maxScore(): int
     {

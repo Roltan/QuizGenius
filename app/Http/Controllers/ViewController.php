@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegRequest;
 use App\Http\Resources\Card\SolvedResource;
+use App\Http\Resources\Card\StatisticResource;
 use App\Models\SolvedTest;
 use App\Models\Test;
 use App\Services\AuthServices;
@@ -27,7 +28,7 @@ class ViewController extends Controller
         ]);
     }
 
-    public function viewSolved()
+    public function viewSolved(): View
     {
         $user = Auth::user();
         if ($user === null)
@@ -43,6 +44,28 @@ class ViewController extends Controller
         return view('profile-solved', [
             'tests' => json_decode(json_encode($tests), true),
             'cards' => json_decode(json_encode(SolvedResource::collection($solvedTest)), true)
+        ]);
+    }
+
+    public function viewStatistic(): View
+    {
+        $user = Auth::user();
+        if ($user === null)
+            return view('index');
+
+        $tests = Test::query()
+            ->where('user_id', $user->id)
+            ->get();
+
+        $solvedTest = $tests->filter(function ($test) {
+            return $test->solved()->count() !== 0;
+        })->flatMap(function ($test) {
+            return $test->solved;
+        });
+
+        return view('profile-statistic', [
+            'tests' => json_decode(json_encode($tests->pluck('title')), true),
+            'cards' => json_decode(json_encode(StatisticResource::collection($solvedTest)), true)
         ]);
     }
 }

@@ -27,9 +27,7 @@ Route::group(['prefix' => '/profile'], function () {
         return view('profile-create');
     });
     Route::get('/solved', [ViewController::class, 'viewSolved']);
-    Route::get('/statistic', function () {
-        return view('profile-statistic');
-    });
+    Route::get('/statistic', [ViewController::class, 'viewStatistic']);
 });
 
 Route::get('/edit', function () {
