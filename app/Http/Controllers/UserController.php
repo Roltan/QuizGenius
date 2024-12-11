@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegRequest;
 use App\Services\AuthServices;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -20,7 +22,7 @@ class UserController extends Controller
         return $this->authServices->login($loginRequest);
     }
 
-    public function logout(): Redirector
+    public function logout(): RedirectResponse
     {
         return $this->authServices->logout();
     }
@@ -28,5 +30,14 @@ class UserController extends Controller
     public function register(RegRequest $regRequest): Response
     {
         return $this->authServices->register($regRequest);
+    }
+
+    public function viewProfile(): View
+    {
+        $user = Auth::user();
+        return view('profile', [
+            'name' => $user->name,
+            'email' => $user->email
+        ]);
     }
 }

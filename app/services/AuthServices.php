@@ -5,9 +5,9 @@ namespace App\Services;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegRequest;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 
 class AuthServices
@@ -29,7 +29,7 @@ class AuthServices
         return response(['status' => true], 200);
     }
 
-    public function logout(): Redirector
+    public function logout(): RedirectResponse
     {
         // if (Auth::user() == null)
         // return response(['status' => false, 'error' => 'You are not logged in']);
