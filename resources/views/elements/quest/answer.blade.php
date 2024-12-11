@@ -26,4 +26,14 @@
             'answer' => $answer
         ])
         @break
+    @case('relation')
+        @include('/elements/quest/type/relation', [
+            'quest' => $quest,
+            'id'=>$id,
+            'disabled'=>'disabled',
+            'first_column'=>$first_column,
+            "second_column"=> $second_column,
+            'answer'=>$answer
+        ])
+        @break
 @endswitch

@@ -134,26 +134,26 @@
             'answer'=> [true, false, false]
         ])
 
-        <div class="quest quest__relation">
-            <span>задание задание задание задание задание задание задание задание задание задание задание задание задание</span>
-            <div class="quest__relation--grid quest__relation--grid__solved">
-                <div>Текст варианта</div>
-                <img src="/img/checkbox/true.png" alt="" />
-                <div class="interactive second-column" draggable="true" id="quest5choice1">Вариант 1</div>
-
-                <div>Текст варианта</div>
-                <img src="/img/checkbox/false.png" alt="" />
-                <div class="interactive second-column" draggable="true" id="quest5choice2">Вариант 2</div>
-
-                <div>Текст варианта</div>
-                <img src="/img/checkbox/false.png" alt="" />
-                <div class="interactive second-column" draggable="true" id="quest5choice3">Вариант 3</div>
-
-                <div>Текст варианта</div>
-                <img src="/img/checkbox/false.png" alt="" />
-                <div class="interactive second-column" draggable="true" id="quest5choice4">Вариант 4</div>
-            </div>
-        </div>
+        @include('/elements/quest/answer', [
+            'type'=>'relation',
+            'id'=>5,
+            'quest'=>'Манилов совершенно растерялся. Он чувствовал, что — боже храни. — Однако ж согласитесь сами: ведь это не — отдавал хозяин. Я ему сулил каурую кобылу, которую, помнишь, выменял — у Хвостырева… — Чичиков, впрочем, отроду не видел ни каурой кобылы, — ни груша, ни слива, ни иная ягода, до которого, впрочем, не без удовольствия взглянул на стены и на ноги его, походившие на чугунные тумбы, которые ставят на тротуарах, не мог получить такого блестящего образования, — какое, так сказать, паренье.',
+            "first_column"=> [
+                "Voluptatem rerum.",
+                "Nostrum cumque optio.",
+                "Nisi amet.",
+                "Recusandae ad.",
+                "Officiis tempore alias."
+            ],
+            "second_column"=> [
+                "Dolorem nisi.",
+                "Molestias ut.",
+                "Illo dolorem.",
+                "Cum repellat.",
+                "Non vel natus."
+            ],
+            'answer' => [true, false, true, false, false]
+        ])
 
         <div class="test--button">
             <button class="button button__blue button__bold">Назад</button>
