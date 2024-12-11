@@ -7,8 +7,11 @@
             name="quest{{$id}}"
             id="quest{{$id}}"
             class="input--field"
-            disabled
-            value="{{ is_array($answer) ? implode(' / ', $answer) : $answer }}"
+            {{$disabled ?? ''}}
+            @php
+                if(isset($disabled))
+                    return 'value='.is_array($answer) ? implode(' / ', $answer) : $answer;
+            @endphp
         />
     </div>
 </div>

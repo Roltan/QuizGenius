@@ -29,13 +29,14 @@
                 <select
                     name="quest{{ $id }}choice{{ $index }}"
                     id="quest{{ $id }}choice{{ $index }}"
-                    class="input--field" {{ $disabled ?? '' }}
+                    class="input--field"
+                    {{ $disabled ?? '' }}
                 >
-                    <option value="" disabled selected hidden>вариант</option>
+                    <option value="" disabled selected hidden>-</option>
                     @foreach ($optionsForSelector as $option)
                         <option
                             value="{{ $option['str'] }}"
-                            {{ ($selectedOption && $option['str'] === $selectedOption) ? 'selected' : ($option['correct'] ? 'selected' : '') }}
+                            {{ $option['str'] === $selectedOption ? 'selected' : (($option['correct'] and isset($disabled)) ? 'selected' : '') }}
                         >
                             {{ $option['str'] }}
                         </option>

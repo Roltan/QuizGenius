@@ -13,7 +13,7 @@
                     name="quest{{$id}}" id="quest{{$id}}choice{{$key}}"
                     class="input--field"
                     {{$disabled ?? ''}}
-                    {{$answer['checked'] ? 'checked' : ''}}
+                    {{$answer['checked'] and isset($disabled)? 'checked' : ''}}
                 />
                 <label for="quest{{$id}}choice{{$key}}">{{$answer['label']}}</label>
             </div>

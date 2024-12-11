@@ -1,181 +1,163 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="/css/test.css" />
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
-		<title>Document</title>
-		<script defer src="/js/drag.js"></script>
-		<script defer src="/js/modal.js"></script>
-	</head>
-	<body>
-		<header class="header">
-			<div class="container">
-				<div class="header--logo">
-					<img src="/img/лого.png" alt="" />
-				</div>
+@extends('/block/pattern')
 
-				<div class="header--buttons">
-					<button class="button button__blue openModalBtn" data-modal="modal1">Вход</button>
-					<button class="button button__blue openModalBtn" data-modal="modal2">Регистрация</button>
-				</div>
-			</div>
-		</header>
+@section('links')
+    <link rel="stylesheet" href="/css/test.css" />
+    <script defer src="/js/modal.js"></script>
+    <script defer src="/js/drag.js"></script>
+@endsection
 
-		<figure class="background"></figure>
+@section('mainContent')
+    @include('/block/header_lk', ['notNav'=>true])
 
-		<div class="modalka modalka--wrapper" id="modal1">
-			<form class="form--login form" id="login">
-				<h1>Вход</h1>
-				<div class="input">
-					<label for="email_login">Почта</label>
-					<input type="email" name="email" id="email_login" class="input--field" />
-				</div>
-				<div class="input">
-					<label for="password_login">Пароль</label>
-					<input type="password" name="email" id="password_login" class="input--field" />
-				</div>
-				<button type="submit" class="button button__blue button__bold">Войти</button>
-			</form>
-		</div>
-		<div class="modalka modalka--wrapper" id="modal2">
-			<form class="form--login from" id="register">
-				<h1>Регистрация</h1>
-				<div class="input">
-					<label for="name">Имя</label>
-					<input type="text" name="name" id="name" class="input--field" />
-				</div>
-				<div class="input">
-					<label for="email_reg">Почта</label>
-					<input type="email" name="email" id="email_reg" class="input--field" />
-				</div>
-				<div class="input">
-					<label for="password_reg">Пароль</label>
-					<input type="password" name="password" id="password_reg" class="input--field" />
-				</div>
-				<div class="input">
-					<label for="password_confirmation">Повторите пароль</label>
-					<input type="password" name="password_confirmation" id="password_confirmation" class="input--field" />
-				</div>
-				<div class="input input__checkbox">
-					<input type="checkbox" name="rule" id="rule" />
-					<label for="rule">
-						<span>
-							Я соглашаюсь на обработку
-							<a href="#">персональных данных</a>
-						</span>
-					</label>
-				</div>
-				<button type="submit" class="button button__blue button__bold">Зарегистрироваться</button>
-			</form>
-		</div>
+    <figure class="background"></figure>
 
-		<main class="container">
-			<h1 class="main--header">Название теста</h1>
+    <main class="container">
+        <h1 class="main--header">Название теста</h1>
 
-			<div class="quest quest__choice">
-				<span>задание задание задание задание задание задание задание задание задание задание задание задание задание</span>
-				<div>
-					<div class="input input__radio">
-						<input type="radio" name="quest1" id="quest1choice1" class="input--field" />
-						<label for="quest1choice1">Label</label>
-					</div>
-					<div class="input input__radio">
-						<input type="radio" name="quest1" id="quest1choice2" class="input--field" />
-						<label for="quest1choice2">Label</label>
-					</div>
-					<div class="input input__radio">
-						<input type="radio" name="quest1" id="quest1choice3" class="input--field" />
-						<label for="quest1choice3">Label</label>
-					</div>
-					<div class="input input__radio">
-						<input type="radio" name="quest1" id="quest1choice4" class="input--field" />
-						<label for="quest1choice4">Label</label>
-					</div>
-				</div>
-			</div>
-			<div class="quest quest__choice">
-				<span>задание задание задание задание задание задание задание задание задание задание задание задание задание</span>
-				<div>
-					<div class="input input__radio">
-						<input type="checkbox" name="quest1c1" id="quest2choice1" class="input--field" />
-						<label for="quest2choice1">Label</label>
-					</div>
-					<div class="input input__radio">
-						<input type="checkbox" name="quest1c2" id="quest2choice2" class="input--field" />
-						<label for="quest2choice2">Label</label>
-					</div>
-					<div class="input input__radio">
-						<input type="checkbox" name="quest1c3" id="quest2choice3" class="input--field" />
-						<label for="quest2choice3">Label</label>
-					</div>
-					<div class="input input__radio">
-						<input type="checkbox" name="quest1c4" id="quest2choice4" class="input--field" />
-						<label for="quest2choice4">Label</label>
-					</div>
-				</div>
-			</div>
-			<div class="quest quest__blank">
-				<span>задание задание задание задание задание задание задание задание задание задание задание задание задание</span>
-				<div class="input">
-					<label for="quest3">Ответ</label>
-					<input type="text" name="quest3" id="quest3" class="input--field" />
-				</div>
-			</div>
-			<div class="quest quest__fill">
-				задание задание задание задание задание задание
-				<span class="input input__little">
-					<select name="quest4choice1" id="quest4choice1" class="input--field">
-						<option value="" disabled selected hidden>вариант</option>
-						<option value="1">тема 1</option>
-						<option value="2">тема 2</option>
-						<option value="3">тема 3</option>
-						<option value="4">тема 4</option>
-					</select>
-				</span>
-				задание задание задание задание задание задание
-				<span class="input input__little">
-					<select name="quest4choice2" id="quest4choice2" class="input--field">
-						<option value="" disabled selected hidden>вариант</option>
-						<option value="1">тема 1</option>
-						<option value="2">тема 2</option>
-						<option value="3">тема 3</option>
-						<option value="4">тема 4</option>
-					</select>
-				</span>
-				задание задание задание задание задание задание задание задание задание задание задание задание задание
-				<span class="input input__little">
-					<select name="quest4choice2" id="quest4choice2" class="input--field">
-						<option value="" disabled selected hidden>вариант</option>
-						<option value="1">тема 1</option>
-						<option value="2">тема 2</option>
-						<option value="3">тема 3</option>
-						<option value="4">тема 4</option>
-					</select>
-				</span>
-				задание задание задание
-			</div>
-			<div class="quest quest__relation">
-				<span>задание задание задание задание задание задание задание задание задание задание задание задание задание</span>
-				<div class="quest__relation--grid">
-					<div>Текст варианта</div>
-					<div class="interactive second-column" draggable="true" id="quest5choice1">Вариант 1</div>
+        @include('/elements/quest/solve', [
+            'type' => 'choice',
+            'id'=> 1,
+            'quest'=>'задание задание задание задание задание задание задание задание задание задание задание задание задание',
+            'is_multiple'=> 0,
+            'answers'=>[
+                [
+                    'label'=>'label',
+                    'checked'=>0
+                ],
+                [
+                    'label'=>'label',
+                    'checked'=>0
+                ],
+                [
+                    'label'=>'label',
+                    'checked'=>0
+                ],
+                [
+                    'label'=>'label',
+                    'checked'=>1
+                ],
+            ]
+        ])
 
-					<div>Текст варианта</div>
-					<div class="interactive second-column" draggable="true" id="quest5choice2">Вариант 2</div>
+        @include('/elements/quest/solve', [
+            'type' => 'choice',
+            'id'=> 2,
+            'quest'=>'задание задание задание задание задание задание задание задание задание задание задание задание задание',
+            'is_multiple'=> 1,
+            'answers'=>[
+                [
+                    'id'=>1,
+                    'label'=>'label',
+                    'checked'=>1
+                ],
+                [
+                    'id'=>2,
+                    'label'=>'label',
+                    'checked'=>0
+                ],
+                [
+                    'id'=>3,
+                    'label'=>'label',
+                    'checked'=>0
+                ],
+                [
+                    'id'=>4,
+                    'label'=>'label',
+                    'checked'=>1
+                ],
+            ]
+        ])
 
-					<div>Текст варианта</div>
-					<div class="interactive second-column" draggable="true" id="quest5choice3">Вариант 3</div>
+        @include('/elements/quest/solve', [
+            'type' => 'blank',
+            'id'=>3,
+            'quest'=>'задание задание задание задание задание задание задание задание задание задание задание задание задание'
+        ])
 
-					<div>Текст варианта</div>
-					<div class="interactive second-column" draggable="true" id="quest5choice4">Вариант 4</div>
-				</div>
-			</div>
+        @include('/elements/quest/solve', [
+            'type'=>'fill',
+            'id'=>4,
+            'quest' => 'Что ж тут смешного? — сказал Ноздрев, указывая пальцем на поле, — — Эй, борода! а как проедешь еще одну версту, так вот тебе, то есть, — то что сам уже давно сидел в бричке, придумывая, кому бы еще отдать визит, да уж извольте проходить вы. s?:0 Да какая просьба? — Ну, послушай, сыграем в шашки, выиграешь s?:2 твои все. Ведь у — тебя есть? — Бобров, Свиньин, Канапатьев, Харпакин, Трепакин, Плешаков. s?:1 Богатые люди или нет? — Нет, я вижу, нельзя, как водится — между хорошими друзьями и товарищами.',
+            "options"=> [
+                [
+                    [
+                        "str"=> "enim",
+                        "correct"=> false
+                    ],
+                    [
+                        "str"=> "consectetur",
+                        "correct"=> true
+                    ],
+                    [
+                        "str"=> "aut",
+                        "correct"=> false
+                    ],
+                    [
+                        "str"=> "eum",
+                        "correct"=> false
+                    ]
+                ],
+                [
+                    [
+                        "str"=> "soluta",
+                        "correct"=> false
+                    ],
+                    [
+                        "str"=> "eum",
+                        "correct"=> false
+                    ],
+                    [
+                        "str"=> "qui",
+                        "correct"=> true
+                    ],
+                    [
+                        "str"=> "quam",
+                        "correct"=> false
+                    ]
+                ],
+                [
+                    [
+                        "str"=> "dicta",
+                        "correct"=> false
+                    ],
+                    [
+                        "str"=> "qui",
+                        "correct"=> true
+                    ],
+                    [
+                        "str"=> "laboriosam",
+                        "correct"=> false
+                    ],
+                    [
+                        "str"=> "qui",
+                        "correct"=> false
+                    ]
+                ]
+            ],
+        ])
 
-			<div class="test--button">
-				<button class="button button__blue button__bold">Завершить тест</button>
-			</div>
-		</main>
-	</body>
-</html>
+        @include('/elements/quest/solve', [
+            'type'=>'relation',
+            'id'=>5,
+            'quest'=>'Манилов совершенно растерялся. Он чувствовал, что — боже храни. — Однако ж согласитесь сами: ведь это не — отдавал хозяин. Я ему сулил каурую кобылу, которую, помнишь, выменял — у Хвостырева… — Чичиков, впрочем, отроду не видел ни каурой кобылы, — ни груша, ни слива, ни иная ягода, до которого, впрочем, не без удовольствия взглянул на стены и на ноги его, походившие на чугунные тумбы, которые ставят на тротуарах, не мог получить такого блестящего образования, — какое, так сказать, паренье.',
+            "first_column"=> [
+                "Voluptatem rerum.",
+                "Nostrum cumque optio.",
+                "Nisi amet.",
+                "Recusandae ad.",
+                "Officiis tempore alias."
+            ],
+            "second_column"=> [
+                "Dolorem nisi.",
+                "Molestias ut.",
+                "Illo dolorem.",
+                "Cum repellat.",
+                "Non vel natus."
+            ]
+        ])
+
+        <div class="test--button">
+            <button class="button button__blue button__bold">Завершить тест</button>
+        </div>
+    </main>
+@endsection
