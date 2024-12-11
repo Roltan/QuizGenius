@@ -11,9 +11,9 @@
                 <input
                     type="{{ $is_multiple ? 'checkbox' : 'radio' }}"
                     name="quest{{$id}}" id="quest{{$id}}choice{{$key}}"
-                    class="input--field"
+                    class="input--field {{isset($answer['isCorrect']) ? ($answer['isCorrect'] ? 'true' : 'false') : ''}}"
                     {{$disabled ?? ''}}
-                    {{$answer['checked'] and isset($disabled)? 'checked' : ''}}
+                    {{($answer['checked'] and isset($disabled))? 'checked' : ''}}
                 />
                 <label for="quest{{$id}}choice{{$key}}">{{$answer['label']}}</label>
             </div>

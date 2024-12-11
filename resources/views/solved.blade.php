@@ -36,27 +36,32 @@
             </div>
         </div>
 
-        <div class="quest quest__choice">
-            <span>задание задание задание задание задание задание задание задание задание задание задание задание задание</span>
-            <div>
-                <div class="input input__radio">
-                    <input type="checkbox" name="quest1c1" id="quest2choice1" class="input--field true" disabled checked />
-                    <label for="quest2choice1">Label</label>
-                </div>
-                <div class="input input__radio">
-                    <input type="checkbox" name="quest1c2" id="quest2choice2" class="input--field false" disabled checked />
-                    <label for="quest2choice2">Label</label>
-                </div>
-                <div class="input input__radio">
-                    <input type="checkbox" name="quest1c3" id="quest2choice3" class="input--field" disabled checked />
-                    <label for="quest2choice3">Label</label>
-                </div>
-                <div class="input input__radio">
-                    <input type="checkbox" name="quest1c4" id="quest2choice4" class="input--field" disabled />
-                    <label for="quest2choice4">Label</label>
-                </div>
-            </div>
-        </div>
+        @include('/elements/quest/answer', [
+            'type' => 'choice',
+            'id'=> 2,
+            'quest'=>'задание задание задание задание задание задание задание задание задание задание задание задание задание',
+            'is_multiple'=> 1,
+            'answers'=>[
+                [
+                    'label'=>'label',
+                    'checked'=>1,
+                    'isCorrect'=>true
+                ],
+                [
+                    'label'=>'label',
+                    'checked'=>1,
+                    'isCorrect'=>false
+                ],
+                [
+                    'label'=>'label',
+                    'checked'=>0
+                ],
+                [
+                    'label'=>'label',
+                    'checked'=>1
+                ],
+            ]
+        ])
 
         @include('/elements/quest/answer', [
             'type' => 'blank',

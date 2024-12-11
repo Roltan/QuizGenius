@@ -66,22 +66,18 @@
             'is_multiple'=> 1,
             'answers'=>[
                 [
-                    'id'=>1,
                     'label'=>'label',
                     'checked'=>1
                 ],
                 [
-                    'id'=>2,
                     'label'=>'label',
                     'checked'=>0
                 ],
                 [
-                    'id'=>3,
                     'label'=>'label',
                     'checked'=>0
                 ],
                 [
-                    'id'=>4,
                     'label'=>'label',
                     'checked'=>1
                 ],
