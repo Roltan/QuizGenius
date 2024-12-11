@@ -10,7 +10,7 @@
 
         @for ($i = 0; $i < count($first_column); $i++)
             <div>{{$first_column[$i]}}</div>
-            <div class="interactive second-column" id="quest{{$id}}relation{{$i}}">{{$second_column[$i]}}</div>
+            <div class="interactive second-column" id="quest{{$id}}relation{{$i}}" draggable="true">{{$second_column[$i]}}</div>
         @endfor
     </div>
 </div>
