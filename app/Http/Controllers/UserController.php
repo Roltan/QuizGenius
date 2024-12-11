@@ -35,6 +35,8 @@ class UserController extends Controller
     public function viewProfile(): View
     {
         $user = Auth::user();
+        if ($user === null)
+            return view('index');
         return view('profile', [
             'name' => $user->name,
             'email' => $user->email

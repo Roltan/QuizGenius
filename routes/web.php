@@ -20,7 +20,7 @@ Route::get('/', function () {
 })->name('index');
 
 Route::group(['prefix' => '/profile'], function () {
-    Route::get('/', [UserController::class, 'viewProfile'])->middleware('authUrl');
+    Route::get('/', [UserController::class, 'viewProfile']);
 
     Route::get('/create', function () {
         return view('profile-create');
