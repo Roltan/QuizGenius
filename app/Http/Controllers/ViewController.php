@@ -9,6 +9,7 @@ use App\Http\Resources\Card\StatisticResource;
 use App\Models\SolvedTest;
 use App\Models\Test;
 use App\Services\AuthServices;
+use App\Services\SolvedTestServices;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -102,13 +103,24 @@ class ViewController extends Controller
         return view('test', $this->convertObjectsToArray($test));
     }
 
-    public function viewSolvedTest(int $solvedId)
+    public function viewSolvedTest(int $solvedId): RedirectResponse|View
     {
         $response = Http::get(env('APP_URL') . "/api/test/solved/" . $solvedId);
         if (!$response->successful()) {
             return redirect('/');
         }
         $response = $response->json();
+
+        return view('solved', $this->convertObjectsToArray($response));
+    }
+
+    public function viewMySolvedTest(int $testId): RedirectResponse|View
+    {
+        $response = (new SolvedTestServices)->getSolvedTest($testId);
+        if ($response->status() != 200) {
+            return redirect('/');
+        }
+        $response = $response->original;
 
         return view('solved', $this->convertObjectsToArray($response));
     }

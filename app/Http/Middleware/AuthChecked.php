@@ -16,7 +16,7 @@ class AuthChecked
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!Auth::check()){
+        if (!Auth::check()) {
             return response([
                 'status' => false,
                 'error' => 'you are not logged in'
