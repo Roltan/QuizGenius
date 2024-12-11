@@ -17,5 +17,13 @@
             'isCorrect'=>($isCorrect ?? false)
         ])
         @break
-    @default
+    @case('fill')
+        @include('/elements/quest/type/fill', [
+            'id'=>$id,
+            'quest'=>$quest,
+            'disabled'=>'disabled',
+            'options'=>$options,
+            'answer' => $answer
+        ])
+        @break
 @endswitch

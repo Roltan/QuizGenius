@@ -29,18 +29,22 @@
                 <select
                     name="quest{{ $id }}choice{{ $index }}"
                     id="quest{{ $id }}choice{{ $index }}"
-                    class="input--field"
+                    class="input--field {{isset($answer) ? ($answer[$index] ? 'true' : '') : ''}}"
                     {{ $disabled ?? '' }}
                 >
-                    <option value="" disabled selected hidden>-</option>
-                    @foreach ($optionsForSelector as $option)
-                        <option
-                            value="{{ $option['str'] }}"
-                            {{ $option['str'] === $selectedOption ? 'selected' : (($option['correct'] and isset($disabled)) ? 'selected' : '') }}
-                        >
-                            {{ $option['str'] }}
-                        </option>
-                    @endforeach
+                    @if (!isset($answer))
+                        <option value="" disabled selected hidden>-</option>
+                        @foreach ($optionsForSelector as $option)
+                            <option
+                                value="{{ $option['str'] }}"
+                                {{ $option['str'] === $selectedOption ? 'selected' : (($option['correct'] and isset($disabled)) ? 'selected' : '') }}
+                            >
+                                {{ $option['str'] }}
+                            </option>
+                        @endforeach
+                    @else
+                        <option value="" disabled selected hidden>{{$selectedOption}}</option>
+                    @endif
                 </select>
             </span>
         @else

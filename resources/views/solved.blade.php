@@ -71,39 +71,68 @@
             'isCorrect'=>false
         ])
 
-        <div class="quest quest__fill">
-            задание задание задание задание задание задание
-            <span class="input input__little">
-                <select name="quest4choice1" id="quest4choice1" class="input--field true" disabled>
-                    <option value="" disabled selected hidden>вариант</option>
-                    <option value="1">тема 1</option>
-                    <option value="2">тема 2</option>
-                    <option value="3">тема 3</option>
-                    <option value="4">тема 4</option>
-                </select>
-            </span>
-            задание задание задание задание задание задание
-            <span class="input input__little">
-                <select name="quest4choice2" id="quest4choice2" class="input--field" disabled>
-                    <option value="" disabled selected hidden>вариант</option>
-                    <option value="1">тема 1</option>
-                    <option value="2">тема 2</option>
-                    <option value="3">тема 3</option>
-                    <option value="4">тема 4</option>
-                </select>
-            </span>
-            задание задание задание задание задание задание задание задание задание задание задание задание задание
-            <span class="input input__little">
-                <select name="quest4choice2" id="quest4choice2" class="input--field" disabled>
-                    <option value="" disabled selected hidden>вариант</option>
-                    <option value="1">тема 1</option>
-                    <option value="2">тема 2</option>
-                    <option value="3">тема 3</option>
-                    <option value="4">тема 4</option>
-                </select>
-            </span>
-            задание задание задание
-        </div>
+        @include('/elements/quest/answer', [
+            'type'=>'fill',
+            'id'=>4,
+            'quest' => 'Что ж тут смешного? — сказал Ноздрев, указывая пальцем на поле, — — Эй, борода! а как проедешь еще одну версту, так вот тебе, то есть, — то что сам уже давно сидел в бричке, придумывая, кому бы еще отдать визит, да уж извольте проходить вы. s?:0 Да какая просьба? — Ну, послушай, сыграем в шашки, выиграешь s?:2 твои все. Ведь у — тебя есть? — Бобров, Свиньин, Канапатьев, Харпакин, Трепакин, Плешаков. s?:1 Богатые люди или нет? — Нет, я вижу, нельзя, как водится — между хорошими друзьями и товарищами.',
+            "options"=> [
+                [
+                    [
+                        "str"=> "enim",
+                        "correct"=> false
+                    ],
+                    [
+                        "str"=> "consectetur",
+                        "correct"=> true
+                    ],
+                    [
+                        "str"=> "aut",
+                        "correct"=> false
+                    ],
+                    [
+                        "str"=> "eum",
+                        "correct"=> false
+                    ]
+                ],
+                [
+                    [
+                        "str"=> "soluta",
+                        "correct"=> false
+                    ],
+                    [
+                        "str"=> "eum",
+                        "correct"=> false
+                    ],
+                    [
+                        "str"=> "qui",
+                        "correct"=> true
+                    ],
+                    [
+                        "str"=> "quam",
+                        "correct"=> false
+                    ]
+                ],
+                [
+                    [
+                        "str"=> "dicta",
+                        "correct"=> false
+                    ],
+                    [
+                        "str"=> "qui",
+                        "correct"=> true
+                    ],
+                    [
+                        "str"=> "laboriosam",
+                        "correct"=> false
+                    ],
+                    [
+                        "str"=> "qui",
+                        "correct"=> false
+                    ]
+                ]
+            ],
+            'answer'=> [true, false, false]
+        ])
 
         <div class="quest quest__relation">
             <span>задание задание задание задание задание задание задание задание задание задание задание задание задание</span>
