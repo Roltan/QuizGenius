@@ -23,7 +23,7 @@ class SolvedTestController extends Controller
 
     public function getMySolvedTest(int $testId): Collection|Response
     {
-        return $this->solvedTestServices->getSolvedTest($testId);
+        return $this->solvedTestServices->getSolvedTest($testId, Auth::user()->id);
     }
 
     public function getSolvedTest(int $solvedId): Collection|Response
@@ -32,6 +32,6 @@ class SolvedTestController extends Controller
         if ($solved == null)
             return response(['status' => false, 'error' => 'solved not found'], 404);
 
-        return $this->solvedTestServices->getSolvedTest($solved->test_id, $solved->user_id);
+        return $this->solvedTestServices->getSolvedTest($solved->id);
     }
 }

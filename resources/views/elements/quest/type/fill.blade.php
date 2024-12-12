@@ -27,8 +27,8 @@
             @endphp
             <span class="input input__little">
                 <select
-                    name="quest{{ $id }}choice{{ $index }}"
-                    id="quest{{ $id }}choice{{ $index }}"
+                    name="quest{{ $id }}selector{{ $index }}"
+                    id="quest{{ $id }}selector{{ $index }}"
                     class="input--field {{isset($answer) ? ($answer[$index] ? 'true' : '') : ''}}"
                     {{ $disabled ?? '' }}
                 >

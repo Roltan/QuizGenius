@@ -1,7 +1,7 @@
 <header class="header">
     <div class="container">
         <div class="header--logo">
-            <img src="img/лого.png" alt="" />
+            <img src="/img/лого.png" alt="" />
         </div>
         <div class="header--buttons">
             @if (Auth::check())

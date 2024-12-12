@@ -19,7 +19,10 @@ class SolvedTestServices
     {
         // общая информация о решении
         $student_id = Auth::check() ? Auth::user()->id : null;
-        $test_id = $request->test_id;
+        $test_id = Test::query()
+            ->where('url', $request->test_alias)
+            ->first()
+            ->id;
         $solved_time = $request->time;
         $is_escape = $request->is_escape;
         $correct = 0;
@@ -61,26 +64,30 @@ class SolvedTestServices
 
         return response([
             'status' => true,
-            'score' => $correct,
-            'percent' => $percent,
-            'maxCorrect' => $count,
-            'grade' => $grade
+            'solved_id' => $solvedTest->id
         ]);
     }
 
     public function getSolvedTest(int $testId, int $user = null): Collection|Response
     {
-        if ($user == null) $user = Auth::user()->id;
-        if ($user == null)
-            return response(['status' => true, 'error' => 'not found user'], 500);
-        $user = User::find($user);
-        $test = Test::find($testId);
-        if ($test == null)
-            return response(['status' => false, 'error' => 'test not found'], 404);
+        if ($user != null) {
+            $user = User::find($user);
+            if ($user == null)
+                return response(['status' => false, 'error' => 'user not found'], 404);
 
-        $solvedTest = $user->solvedTests()->where('test_id', $testId)->first();
-        if ($solvedTest == null)
-            return response(['status' => false, 'error' => 'You haven`t solved this test yet'], 400);
+            $test = Test::find($testId);
+            if ($test == null)
+                return response(['status' => false, 'error' => 'test not found'], 404);
+
+            $solvedTest = $user->solvedTests()->where('test_id', $testId)->first();
+            if ($solvedTest == null)
+                return response(['status' => false, 'error' => 'You haven`t solved this test yet'], 400);
+        } else {
+            $solvedTest = SolvedTest::find($testId);
+            if ($solvedTest == null)
+                return response(['status' => false, 'error' => 'solved test not found'], 404);
+            $test = $solvedTest->test;
+        }
 
         // формируем данные об ответах на вопросы теста
         $answer = new SolvedQuestResource([
@@ -91,7 +98,7 @@ class SolvedTestServices
         return response([
             'title' => $test->title,
             'topic' => $test->topic->topic,
-            'student' => $solvedTest->student->name,
+            'student' => ($solvedTest->student == null ? '' : $solvedTest->student->name),
             'grade' => $solvedTest->grade,
             'percent' => $solvedTest->percent,
             'date' => $solvedTest->created_at->format('d-m-Y'),

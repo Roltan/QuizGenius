@@ -24,7 +24,7 @@ class SaveSolvedRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'test_id' => ['required', 'numeric', 'min:1'],
+            'test_alias' => ['required', 'string', 'min:1', 'filled'],
             'time' => ['required', 'numeric', 'min:1'],
             'is_escape' => ['required', 'boolean'],
 
@@ -32,7 +32,7 @@ class SaveSolvedRequest extends FormRequest
             'answer.*' => ['required', 'array'],
             'answer.*.id' => ['required', 'numeric', 'min:1'],
             'answer.*.type' => ['required', Rule::in(['fill', 'relation', 'choice', 'blank'])],
-            'answer.*.text' => ['required', new AnswerTextRule]
+            'answer.*.text' => [new AnswerTextRule]
         ];
     }
 }

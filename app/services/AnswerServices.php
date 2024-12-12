@@ -26,6 +26,7 @@ class AnswerServices
     {
         $quest = $questAnswer->questsTest->quest;
         $answer = json_decode($questAnswer->answer);
+        if ($answer == null) $answer = '';
         switch ($questAnswer->questsTest->type_quest) {
             case 'fill':
                 return $this->checkFillQuest($quest, $answer);

@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="/css/test.css" />
     <script defer src="/js/modal.js"></script>
     <script defer src="/js/drag.js"></script>
+    <script defer src="/js/saveAnswer.js"></script>
 @endsection
 
 @section('mainContent')
@@ -19,7 +20,7 @@
         @endforeach
 
         <div class="test--button">
-            <button class="button button__blue button__bold">Завершить тест</button>
+            <button class="button button__blue button__bold" id="finish_test">Завершить тест</button>
         </div>
     </main>
 @endsection

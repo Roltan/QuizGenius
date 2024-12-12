@@ -15,11 +15,12 @@ class StatisticResource extends JsonResource
     public function toArray(Request $request): array
     {
         $test = $this->test;
+        $student = ($this->student == null ? 'Неавторизованный пользователь' : $this->student->name);
 
         return [
             'href' => '/solved' . '/' . $this->id,
             'span' => [
-                $this->student->name,
+                $student,
                 $this->score . '/' . $test->maxScore(),
                 $test->title,
                 $this->created_at->format('d-m-Y')

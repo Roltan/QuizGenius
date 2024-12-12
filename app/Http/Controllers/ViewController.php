@@ -20,6 +20,10 @@ use Illuminate\Support\Facades\Http;
 
 class ViewController extends Controller
 {
+    public  function __construct(
+        public SolvedTestController $solvedTestController
+    ) {}
+
     protected function convertObjectsToArray($data): mixed
     {
         // Если данные - массив, рекурсивно обрабатываем каждый элемент
@@ -115,18 +119,18 @@ class ViewController extends Controller
 
     public function viewSolvedTest(int $solvedId): RedirectResponse|View
     {
-        $response = Http::get(env('APP_URL') . "/api/test/solved/" . $solvedId);
-        if (!$response->successful()) {
+        $response = $this->solvedTestController->getSolvedTest($solvedId);
+        if ($response->status() != 200) {
             return redirect('/');
         }
-        $response = $response->json();
+        $response = $response->original;
 
         return view('solved', $this->convertObjectsToArray($response));
     }
 
     public function viewMySolvedTest(int $testId): RedirectResponse|View
     {
-        $response = (new SolvedTestServices)->getSolvedTest($testId);
+        $response = $this->solvedTestController->getMySolvedTest($testId);
         if ($response->status() != 200) {
             return redirect('/');
         }

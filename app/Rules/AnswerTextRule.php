@@ -28,7 +28,7 @@ class AnswerTextRule implements ValidationRule, DataAwareRule
 
         switch ($type) {
             case 'blank':
-                if (!is_string($value)) {
+                if (!is_string($value) and $value != '') {
                     $fail('The :attribute must be a string for type \'blank\'.');
                 }
                 break;
