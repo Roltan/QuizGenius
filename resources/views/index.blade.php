@@ -7,6 +7,9 @@
 
 @section('mainContent')
     @include('block.header')
+    @if(session('error'))
+        @include('/elements/error', ['error'=>session('error')])
+    @endif
 
     <figure class="background"></figure>
 
@@ -33,16 +36,18 @@
                 </div>
             </section>
             <div class="line"></div>
-            <form class="form">
+            <form class="form" action='/generate' method="POST">
+                @csrf
                 <div>
                     <div class="input">
                         <label for="overCount">Количество вопросов</label>
-                        <input type="text" name="overCount" id="overCount" class="input--field" />
+                        <input type="number" name="overCount" id="overCount" class="input--field" />
                     </div>
                     @include('/elements/input/selector', [
                         'name'=>'topic',
                         'label'=>'Выберете тему',
-                        'options'=>$topics
+                        'options'=>$topics,
+                        'strValue' => true
                     ])
                 </div>
 

@@ -47,7 +47,7 @@ class QuestServices
             ->where('topic', $topic)
             ->first();
         if ($topic == null)
-            return response(['status' => false, 'error' => 'topic not found'], 404);
+            return response(['status' => false, 'error' => 'Тема не найдена'], 404);
 
         $question = $model::query()
             ->where('topic_id', $topic->id)
@@ -62,7 +62,7 @@ class QuestServices
             ->where('topic', $request->topic)
             ->first();
         if ($topic == null)
-            return response(['status' => false, 'error' => 'topic not found'], 404);
+            return response(['status' => false, 'error' => 'Тема не найдена'], 404);
 
         $data = [];
         switch ($request->type) {

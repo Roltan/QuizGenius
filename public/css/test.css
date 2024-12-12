@@ -182,17 +182,20 @@ a:hover {
 
 input[type=text]:-moz-placeholder,
 input[type=password]:-moz-placeholder,
-input[type=email]:-moz-placeholder {
+input[type=email]:-moz-placeholder,
+input[type=number]:-moz-placeholder {
   color: rgba(43, 118, 188, 0.4392156863);
 }
 input[type=text]::-webkit-input-placeholder,
 input[type=password]::-webkit-input-placeholder,
-input[type=email]::-webkit-input-placeholder {
+input[type=email]::-webkit-input-placeholder,
+input[type=number]::-webkit-input-placeholder {
   color: rgba(43, 118, 188, 0.4392156863);
 }
 input[type=text]:hover:not(:disabled),
 input[type=password]:hover:not(:disabled),
-input[type=email]:hover:not(:disabled) {
+input[type=email]:hover:not(:disabled),
+input[type=number]:hover:not(:disabled) {
   border: solid #74b7f8 7px;
   padding-left: 14px;
 }
@@ -200,7 +203,9 @@ input[type=text]:active, input[type=text]:focus,
 input[type=password]:active,
 input[type=password]:focus,
 input[type=email]:active,
-input[type=email]:focus {
+input[type=email]:focus,
+input[type=number]:active,
+input[type=number]:focus {
   border: solid #123a60 7px;
   padding-left: 14px;
 }
@@ -552,7 +557,7 @@ body.modalka-open {
   grid-column-start: 1;
   grid-column-end: 3;
 }
-.settings > :nth-child(4) {
+.settings > :nth-child(4):not(.input) {
   justify-self: end;
 }
 @media (max-width: 768px) {

@@ -19,7 +19,6 @@ class FillResource extends JsonResource
             'type' => $this->type,
             'quest' => $this->quest,
             'options' => json_decode($this->options),
-            'is_multiple' => $this->is_multiple
         ];
     }
 }

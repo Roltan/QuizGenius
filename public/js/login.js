@@ -20,9 +20,23 @@ document
 
         if (result.status == true) {
             // Успешная отправка
-            window.location.href = "/";
+            window.location.reload();
         } else {
             // Обрабатываем ошибки валидации
-            alert(result.message);
+            console.log(result);
+            document.body.innerHTML += `
+<div class="modalka modalka--wrapper modalka-open" id="modal99" style="display: flex">
+    <form class="form">
+        <h1>${result.message}</h1>
+    </form>
+</div>
+                `;
+            modal = document.getElementById("modal99");
+            modal.addEventListener("click", function (event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                    document.body.classList.remove("modalka-open");
+                }
+            });
         }
     });

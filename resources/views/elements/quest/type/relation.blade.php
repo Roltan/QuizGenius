@@ -2,7 +2,7 @@
     <span>{{$quest}}</span>
     <div class="quest__relation--grid {{isset($answer) ? 'quest__relation--grid__solved' : ''}}">
         @php
-            if(!isset($disable)){
+            if(!isset($disabled)){
                 // Перемешиваем массив ответов случайным образом
                 shuffle($second_column);
             }

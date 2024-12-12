@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Test\GenerateTestRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegRequest;
 use App\Http\Resources\Card\SolvedResource;
@@ -9,19 +10,17 @@ use App\Http\Resources\Card\StatisticResource;
 use App\Models\SolvedTest;
 use App\Models\Test;
 use App\Models\Topic;
-use App\Services\AuthServices;
-use App\Services\SolvedTestServices;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
 class ViewController extends Controller
 {
     public  function __construct(
-        public SolvedTestController $solvedTestController
+        public SolvedTestController $solvedTestController,
+        public TestController $testController
     ) {}
 
     protected function convertObjectsToArray($data): mixed
@@ -54,11 +53,20 @@ class ViewController extends Controller
         return view('index', ['topics' => $topic]);
     }
 
+    public function viewCreate(): View
+    {
+        $topic = Topic::query()
+            ->orderBy('topic')
+            ->get()
+            ->pluck('topic');
+        return view('profile-create', ['topics' => $topic]);
+    }
+
     public function viewProfile(): RedirectResponse|View
     {
         $user = Auth::user();
         if ($user === null)
-            return redirect('/');
+            return redirect('/')->with('error', 'У вас нет прав посещать ту страницу');
         return view('profile', [
             'name' => $user->name,
             'email' => $user->email
@@ -69,7 +77,7 @@ class ViewController extends Controller
     {
         $user = Auth::user();
         if ($user === null)
-            return redirect('/');
+            return redirect('/')->with('error', 'У вас нет прав посещать ту страницу');
 
         $solvedTest = SolvedTest::query()
             ->where('user_id', $user->id)
@@ -88,7 +96,7 @@ class ViewController extends Controller
     {
         $user = Auth::user();
         if ($user === null)
-            return redirect('/');
+            return redirect('/')->with('error', 'У вас нет прав посещать ту страницу');
 
         $tests = Test::query()
             ->where('user_id', $user->id)
@@ -110,7 +118,7 @@ class ViewController extends Controller
     {
         $test = Http::get(env('APP_URL') . "/api/test/solve/" . $alias);
         if (!$test->successful()) {
-            return redirect('/');
+            return redirect('/')->with('error', $test->json('error'));
         }
         $test = $test->json();
 
@@ -121,7 +129,7 @@ class ViewController extends Controller
     {
         $response = $this->solvedTestController->getSolvedTest($solvedId);
         if ($response->status() != 200) {
-            return redirect('/');
+            return redirect('/')->with('error', $response->original['error']);
         }
         $response = $response->original;
 
@@ -132,10 +140,21 @@ class ViewController extends Controller
     {
         $response = $this->solvedTestController->getMySolvedTest($testId);
         if ($response->status() != 200) {
-            return redirect('/');
+            return redirect('/')->with('error', $response->original['error']);
         }
         $response = $response->original;
 
         return view('solved', $this->convertObjectsToArray($response));
+    }
+
+    public function generateTest(GenerateTestRequest $request): RedirectResponse|View
+    {
+        $response = $this->testController->generateTest($request);
+        if ($response->status() != 200) {
+            return redirect('/')->with('error', $response->original['error']);
+        }
+        $response = $response->original;
+
+        return view('edit', $this->convertObjectsToArray($response));
     }
 }

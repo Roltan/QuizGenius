@@ -24,42 +24,43 @@ class TestServices
         $test = Test::query()
             ->where('url', $alias)
             ->first();
-        if ($test == null) return response(['status' => false, 'error' => 'test not found'], 404);
+        if ($test == null) return response(['status' => false, 'error' => 'Тест не найден'], 404);
 
         if ($test->only_user == true and !Auth::check())
-            return response(['status' => false, 'error' => 'log in first'], 403);
+            return response(['status' => false, 'error' => 'У вас нет пара посещать ту страницу'], 403);
 
         return new TestResource($test);
     }
 
     public function createTest(CreateTestRequest $request): Response
     {
+        // проверка существования вопросов
         foreach ($request->quest as $quest) {
             switch ($quest['type']) {
                 case 'fill':
                     if (!FillQuest::find($quest['id'])->exists())
-                        return response(['status' => false, 'error' => "there is no question like " . $quest['type'] . " with id " . $quest['id']]);
+                        return response(['status' => false, 'error' => "there is no question like " . $quest['type'] . " with id " . $quest['id']], 422);
                 case 'blank':
                     if (!BlankQuest::find($quest['id'])->exists())
-                        return response(['status' => false, 'error' => "there is no question like " . $quest['type'] . " with id " . $quest['id']]);
+                        return response(['status' => false, 'error' => "there is no question like " . $quest['type'] . " with id " . $quest['id']], 422);
                 case 'choice':
                     if (!ChoiceQuest::find($quest['id'])->exists())
-                        return response(['status' => false, 'error' => "there is no question like " . $quest['type'] . " with id " . $quest['id']]);
+                        return response(['status' => false, 'error' => "there is no question like " . $quest['type'] . " with id " . $quest['id']], 422);
                 case 'relation':
                     if (!RelationQuest::find($quest['id'])->exists())
-                        return response(['status' => false, 'error' => "there is no question like " . $quest['type'] . " with id " . $quest['id']]);
+                        return response(['status' => false, 'error' => "there is no question like " . $quest['type'] . " with id " . $quest['id']], 422);
             }
         }
 
         $data = $request->only('title', 'only_user', 'leave');
         $topic = Topic::where('topic', $request->topic)->first();
-        if ($topic == null) return response(['status' => false, 'error' => 'topic not found'], 404);
+        if ($topic == null) return response(['status' => false, 'error' => 'Тема не найдена'], 404);
 
         $data['user_id'] = Auth::user()->id;
         $data['url'] = Str::slug($request->title);
         $data['topic_id'] = $topic->id;
         if (Test::query()->where('url', $data['url'])->exists())
-            return response(['status' => false, 'error' => 'this title is already in use'], 400);
+            return response(['status' => false, 'error' => 'Это название теста уже занято'], 400);
         $test = Test::create($data);
 
         foreach ($request->quest as $quest) {
@@ -76,9 +77,9 @@ class TestServices
     {
         $test = Test::find($id);
         if ($test == null)
-            return response(['status' => false, 'error' => 'test not found'], 404);
+            return response(['status' => false, 'error' => 'Тест не найден'], 404);
         if ($test->user_id != Auth::user()->id)
-            return response(['status' => false, 'error' => 'forbidden delete test'], 403);
+            return response(['status' => false, 'error' => 'У вас нет права удалять этот тест'], 403);
         $test->delete();
         return response(['status' => true]);
     }

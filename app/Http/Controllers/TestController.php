@@ -11,6 +11,7 @@ use App\Services\TestServices;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Contracts\View\View;
 
 class TestController extends Controller
 {
@@ -24,7 +25,7 @@ class TestController extends Controller
         return $this->testServices->getTest($alias);
     }
 
-    public function generateTest(GenerateTestRequest $request): Response|ResponseFactory|QuestResource
+    public function generateTest(GenerateTestRequest $request): Response
     {
         return $this->generateServices->generateTest($request);
     }

@@ -55,7 +55,6 @@ function getAnswer(questElements) {
                 'input[type="checkbox"], input[type="radio"]'
             );
             const selectedLabels = [];
-            console.log(inputs);
 
             inputs.forEach((input) => {
                 if (input.checked) {
@@ -194,7 +193,20 @@ document
                 window.location.href = "/solved/" + result.solved_id;
             } else {
                 // Обрабатываем ошибки валидации
-                alert("Что-то пошло не так");
+                document.body.innerHTML += `
+<div class="modalka modalka--wrapper modalka-open" id="modal99" style="display: flex">
+    <form class="form">
+        <h1>${result.error}</h1>
+    </form>
+</div>
+                `;
+                modal = document.getElementById("modal99");
+                modal.addEventListener("click", function (event) {
+                    if (event.target === modal) {
+                        modal.style.display = "none";
+                        document.body.classList.remove("modalka-open");
+                    }
+                });
             }
         }
     });

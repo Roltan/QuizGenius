@@ -14,10 +14,11 @@
         @include('/block/navLK', ['active'=>2])
 
         <div class="main">
-            <form>
+            <form action='/generate' method="POST">
+                @csrf
                 <div class="input input__dark">
-                    <label for="name">Название</label>
-                    <input type="text" name="name" id="name" class="input--field" />
+                    <label for="title">Название</label>
+                    <input type="text" name="title" id="title" class="input--field" />
                 </div>
 
                 <section>
@@ -27,28 +28,28 @@
                             <img src="/img/create/choice.png" alt="" />
                             <div class="input input__dark">
                                 <label for="choice">С выбором</label>
-                                <input type="text" placeholder="число" name="choice" id="choice" class="input--field" />
+                                <input type="number" placeholder="число" name="choice" id="choice" class="input--field" />
                             </div>
                         </div>
                         <div class="input--wrap__img">
                             <img src="/img/create/blank.png" alt="" />
                             <div class="input input__dark">
                                 <label for="blank">С бланком</label>
-                                <input type="text" placeholder="число" name="blank" id="blank" class="input--field" />
+                                <input type="number" placeholder="число" name="blank" id="blank" class="input--field" />
                             </div>
                         </div>
                         <div class="input--wrap__img">
                             <img src="/img/create/relation.png" alt="" />
                             <div class="input input__dark">
                                 <label for="relation">На соотношение</label>
-                                <input type="text" placeholder="число" name="relation" id="relation" class="input--field" />
+                                <input type="number" placeholder="число" name="relation" id="relation" class="input--field" />
                             </div>
                         </div>
                         <div class="input--wrap__img">
                             <img src="/img/create/fill.png" alt="" />
                             <div class="input input__dark">
                                 <label for="fill">На заполнение</label>
-                                <input type="text" placeholder="число" name="fill" id="fill" class="input--field" />
+                                <input type="number" placeholder="число" name="fill" id="fill" class="input--field" />
                             </div>
                         </div>
                     </div>
@@ -58,16 +59,12 @@
                             'name'=>'topic',
                             'label'=>'Выберете тему',
                             'class' => 'input__dark',
-                            'options'=>[
-                                'тема 1',
-                                'тема 2',
-                                'тема 3',
-                                'тема 4',
-                            ]
+                            'options'=>$topics,
+                            'strValue' => true
                         ])
                         <div class="input input__dark">
                             <label for="overCount">Количество вопросов</label>
-                            <input type="text" placeholder="число" name="overCount" id="overCount" class="input--field" />
+                            <input type="number" placeholder="число" name="overCount" id="overCount" class="input--field" />
                         </div>
                     </div>
                 </section>

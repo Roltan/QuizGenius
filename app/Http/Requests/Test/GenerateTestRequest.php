@@ -24,6 +24,7 @@ class GenerateTestRequest extends FormRequest
         return [
             'overCount' => ['required', 'numeric', 'min:1'],
             'topic' => ['required', 'string', 'filled', 'min:1'],
+            'title' => ['nullable', 'string', 'filled', 'min:1'],
             'fillCount' => ['nullable', 'numeric', 'min:0'],
             'choiceCount' => ['nullable', 'numeric', 'min:0'],
             'blankCount' => ['nullable', 'numeric', 'min:0'],

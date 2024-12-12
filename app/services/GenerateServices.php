@@ -16,11 +16,11 @@ use Illuminate\Support\Facades\DB;
 
 class GenerateServices
 {
-    public function generateTest(GenerateTestRequest $request): QuestResource|Response
+    public function generateTest(GenerateTestRequest $request): Response
     {
         $topic = Topic::query()->where('topic', $request->topic)->first();
         if ($topic == null)
-            return response(['status' => false, 'error' => 'topic not found'], 404);
+            return response(['status' => false, 'error' => 'Тема не найдена'], 404);
 
         $countQuest = $request->overCount;
         if (!$request->has('fillCount') and !$request->has('choiceCount') and !$request->has('blankCount') and !$request->has('relationCount')) {
@@ -52,7 +52,11 @@ class GenerateServices
             ->merge($relation)
             ->shuffle();
 
-        return new QuestResource($response);
+        $data = [
+            'quest' => new QuestResource($response),
+        ];
+        if ($request->has('title')) $data['title'] = $request->title;
+        return response($data, 200);
     }
 
     protected function divideIntoParts(int $number, int $count): array

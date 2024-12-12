@@ -35,7 +35,7 @@ class SolvedTestServices
             ->where('test_id', $test_id)
             ->where('user_id', $student_id)
             ->exists()
-        ) return response(['status' => false, 'error' => 'Have you already solved this test'], 400);
+        ) return response(['status' => false, 'error' => 'Вы уже решали этот тест'], 400);
         $solvedTest = SolvedTest::create([
             'test_id' => $test_id,
             'user_id' => $student_id,
@@ -74,19 +74,19 @@ class SolvedTestServices
         if ($user != null) {
             $user = User::find($user);
             if ($user == null)
-                return response(['status' => false, 'error' => 'user not found'], 404);
+                return response(['status' => false, 'error' => 'Пользователь не найден'], 404);
 
             $test = Test::find($testId);
             if ($test == null)
-                return response(['status' => false, 'error' => 'test not found'], 404);
+                return response(['status' => false, 'error' => 'Тест не найден'], 404);
 
             $solvedTest = $user->solvedTests()->where('test_id', $testId)->first();
             if ($solvedTest == null)
-                return response(['status' => false, 'error' => 'You haven`t solved this test yet'], 400);
+                return response(['status' => false, 'error' => 'Вы еще не решили этот тест'], 400);
         } else {
             $solvedTest = SolvedTest::find($testId);
             if ($solvedTest == null)
-                return response(['status' => false, 'error' => 'solved test not found'], 404);
+                return response(['status' => false, 'error' => 'Решение теста не найдено'], 404);
             $test = $solvedTest->test;
         }
 

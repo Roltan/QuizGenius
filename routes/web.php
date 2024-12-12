@@ -20,22 +20,16 @@ Route::get('/', [ViewController::class, 'viewIndex']);
 
 Route::group(['prefix' => '/profile'], function () {
     Route::get('/', [ViewController::class, 'viewProfile']);
-
-    Route::get('/create', function () {
-        return view('profile-create');
-    });
+    Route::get('/create', [ViewController::class, 'viewCreate']);
     Route::get('/solved', [ViewController::class, 'viewSolved']);
     Route::get('/statistic', [ViewController::class, 'viewStatistic']);
 });
 
-Route::get('/edit', function () {
-    return view('edit');
-});
 Route::group(['prefix' => '/solved'], function () {
     Route::get('/my/{testId}', [ViewController::class, 'viewMySolvedTest']);
     Route::get('/{solvedId}', [ViewController::class, 'viewSolvedTest']);
 });
 Route::get('/test/{alias}', [ViewController::class, 'viewTest']);
 
-
+Route::post('/generate', [ViewController::class, 'generateTest']);
 Route::get('/logout', [UserController::class, 'logout']);
