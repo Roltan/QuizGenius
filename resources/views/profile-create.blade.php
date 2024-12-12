@@ -3,6 +3,7 @@
 @section('links')
     <link rel="stylesheet" href="/css/create.css" />
     <script defer src="/js/modal.js"></script>
+    <script defer src="/js/editCount.js"></script>
 @endsection
 
 @section('mainContent')
@@ -18,7 +19,7 @@
                 @csrf
                 <div class="input input__dark">
                     <label for="title">Название</label>
-                    <input type="text" name="title" id="title" class="input--field" />
+                    <input type="text" name="title" id="title" class="input--field" required/>
                 </div>
 
                 <section>
@@ -64,7 +65,7 @@
                         ])
                         <div class="input input__dark">
                             <label for="overCount">Количество вопросов</label>
-                            <input type="number" placeholder="число" name="overCount" id="overCount" class="input--field" />
+                            <input type="number" placeholder="число" name="overCount" id="overCount" class="input--field" required/>
                         </div>
                     </div>
                 </section>
