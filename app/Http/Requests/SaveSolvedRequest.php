@@ -25,7 +25,7 @@ class SaveSolvedRequest extends FormRequest
     {
         return [
             'test_alias' => ['required', 'string', 'min:1', 'filled'],
-            'time' => ['required', 'numeric', 'min:1'],
+            'time' => ['required', 'numeric', 'min:0'],
             'is_escape' => ['required', 'boolean'],
 
             'answer' => ['required', 'array'],

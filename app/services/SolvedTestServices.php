@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class SolvedTestServices
 {
@@ -103,9 +104,9 @@ class SolvedTestServices
             'percent' => $solvedTest->percent,
             'date' => $solvedTest->created_at->format('d-m-Y'),
             'score' => $solvedTest->score,
-            'solved_time' => $solvedTest->solved_time,
-            // 'isLeave' => $solvedTest->isLeave
-            'isLeave' => false,
+            'solved_time' => Carbon::createFromTimestamp($solvedTest->solved_time)
+                ->format('H:i:s'),
+            'isLeave' => $solvedTest->is_escapee,
             'answer' => $answer
         ]);
     }
