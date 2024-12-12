@@ -41,7 +41,14 @@
         @endforeach
 
         <div class="test--button">
-            <button class="button button__blue button__bold">Назад</button>
+            <a
+                @if (Auth::check())
+                    href="{{ url()->previous() }}"
+                @else
+                    href="/"
+                @endif
+                class="button button__blue button__bold"
+            >Назад</a>
         </div>
     </main>
 @endsection
