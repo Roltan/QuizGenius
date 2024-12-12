@@ -50,7 +50,6 @@ class FillQuestFactory extends Factory
             'vis' => $this->faker->boolean,
             'quest' => $quest,
             'options' => json_encode($options),
-            'is_multiple' => $this->faker->boolean,
         ];
     }
 }

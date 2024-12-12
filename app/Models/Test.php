@@ -17,7 +17,6 @@ class Test extends Model
         'title',
         'url',
         'only_user',
-        'leave'
     ];
 
     // связи

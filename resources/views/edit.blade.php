@@ -21,10 +21,6 @@
                 <input type="checkbox" name="only_user" id="only_user" class="input--field toggle" />
                 <label for="only_user">Только авторизованные тестируемые</label>
             </div>
-            <div class="input input__radio">
-                <input type="checkbox" name="leave" id="leave" class="input--field toggle" />
-                <label for="leave">Запретить переключать страницу</label>
-            </div>
             @include('/elements/input/selector', [
                 'name'=>'access',
                 'label'=>'Доступ по',

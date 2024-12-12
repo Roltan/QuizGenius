@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('title');
             $table->string('url')->unique();
             $table->boolean('only_user')->default(false);
-            $table->boolean('leave')->default(false);
             $table->timestamps();
         });
     }

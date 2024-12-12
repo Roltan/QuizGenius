@@ -17,7 +17,6 @@ return new class extends Migration
             $table->boolean('vis')->default(false);
             $table->text('quest');
             $table->text('options');
-            $table->boolean('is_multiple')->default(false);
             $table->timestamps();
         });
     }

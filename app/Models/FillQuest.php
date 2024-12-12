@@ -18,7 +18,6 @@ class FillQuest extends Model
         'vis',
         'quest',
         'options',
-        'is_multiple',
     ];
 
     // связи

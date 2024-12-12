@@ -56,9 +56,6 @@ class FillQuestResource extends Resource
                                 Toggle::make('vis')
                                     ->label('Видимость')
                                     ->default(true),
-                                Toggle::make('is_multiple')
-                                    ->label('Повторяющиеся ответы')
-                                    ->default(false),
                             ]),
                         Tab::make('Ответы')
                             ->columns(2)
@@ -101,8 +98,6 @@ class FillQuestResource extends Resource
                     ->label('Задание')
                     ->searchable()
                     ->limit(50),
-                BooleanColumn::make('is_multiple')
-                    ->label('Повторяющиеся ответы'),
             ])
             ->filters([
                 TernaryFilter::make('vis')

@@ -37,7 +37,6 @@ class TestFactory extends Factory
             'title' => $title,
             'url' => $url,
             'only_user' => $this->faker->boolean(),
-            'leave' => $this->faker->boolean(),
         ];
     }
 }
