@@ -16,9 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-})->name('index');
+Route::get('/', [ViewController::class, 'viewIndex']);
 
 Route::group(['prefix' => '/profile'], function () {
     Route::get('/', [ViewController::class, 'viewProfile']);
@@ -32,9 +30,6 @@ Route::group(['prefix' => '/profile'], function () {
 
 Route::get('/edit', function () {
     return view('edit');
-});
-Route::get('/solved', function () {
-    return view('solved');
 });
 Route::group(['prefix' => '/solved'], function () {
     Route::get('/my/{testId}', [ViewController::class, 'viewMySolvedTest']);

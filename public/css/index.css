@@ -460,6 +460,7 @@ body.modalka-open {
 
 .form {
   justify-content: space-between;
+  width: 420px;
 }
 .form > div {
   display: flex;

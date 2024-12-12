@@ -42,12 +42,7 @@
                     @include('/elements/input/selector', [
                         'name'=>'topic',
                         'label'=>'Выберете тему',
-                        'options'=>[
-                            'тема 1',
-                            'тема 2',
-                            'тема 3',
-                            'тема 4',
-                        ]
+                        'options'=>$topics
                     ])
                 </div>
 

@@ -8,6 +8,7 @@ use App\Http\Resources\Card\SolvedResource;
 use App\Http\Resources\Card\StatisticResource;
 use App\Models\SolvedTest;
 use App\Models\Test;
+use App\Models\Topic;
 use App\Services\AuthServices;
 use App\Services\SolvedTestServices;
 use Illuminate\Contracts\View\View;
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Http;
 
 class ViewController extends Controller
 {
-    function convertObjectsToArray($data): mixed
+    protected function convertObjectsToArray($data): mixed
     {
         // Если данные - массив, рекурсивно обрабатываем каждый элемент
         if (is_array($data)) {
@@ -38,6 +39,15 @@ class ViewController extends Controller
 
         // Если данные не являются массивом или объектом, возвращаем их как есть
         return $data;
+    }
+
+    public function viewIndex(): View
+    {
+        $topic = Topic::query()
+            ->orderBy('topic')
+            ->get()
+            ->pluck('topic');
+        return view('index', ['topics' => $topic]);
     }
 
     public function viewProfile(): RedirectResponse|View
