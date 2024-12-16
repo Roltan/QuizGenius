@@ -2,7 +2,6 @@
 
 @section('links')
     <link rel="stylesheet" href="/css/create.css" />
-    <script defer src="/js/modal.js"></script>
     <script defer src="/js/editCount.js"></script>
 @endsection
 

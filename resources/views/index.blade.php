@@ -2,7 +2,6 @@
 
 @section('links')
     <link rel="stylesheet" href="/css/index.css" />
-    <script defer src="/js/modal.js"></script>
 @endsection
 
 @section('mainContent')

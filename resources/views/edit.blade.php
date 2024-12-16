@@ -2,7 +2,6 @@
 
 @section('links')
     <link rel="stylesheet" href="/css/test.css" />
-    <script defer type="module" src="/js/modal.js"></script>
     <script defer type="module" src="/js/quest/resetQuest.js"></script>
     <script defer type="module" src="/js/quest/addQuest.js"></script>
     <script defer src="/js/quest/delQuest.js"></script>
