@@ -1,3 +1,4 @@
+import { bindModalEvents } from "./auth/modal.js";
 const startTime = new Date().getTime();
 let isUserAway = false;
 let isClick = false;
@@ -178,35 +179,31 @@ document
             };
 
             // Отправляем запрос на сервер
-            const response = await fetch("/api/test/solved/save", {
+            fetch("/api/test/solved/save", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(data),
-            });
-
-            const result = await response.json();
-
-            if (result.status == true) {
-                // Успешная отправка
-                window.location.href = "/solved/" + result.solved_id;
-            } else {
-                // Обрабатываем ошибки валидации
-                document.body.innerHTML += `
-<div class="modalka modalka--wrapper modalka-open" id="modal99" style="display: flex">
-    <form class="form">
-        <h1>${result.error}</h1>
-    </form>
-</div>
-                `;
-                modal = document.getElementById("modal99");
-                modal.addEventListener("click", function (event) {
-                    if (event.target === modal) {
-                        modal.style.display = "none";
-                        document.body.classList.remove("modalka-open");
+            })
+                .then((response) => {
+                    return response.json();
+                })
+                .then((result) => {
+                    if (result.status == true) {
+                        // Успешная отправка
+                        window.location.href = "/solved/" + result.solved_id;
+                    } else {
+                        // Обрабатываем ошибки валидации
+                        document.body.innerHTML += `
+                            <div class="modalka modalka--wrapper modalka-open" id="modal99" style="display: flex">
+                                <form class="form">
+                                    <h1>${result.error}</h1>
+                                </form>
+                            </div>
+                        `;
+                        bindModalEvents();
                     }
                 });
-            }
         }
     });

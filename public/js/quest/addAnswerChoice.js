@@ -29,22 +29,22 @@ addAnswerButtonsChoice.forEach((button) => {
             const newAnswer = document.createElement("div");
             newAnswer.className = `input input__${inputType}`;
             newAnswer.innerHTML = `
-                    <input type="checkbox"
-                        name="questEdit${id}choice${newKey}"
-                        id="questEdit${id}choice${newKey}"
-                        class="input--field toggle"
-                    />
-                    <label for="questEdit${id}choice${newKey}">
-                        <div class="input">
-                            <input
-                                type="text"
-                                name="questEdit${id}choice${newKey}value"
-                                id="questEdit${id}choice${newKey}value"
-                                class="input--field"
-                            />
-                        </div>
-                    </label>
-                `;
+                <input type="checkbox"
+                    name="questEdit${id}choice${newKey}"
+                    id="questEdit${id}choice${newKey}"
+                    class="input--field toggle"
+                />
+                <label for="questEdit${id}choice${newKey}">
+                    <div class="input">
+                        <input
+                            type="text"
+                            name="questEdit${id}choice${newKey}value"
+                            id="questEdit${id}choice${newKey}value"
+                            class="input--field"
+                        />
+                    </div>
+                </label>
+            `;
 
             // Добавляем новый элемент в конец контейнера
             answerContainer.appendChild(newAnswer);

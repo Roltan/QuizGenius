@@ -20,7 +20,7 @@ class AuthServices
         ];
 
         if (!Auth::validate($credentials)) {
-            return response(['status' => false, 'error' => 'Неверные данные'], 400);
+            return response(['status' => false, 'message' => 'Неверные данные'], 400);
         }
 
         // вход

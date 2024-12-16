@@ -18,7 +18,7 @@
 </header>
 
 @if (!Auth::check())
-    <script defer src="/js/login.js"></script>
+    <script defer type="module" src="/js/auth/login.js"></script>
     <div class="modalka modalka--wrapper" id="modal1">
         <form class="form--login form" id="login">
             <h1>Вход</h1>
@@ -33,7 +33,8 @@
             <button type="submit" class="button button__blue button__bold">Войти</button>
         </form>
     </div>
-    <script defer src="/js/register.js"></script>
+
+    <script defer type="module" src="/js/auth/register.js"></script>
     <div class="modalka modalka--wrapper" id="modal2">
         <form class="form--login form" id="register">
             <h1>Регистрация</h1>

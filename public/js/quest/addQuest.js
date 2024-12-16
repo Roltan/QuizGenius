@@ -11,7 +11,7 @@ addQuestionButton.addEventListener("click", () => {
 
     // Сформировать массив из номеров id
     var ids = Array.from(questElements).map((element) => {
-        // Извлечь число из id (например, из "quest123" извлечь "123")
+        // Извлечь число из id
         return parseInt(element.id.replace("quest", ""), 10);
     });
 

@@ -5,6 +5,7 @@
     <script defer type="module" src="/js/quest/resetQuest.js"></script>
     <script defer type="module" src="/js/quest/addQuest.js"></script>
     <script defer type="module" src="/js/quest/createQuest.js"></script>
+    <script defer type="module" src="/js/saveTest.js"></script>
     <script defer src="/js/quest/delQuest.js"></script>
     <script defer src="/js/quest/addAnswerChoice.js"></script>
     <script defer src="/js/quest/addAnswerRelation.js"></script>
@@ -20,7 +21,7 @@
             <h1>Настройки теста</h1>
             <div class="input">
                 <label for="title">Название теста</label>
-                <input type="text" name="title" id="title" class="input--field" value="@isset($title){{$title}}@endisset"/>
+                <input type="text" name="title" id="title" class="input--field" value="@isset($title){{$title}}@endisset" required/>
             </div>
             <div class="input input__radio">
                 <input type="checkbox" name="only_user" id="only_user" class="input--field toggle" />
@@ -47,7 +48,7 @@
                 </div>
                 Добавить вопрос
             </button>
-            <button class="button button__blue button__bold">Сохранить тест</button>
+            <button type="submit" class="button button__blue button__bold" id="saveTest">Сохранить тест</button>
         </div>
     </main>
 @endsection
