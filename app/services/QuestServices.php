@@ -20,29 +20,43 @@ class QuestServices
 {
     public function reGenerate(GenerateQuestRequest $request): Response
     {
+        // определяем тип
         $types = ['fill', 'blank', 'choice', 'relation'];
         $type = $request->has('type') ? $request->type : $types[array_rand($types)];
+
+        // получаем вопрос
+        $quest = $this->switchQuest($type, $request->topic);
+        if ($quest instanceof Response) return $quest;
+
+        // переполучаем вопрос если он уже есть на странице
+        if ($request->has('ids')) {
+            while (in_array($quest->id, $request->ids)) {
+                $quest = $this->switchQuest($type, $request->topic);
+                if ($quest instanceof Response) return $quest;
+            }
+        }
+        return response(['status' => true, 'quest' => json_decode(json_encode($quest), true)]);
+    }
+
+    public function switchQuest($type, $topic): BlankResource|ChoiceResource|FillResource|RelationResource|Response
+    {
         switch ($type) {
             case 'fill':
-                $question = $this->getQuest(FillQuest::class, $request->topic);
+                $question = $this->getQuest(FillQuest::class, $topic);
                 if ($question instanceof Response) return $question;
-                $question = new FillResource($question);
-                return response(['status' => true, 'quest' => json_decode(json_encode($question), true)]);
+                return new FillResource($question);
             case 'blank':
-                $question = $this->getQuest(BlankQuest::class, $request->topic);
+                $question = $this->getQuest(BlankQuest::class, $topic);
                 if ($question instanceof Response) return $question;
-                $question = new BlankResource($question);
-                return response(['status' => true, 'quest' => json_decode(json_encode($question), true)]);
+                return new BlankResource($question);
             case 'choice':
-                $question = $this->getQuest(ChoiceQuest::class, $request->topic);
+                $question = $this->getQuest(ChoiceQuest::class, $topic);
                 if ($question instanceof Response) return $question;
-                $question = new ChoiceResource($question);
-                return response(['status' => true, 'quest' => json_decode(json_encode($question), true)]);
+                return new ChoiceResource($question);
             case 'relation':
-                $question = $this->getQuest(RelationQuest::class, $request->topic);
+                $question = $this->getQuest(RelationQuest::class, $topic);
                 if ($question instanceof Response) return $question;
-                $question = new RelationResource($question);
-                return response(['status' => true, 'quest' => json_decode(json_encode($question), true)]);
+                return new RelationResource($question);
             default:
                 return response(['status' => false, 'error' => 'unknown type quest'], 400);
         }

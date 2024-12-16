@@ -24,7 +24,9 @@ class GenerateQuestRequest extends FormRequest
     {
         return [
             'type' => ['nullable', 'string', Rule::in(['fill', 'blank', 'choice', 'relation'])],
-            'topic' => ['required', 'string', 'filled', 'min:1']
+            'topic' => ['required', 'string', 'filled', 'min:1'],
+            'ids' => ['nullable', 'array'],
+            'ids.*' => ['numeric']
         ];
     }
 }

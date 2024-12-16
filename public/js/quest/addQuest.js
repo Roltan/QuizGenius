@@ -6,6 +6,15 @@ const topicInput = document.getElementById("topic");
 addQuestionButton.addEventListener("click", () => {
     const topic = topicInput.value; // Получаем значение топика
 
+    // Найти все элементы с классом quest__edit
+    var questElements = document.querySelectorAll(".quest__edit");
+
+    // Сформировать массив из номеров id
+    var ids = Array.from(questElements).map((element) => {
+        // Извлечь число из id (например, из "quest123" извлечь "123")
+        return parseInt(element.id.replace("quest", ""), 10);
+    });
+
     // Отправляем POST-запрос на /quest/generate
     fetch("/quest/generate", {
         method: "POST",
@@ -14,6 +23,7 @@ addQuestionButton.addEventListener("click", () => {
         },
         body: JSON.stringify({
             topic: topic,
+            ids: ids,
         }),
     })
         .then((response) => response.text())
