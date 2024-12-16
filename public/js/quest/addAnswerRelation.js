@@ -27,12 +27,12 @@ addAnswerButtonsRelation.forEach((button) => {
             // Добавляем новую пару в конец контейнера
             answerContainer.innerHTML += `
                 <div class="input">
-                    <input type="text" name="questEdit${id}FirstColumn${newIndex}" id="questEdit${id}FirstColumn${newIndex}" class="input--field" />
+                    <input type="text" name="questEdit${id}FirstColumn${newIndex}" id="questEdit${id}FirstColumn${newIndex}" class="input--field FirstColumn" />
                 </div>
             `;
             answerContainer.innerHTML += `
                 <div class="input">
-                    <input type="text" name="questEdit${id}SecondColumn${newIndex}" id="questEdit${id}SecondColumn${newIndex}" class="input--field" />
+                    <input type="text" name="questEdit${id}SecondColumn${newIndex}" id="questEdit${id}SecondColumn${newIndex}" class="input--field SecondColumn" />
                 </div>
             `;
         }

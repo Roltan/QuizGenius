@@ -5,10 +5,10 @@
 <div class="answer answer__relation">
     @for ($i = 0; $i < count($first_column); $i++)
         <div class="input">
-            <input type="text" name="questEdit{{$id}}FirstColumn{{$i}}" id="questEdit{{$id}}FirstColumn{{$i}}" class="input--field" value="{{$first_column[$i]}}"/>
+            <input type="text" name="questEdit{{$id}}FirstColumn{{$i}}" id="questEdit{{$id}}FirstColumn{{$i}}" class="input--field FirstColumn" value="{{$first_column[$i]}}"/>
         </div>
         <div class="input">
-            <input type="text" name="questEdit{{$id}}SecondColumn{{$i}}" id="questEdit{{$id}}SecondColumn{{$i}}" class="input--field" value="{{$second_column[$i]}}"/>
+            <input type="text" name="questEdit{{$id}}SecondColumn{{$i}}" id="questEdit{{$id}}SecondColumn{{$i}}" class="input--field SecondColumn" value="{{$second_column[$i]}}"/>
         </div>
     @endfor
 </div>
@@ -19,6 +19,6 @@
         </div>
         Добавить пару
     </button>
-    <button class="button button__blue button__bold">Сохранить</button>
+    <button type="button" class="button button__blue button__bold" onclick="saveQuest(this, 'relation')">Сохранить</button>
 </div>
 

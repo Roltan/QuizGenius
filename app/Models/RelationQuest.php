@@ -17,8 +17,8 @@ class RelationQuest extends Model
         'topic_id',
         'vis',
         'quest',
-        'options',
-        'is_multiple',
+        'first_column',
+        'second_column'
     ];
 
     // связи

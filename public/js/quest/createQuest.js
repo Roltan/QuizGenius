@@ -30,6 +30,12 @@ function saveQuest(button, questType) {
             break;
         case "fill":
             break;
+        case "relation":
+            requestBody = {
+                ...requestBody,
+                ...getRelationRequestBody(form, questId),
+            };
+            break;
         default:
             console.error("Неизвестный тип вопроса:", questType);
             return;
@@ -105,6 +111,28 @@ function getBlankRequestBody(form, questId) {
 
     return {
         correct: correct,
+    };
+}
+
+// Функция для формирования тела запроса для типа вопроса "relation"
+function getRelationRequestBody(form, questId) {
+    const firstColumnInputs = form.querySelectorAll(
+        ".input--field.FirstColumn"
+    );
+    const secondColumnInputs = form.querySelectorAll(
+        ".input--field.SecondColumn"
+    );
+
+    const firstColumn = Array.from(firstColumnInputs).map(
+        (input) => input.value
+    );
+    const secondColumn = Array.from(secondColumnInputs).map(
+        (input) => input.value
+    );
+
+    return {
+        first_column: firstColumn,
+        second_column: secondColumn,
     };
 }
 
