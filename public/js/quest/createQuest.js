@@ -1,8 +1,6 @@
 import { bindModalEvents } from "../modal.js";
 
 function saveQuest(button, questType) {
-    event.preventDefault(); // Предотвращаем стандартное поведение формы
-
     // Находим форму, связанную с этой кнопкой
     const form = button.closest("form");
     let modalElement = form.closest(".modalka");
@@ -24,7 +22,12 @@ function saveQuest(button, questType) {
                 ...getChoiceRequestBody(form, questId),
             };
             break;
-        // Добавьте другие типы вопросов здесь
+        case "blank":
+            requestBody = {
+                ...requestBody,
+                ...getBlankRequestBody(form, questId),
+            };
+            break;
         default:
             console.error("Неизвестный тип вопроса:", questType);
             return;
@@ -48,11 +51,16 @@ function saveQuest(button, questType) {
             var newQuestElement = tempDiv.querySelector(".quest__edit");
             var newModalElement = tempDiv.querySelector(".modalka");
 
+            if (!newQuestElement || !newModalElement) {
+                throw new Error("Сервер вернул некорректную вёрстку");
+            }
+
             // Заменить старые элементы новыми
             questElement.replaceWith(newQuestElement);
             modalElement.replaceWith(newModalElement);
 
             bindModalEvents();
+            document.body.classList.remove("modalka-open");
         })
         .catch((error) => {
             console.error("Ошибка:", error);
@@ -85,6 +93,16 @@ function getChoiceRequestBody(form, questId) {
     return {
         correct: correct,
         uncorrect: uncorrect,
+    };
+}
+
+// Функция для формирования тела запроса для типа вопроса "blank"
+function getBlankRequestBody(form, questId) {
+    const answerInput = form.querySelector(`#questEdit${questId}answer`);
+    const correct = [answerInput.value]; // Массив из одного элемента
+
+    return {
+        correct: correct,
     };
 }
 

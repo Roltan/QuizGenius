@@ -9,5 +9,5 @@
     </div>
 </div>
 <div class="test--button">
-    <button class="button button__blue button__bold">Сохранить</button>
+    <button type="button" class="button button__blue button__bold" onclick="saveQuest(this, 'blank')">Сохранить</button>
 </div>
