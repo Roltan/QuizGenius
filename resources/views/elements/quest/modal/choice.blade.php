@@ -26,7 +26,7 @@
     @endforeach
 </div>
 <div class="test--button test--button__max">
-    <button class="test--add test--add__light">
+    <button type="button" class="test--add test--add__light test--add__choice">
         <div>
             <img src="/img/edit/add.png" alt="" />
         </div>

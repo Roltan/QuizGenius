@@ -1,15 +1,13 @@
 // Функция для привязки обработчиков событий к модалкам
-function bindModalEvents(first = null) {
+function bindModalEvents() {
     const openModalBtns = document.querySelectorAll(".openModalBtn");
     const modals = document.querySelectorAll(".modalka");
 
     // Открытие модального окна
-    if (first == null) {
-        openModalBtns.forEach((btn) => {
-            btn.removeEventListener("click", openModalHandler); // Удаляем старые обработчики
-            btn.addEventListener("click", openModalHandler); // Добавляем новые обработчики
-        });
-    }
+    openModalBtns.forEach((btn) => {
+        btn.removeEventListener("click", openModalHandler); // Удаляем старые обработчики
+        btn.addEventListener("click", openModalHandler); // Добавляем новые обработчики
+    });
 
     // Закрытие модального окна по нажатию вне его области
     modals.forEach((modal) => {
@@ -34,5 +32,5 @@ function closeModalHandler(event) {
     }
 }
 
-bindModalEvents(true);
+bindModalEvents();
 export { bindModalEvents };
