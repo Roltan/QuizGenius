@@ -37,6 +37,7 @@ Route::post('/generate', [ViewController::class, 'generateTest']);
 
 Route::group(['prefix' => 'quest'], function () {
     Route::post('/generate', [ComponentController::class, 'reGenerate']);
+    Route::post('/create', [ComponentController::class, 'create']);
 });
 
 Route::get('/logout', [UserController::class, 'logout']);

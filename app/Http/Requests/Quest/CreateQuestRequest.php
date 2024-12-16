@@ -27,12 +27,6 @@ class CreateQuestRequest extends FormRequest
             'quest' => ['required', 'string', 'filled', 'min:1'],
             'type' => ['required', 'string', Rule::in(['fill', 'blank', 'choice', 'relation'])],
 
-            'options' => [Rule::requiredIf($this->input('type') == 'fill'), 'array'],
-            'options.*' => [Rule::requiredIf($this->input('type') == 'fill'), 'array'],
-            'options.*.*' => [Rule::requiredIf($this->input('type') == 'fill'), 'array'],
-            'options.*.*.str' => [Rule::requiredIf($this->input('type') == 'fill'), 'string', 'filled', 'min:1'],
-            'options.*.*.correct' => [Rule::requiredIf($this->input('type') == 'fill'), 'boolean'],
-
             'correct' => [Rule::requiredIf(in_array($this->input('type'), ['blank', 'choice'])), 'array'],
             'correct.*' => [Rule::requiredIf(in_array($this->input('type'), ['blank', 'choice'])), 'string', 'filled', 'min:1'],
 
@@ -44,9 +38,6 @@ class CreateQuestRequest extends FormRequest
 
             'second_column' => [Rule::requiredIf($this->input('type') == 'relation'), 'array'],
             'second_column.*' => [Rule::requiredIf($this->input('type') == 'relation'), 'string', 'filled', 'min:1'],
-
-
-            'is_multiple' => [Rule::requiredIf(in_array($this->input('type'), ['fill', 'choice'])), 'boolean']
         ];
     }
 }

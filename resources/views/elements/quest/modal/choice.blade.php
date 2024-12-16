@@ -32,5 +32,5 @@
         </div>
         Добавить ответ
     </button>
-    <button class="button button__blue button__bold">Сохранить</button>
+    <button type="submit" class="button button__blue button__bold" onclick="saveQuest(this, 'choice')">Сохранить</button>
 </div>

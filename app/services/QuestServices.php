@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Requests\Quest\CreateQuestRequest;
 use App\Http\Requests\Quest\GenerateQuestRequest;
 use App\Http\Resources\Test\BlankResource;
 use App\Http\Resources\Test\ChoiceResource;
@@ -12,6 +13,7 @@ use App\Models\ChoiceQuest;
 use App\Models\FillQuest;
 use App\Models\RelationQuest;
 use App\Models\Topic;
+use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use stdClass;
@@ -81,7 +83,7 @@ class QuestServices
         return $question;
     }
 
-    public function create(Request $request): Response
+    public function create(CreateQuestRequest $request): Response
     {
         $topic = Topic::query()
             ->where('topic', $request->topic)
@@ -89,33 +91,88 @@ class QuestServices
         if ($topic == null)
             return response(['status' => false, 'error' => 'Тема не найдена'], 404);
 
-        $data = [];
+        $model = null;
         switch ($request->type) {
             case 'fill':
-                $data = $request->only(['quest', 'options', 'is_multiple']);
-                $this->createQuest(FillQuest::class, $data, $topic->id);
+                $model = $this->createFill($topic->id, $request->quest);
+                $model = new FillResource($model);
                 break;
             case 'blank':
                 $data = $request->only(['quest', 'correct']);
-                $this->createQuest(BlankQuest::class, $data, $topic->id);
+                $model = $this->createQuest(BlankQuest::class, $data, $topic->id);
+                $model = new BlankResource($model);
                 break;
             case 'choice':
-                $data = $request->only(['quest', 'correct', 'uncorrect', 'is_multiple']);
-                $this->createQuest(ChoiceQuest::class, $data, $topic->id);
+                $data = $request->only(['quest', 'correct', 'uncorrect']);
+                if (count($data['correct']) > 1) $data['is_multiple'] = true;
+                $model = $this->createQuest(ChoiceQuest::class, $data, $topic->id);
+                $model = new ChoiceResource($model);
                 break;
             case 'relation':
                 $data = $request->only(['quest', 'first_column', 'second_column']);
-                $this->createQuest(RelationQuest::class, $data, $topic->id);
+                $model = $this->createQuest(RelationQuest::class, $data, $topic->id);
+                $model = new RelationResource($model);
                 break;
             default:
                 return response(['status' => false, 'error' => 'unknown type'], 400);
         }
-        return response(['status' => true]);
+
+        return response(['status' => true, 'quest' => $model]);
     }
 
-    protected function createQuest(string $model, array $data, int $topic): void
+    protected function createQuest(string $model, array $data, int $topic): ChoiceQuest|BlankQuest|RelationQuest
     {
+        $data = $this->jsonChildren($data);
         $data['topic_id'] = $topic;
-        $model::create($data);
+        $return = $model::create($data);
+        $return->type = $return->type();
+        return $return;
+    }
+
+    protected function createFill(int $topic, string $quest): FillQuest
+    {
+        // Регулярное выражение для поиска тегов
+        $pattern = '/<([a-z;]+)>/';
+
+        // Инициализация счетчика и массива для удалённых тегов
+        $counter = 0;
+        $removedTags = [];
+
+        // Замена тегов на s?:n и сохранение удалённых тегов в нужном формате
+        $quest = preg_replace_callback($pattern, function ($matches) use (&$counter, &$removedTags) {
+            // Разделяем содержимое тега по ";"
+            $tagContent = explode(';', $matches[1]);
+
+            // Преобразуем каждую строку в теге в нужный формат
+            $formattedTag = array_map(function ($index, $str) {
+                return [
+                    'str' => $str,
+                    'correct' => $index === 0, // Первая строка помечается как "correct": true
+                ];
+            }, array_keys($tagContent), $tagContent);
+
+            // Добавляем в массив удалённых тегов
+            $removedTags[] = $formattedTag;
+
+            // Возвращаем замену s?:n
+            return 's?:' . $counter++;
+        }, $quest);
+
+        $return = FillQuest::create([
+            'quest' => $quest,
+            'options' => json_encode($removedTags),
+            'topic_id' => $topic,
+        ]);
+        $return->type = $return->type();
+        return $return;
+    }
+
+    protected function jsonChildren(array $arr): array
+    {
+        foreach ($arr as &$item) {
+            if (is_array($item))
+                $item = json_encode($item);
+        }
+        return $arr;
     }
 }
