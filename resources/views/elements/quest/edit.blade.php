@@ -42,7 +42,7 @@
         <button>
             <img src="/img/edit/edit.png" alt="" class="openModalBtn" data-modal="questEdit{{$id}}" />
         </button>
-        <button>
+        <button onclick="delQuest(this)">
             <img src="/img/edit/delet.png" alt="" />
         </button>
     </div>
