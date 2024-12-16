@@ -18,7 +18,7 @@ class QuestController extends Controller
         public QuestServices $questServices
     ) {}
 
-    public function reGenerate(GenerateQuestRequest $generateQuestRequest): BlankResource|ChoiceResource|FillResource|RelationResource|Response
+    public function reGenerate(GenerateQuestRequest $generateQuestRequest): Response
     {
         return $this->questServices->reGenerate($generateQuestRequest);
     }

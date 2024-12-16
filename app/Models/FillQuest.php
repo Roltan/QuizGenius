@@ -28,10 +28,15 @@ class FillQuest extends Model
 
     public function questsTest(): MorphOne
     {
-        return $this->morphOne(QuestsTest::class, 'quest');
+        return $this->morphOne(QuestsTest::class, 'quest', 'type_quest');
     }
 
     // методы
+    public function type(): string
+    {
+        return 'fill';
+    }
+
     public function getCorrectAnswer(): array
     {
         $options = json_decode($this->options, true);

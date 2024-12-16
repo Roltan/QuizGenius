@@ -16,7 +16,6 @@
 
         <div class="main">
             <form action='/generate' method="POST">
-                @csrf
                 <div class="input input__dark">
                     <label for="title">Название</label>
                     <input type="text" name="title" id="title" class="input--field" required/>

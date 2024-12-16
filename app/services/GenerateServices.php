@@ -54,6 +54,7 @@ class GenerateServices
 
         $data = [
             'quest' => new QuestResource($response),
+            'topic' => $topic->topic
         ];
         if ($request->has('title')) $data['title'] = $request->title;
         return response($data, 200);

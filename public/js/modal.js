@@ -1,22 +1,38 @@
-const openModalBtns = document.querySelectorAll(".openModalBtn");
-const modals = document.querySelectorAll(".modalka");
+// Функция для привязки обработчиков событий к модалкам
+function bindModalEvents(first = null) {
+    const openModalBtns = document.querySelectorAll(".openModalBtn");
+    const modals = document.querySelectorAll(".modalka");
 
-// Открытие модального окна
-openModalBtns.forEach((btn) => {
-	btn.addEventListener("click", function () {
-		const modalId = btn.getAttribute("data-modal");
-		const modal = document.getElementById(modalId);
-		modal.style.display = "flex";
-		document.body.classList.add("modalka-open");
-	});
-});
+    // Открытие модального окна
+    if (first == null) {
+        openModalBtns.forEach((btn) => {
+            btn.removeEventListener("click", openModalHandler); // Удаляем старые обработчики
+            btn.addEventListener("click", openModalHandler); // Добавляем новые обработчики
+        });
+    }
 
-// Закрытие модального окна по нажатию вне его области
-modals.forEach((modal) => {
-	modal.addEventListener("click", function (event) {
-		if (event.target === modal) {
-			modal.style.display = "none";
-			document.body.classList.remove("modalka-open");
-		}
-	});
-});
+    // Закрытие модального окна по нажатию вне его области
+    modals.forEach((modal) => {
+        modal.removeEventListener("click", closeModalHandler); // Удаляем старые обработчики
+        modal.addEventListener("click", closeModalHandler); // Добавляем новые обработчики
+    });
+}
+
+// Обработчик для открытия модалки
+function openModalHandler() {
+    const modalId = this.getAttribute("data-modal");
+    const modal = document.getElementById(modalId);
+    modal.style.display = "flex";
+    document.body.classList.add("modalka-open");
+}
+
+// Обработчик для закрытия модалки
+function closeModalHandler(event) {
+    if (event.target === this) {
+        this.style.display = "none";
+        document.body.classList.remove("modalka-open");
+    }
+}
+
+bindModalEvents(true);
+export { bindModalEvents };

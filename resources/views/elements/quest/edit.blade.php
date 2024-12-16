@@ -1,4 +1,4 @@
-<div class="quest__edit">
+<div class="quest__edit" id="quest{{$id}}">
     @switch($type)
         @case('choice')
             @include('/elements/quest/type/choice', [
@@ -36,7 +36,7 @@
             @break
     @endswitch
     <div class="buttons">
-        <button>
+        <button onclick="resetQuest(this)">
             <img src="/img/edit/reset.png" alt="" />
         </button>
         <button>

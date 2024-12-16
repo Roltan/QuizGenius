@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ComponentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ViewController;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +30,13 @@ Route::group(['prefix' => '/solved'], function () {
     Route::get('/my/{testId}', [ViewController::class, 'viewMySolvedTest']);
     Route::get('/{solvedId}', [ViewController::class, 'viewSolvedTest']);
 });
-Route::get('/test/{alias}', [ViewController::class, 'viewTest']);
 
+Route::get('/test/{alias}', [ViewController::class, 'viewTest']);
 Route::post('/generate', [ViewController::class, 'generateTest']);
+
+
+Route::group(['prefix' => 'quest'], function () {
+    Route::post('/generate', [ComponentController::class, 'reGenerate']);
+});
+
 Route::get('/logout', [UserController::class, 'logout']);

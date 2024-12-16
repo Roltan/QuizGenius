@@ -2,7 +2,8 @@
 
 @section('links')
     <link rel="stylesheet" href="/css/test.css" />
-    <script defer src="/js/modal.js"></script>
+    <script defer type="module" src="/js/modal.js"></script>
+    <script defer type="module" src="/js/resetQuest.js"></script>
 @endsection
 
 @section('mainContent')
@@ -21,6 +22,7 @@
                 <input type="checkbox" name="only_user" id="only_user" class="input--field toggle" />
                 <label for="only_user">Только авторизованные тестируемые</label>
             </div>
+            <input type="hidden" name="topic" id="topic" value="{{$topic}}" />
             @include('/elements/input/selector', [
                 'name'=>'access',
                 'label'=>'Доступ по',

@@ -29,8 +29,12 @@ class RelationQuest extends Model
 
     public function questsTest(): MorphOne
     {
-        return $this->morphOne(QuestsTest::class, 'quest');
+        return $this->morphOne(QuestsTest::class, 'quest', 'type_quest');
     }
 
     // методы
+    public function type(): string
+    {
+        return 'relation';
+    }
 }

@@ -14,34 +14,39 @@ use App\Models\RelationQuest;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use stdClass;
 
 class QuestServices
 {
-    public function reGenerate(GenerateQuestRequest $request): BlankResource|ChoiceResource|FillResource|RelationResource|Response
+    public function reGenerate(GenerateQuestRequest $request): Response
     {
         switch ($request->type) {
             case 'fill':
                 $question = $this->getQuest(FillQuest::class, $request->topic);
                 if ($question instanceof Response) return $question;
-                return new FillResource($question);
+                $question = new FillResource($question);
+                return response(['status' => true, 'quest' => json_decode(json_encode($question), true)]);
             case 'blank':
                 $question = $this->getQuest(BlankQuest::class, $request->topic);
                 if ($question instanceof Response) return $question;
-                return new BlankResource($question);
+                $question = new BlankResource($question);
+                return response(['status' => true, 'quest' => json_decode(json_encode($question), true)]);
             case 'choice':
                 $question = $this->getQuest(ChoiceQuest::class, $request->topic);
                 if ($question instanceof Response) return $question;
-                return new ChoiceResource($question);
+                $question = new ChoiceResource($question);
+                return response(['status' => true, 'quest' => json_decode(json_encode($question), true)]);
             case 'relation':
                 $question = $this->getQuest(RelationQuest::class, $request->topic);
                 if ($question instanceof Response) return $question;
-                return new RelationResource($question);
+                $question = new RelationResource($question);
+                return response(['status' => true, 'quest' => json_decode(json_encode($question), true)]);
             default:
-                return response(['status' => false, 'error' => 'unknown type'], 400);
+                return response(['status' => false, 'error' => 'unknown type quest'], 400);
         }
     }
 
-    protected function getQuest(string $model, string $topic): Response|FillQuest|ChoiceQuest|BlankQuest|RelationQuest
+    protected function getQuest(string $model, string $topic): Response|stdClass
     {
         $topic = Topic::query()
             ->where('topic', $topic)
@@ -53,6 +58,10 @@ class QuestServices
             ->where('topic_id', $topic->id)
             ->inRandomOrder()
             ->first();
+
+        $type = $question->type();
+        $question = json_decode(json_encode($question));
+        $question->type = $type;
         return $question;
     }
 
