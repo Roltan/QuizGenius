@@ -28,6 +28,8 @@ function saveQuest(button, questType) {
                 ...getBlankRequestBody(form, questId),
             };
             break;
+        case "fill":
+            break;
         default:
             console.error("Неизвестный тип вопроса:", questType);
             return;

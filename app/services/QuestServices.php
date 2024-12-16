@@ -132,7 +132,7 @@ class QuestServices
     protected function createFill(int $topic, string $quest): FillQuest
     {
         // Регулярное выражение для поиска тегов
-        $pattern = '/<([a-z;]+)>/';
+        $pattern = '/<([^>]+)>/';
 
         // Инициализация счетчика и массива для удалённых тегов
         $counter = 0;
