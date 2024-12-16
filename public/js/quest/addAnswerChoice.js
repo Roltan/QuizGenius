@@ -1,6 +1,6 @@
-const addAnswerButtons = document.querySelectorAll(".test--add__choice");
+const addAnswerButtonsChoice = document.querySelectorAll(".test--add__choice");
 
-addAnswerButtons.forEach((button) => {
+addAnswerButtonsChoice.forEach((button) => {
     button.addEventListener("click", () => {
         // Находим форму, в которой находится кнопка
         const form = button.closest(".modalka--wrapper");
