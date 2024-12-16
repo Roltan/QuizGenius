@@ -23,7 +23,7 @@ class GenerateQuestRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => ['required', 'string', Rule::in(['fill', 'blank', 'choice', 'relation'])],
+            'type' => ['nullable', 'string', Rule::in(['fill', 'blank', 'choice', 'relation'])],
             'topic' => ['required', 'string', 'filled', 'min:1']
         ];
     }

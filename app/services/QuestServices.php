@@ -20,7 +20,9 @@ class QuestServices
 {
     public function reGenerate(GenerateQuestRequest $request): Response
     {
-        switch ($request->type) {
+        $types = ['fill', 'blank', 'choice', 'relation'];
+        $type = $request->has('type') ? $request->type : $types[array_rand($types)];
+        switch ($type) {
             case 'fill':
                 $question = $this->getQuest(FillQuest::class, $request->topic);
                 if ($question instanceof Response) return $question;

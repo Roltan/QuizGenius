@@ -3,7 +3,8 @@
 @section('links')
     <link rel="stylesheet" href="/css/test.css" />
     <script defer type="module" src="/js/modal.js"></script>
-    <script defer type="module" src="/js/resetQuest.js"></script>
+    <script defer type="module" src="/js/quest/resetQuest.js"></script>
+    <script defer type="module" src="/js/quest/addQuest.js"></script>
 @endsection
 
 @section('mainContent')
@@ -36,8 +37,8 @@
             @include('/elements/quest/edit', $item)
         @endforeach
 
-        <div class="test--button test--button__max">
-            <button class="test--add">
+        <div class="test--button test--button__max" id="edit--footer">
+            <button class="test--add" id="add_quest">
                 <div>
                     <img src="/img/edit/add.png" alt="" />
                 </div>
