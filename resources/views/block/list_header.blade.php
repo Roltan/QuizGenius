@@ -10,7 +10,9 @@
             @include('/elements/input/selector', [
                 'name'=>'test',
                 'label'=>'Тест',
-                'options'=>$tests
+                'options'=>$tests,
+                'strValue'=>true,
+                'required'=>false
             ])
 
             @include('/elements/input/data_select')
