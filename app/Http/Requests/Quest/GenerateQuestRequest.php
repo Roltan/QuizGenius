@@ -7,19 +7,11 @@ use Illuminate\Validation\Rule;
 
 class GenerateQuestRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
@@ -27,6 +19,22 @@ class GenerateQuestRequest extends FormRequest
             'topic' => ['required', 'string', 'filled', 'min:1'],
             'ids' => ['nullable', 'array'],
             'ids.*' => ['numeric']
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'type.string' => 'Поле типа должно быть строкой.',
+            'type.in' => 'Поле типа должно быть одним из следующих значений: fill, blank, choice, relation.',
+
+            'topic.required' => 'Поле темы обязательно для заполнения.',
+            'topic.string' => 'Поле темы должно быть строкой.',
+            'topic.filled' => 'Поле темы не должно быть пустым.',
+            'topic.min' => 'Поле темы должно содержать хотя бы один символ.',
+
+            'ids.array' => 'Поле идентификаторов должно быть массивом.',
+            'ids.*.numeric' => 'Каждый идентификатор должен быть числом.',
         ];
     }
 }
