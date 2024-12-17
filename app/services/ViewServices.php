@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Database\Eloquent\Builder;
 
 class ViewServices
 {
@@ -69,6 +70,27 @@ class ViewServices
         });
     }
 
+    private function applyDateFilter($query, ?int $day, ?int $month, ?int $year): Builder
+    {
+        if ($day !== null || $month !== null || $year !== null) {
+            $query->where(function ($query) use ($day, $month, $year) {
+                if ($day !== null) {
+                    $query->whereDay('created_at', $day);
+                }
+
+                if ($month !== null) {
+                    $query->whereMonth('created_at', $month);
+                }
+
+                if ($year !== null) {
+                    $query->whereYear('created_at', $year);
+                }
+            });
+        }
+
+        return $query;
+    }
+
     public function viewIndex(): View
     {
         $topic = Topic::query()
@@ -98,17 +120,30 @@ class ViewServices
         ]);
     }
 
-    public function viewSolved(): RedirectResponse|View
+    public function viewSolved(Request $request): RedirectResponse|View
     {
         $user = Auth::user();
         if ($user === null)
             return redirect('/')->with('error', 'У вас нет прав посещать ту страницу');
 
         $solvedTest = SolvedTest::query()
-            ->where('user_id', $user->id)
-            ->get();
+            ->where('user_id', $user->id);
+        $tests = $solvedTest->get();
 
-        $tests = $solvedTest->map(function ($solved) {
+        // Фильтрация по названию теста
+        if ($request->has('test_title')) {
+            $testTitle = $request->input('test_title');
+            $solvedTest->whereHas('test', function ($query) use ($testTitle) {
+                $query->where('title', 'like', '%' . $testTitle . '%');
+            });
+        }
+
+        // Фильтрация по дате
+        $solvedTest = $this->applyDateFilter($solvedTest, $request->input('day'), $request->input('month'), $request->input('year'));
+
+        $solvedTest = $solvedTest->get();
+
+        $tests = $tests->map(function ($solved) {
             return $solved->test->title;
         });
         return view('profile-solved', $this->convertObjectsToArray([

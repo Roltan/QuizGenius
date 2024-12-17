@@ -38,9 +38,9 @@ class ViewController extends Controller
         return $this->viewServices->viewProfile();
     }
 
-    public function viewSolved(): RedirectResponse|View
+    public function viewSolved(Request $request): RedirectResponse|View
     {
-        return $this->viewServices->viewSolved();
+        return $this->viewServices->viewSolved($request);
     }
 
     public function viewStatistic(Request $request): RedirectResponse|View
