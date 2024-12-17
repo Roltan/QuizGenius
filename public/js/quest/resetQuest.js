@@ -1,4 +1,4 @@
-import { bindModalEvents } from "../modal.js";
+import { bindModalEvents } from "../auth/modal.js";
 
 function resetQuest(button) {
     // Найти родительский элемент .quest__edit

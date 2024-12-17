@@ -48,7 +48,7 @@
                 </div>
                 Добавить вопрос
             </button>
-            <button type="submit" class="button button__blue button__bold" id="saveTest">Сохранить тест</button>
+            <button type="button" class="button button__blue button__bold" id="saveTest" onclick="saveTest()">Сохранить тест</button>
         </div>
     </main>
 @endsection

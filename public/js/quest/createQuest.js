@@ -1,4 +1,4 @@
-import { bindModalEvents } from "../modal.js";
+import { bindModalEvents } from "../auth/modal.js";
 
 function saveQuest(button, questType) {
     // Находим форму, связанную с этой кнопкой

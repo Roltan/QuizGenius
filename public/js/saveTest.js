@@ -1,11 +1,10 @@
-import { bindModalEvents } from "./auth/modal.js";
+import { errorModal } from "./auth/modal.js";
 
-document.getElementById("saveTest").addEventListener("click", function (event) {
-    event.preventDefault(); // Предотвращаем стандартное поведение формы
-
+function saveTest() {
     const buttonIMG = document
         .querySelector("header")
         .querySelector(".button__image");
+
     // если авторизован
     if (buttonIMG) {
         // Собираем данные из формы
@@ -45,16 +44,51 @@ document.getElementById("saveTest").addEventListener("click", function (event) {
             })
             .then((data) => {
                 if (data.status) {
-                    window.location.href = "/profile";
-                } else {
                     document.body.innerHTML += `
-                        <div class="modalka modalka--wrapper modalka-open" id="modal99" style="display: flex">
+                        <div class="modalka modalka--wrapper modalka-open" id="modal200" style="display: flex">
                             <form class="form">
-                                <h1>${data.message}</h1>
+                                <h1>Ссылка на ваш тест: <span id="testLink">https://quizgenius/test/${data.url}</span></h1>
+                                <div class="test--button test--button__max">
+                                    <a class="button button__blue button__bold" href="/">
+                                        На главную
+                                    </a>
+                                    <a class="button button__blue button__bold" href="/profile">
+                                        В личный кабинет
+                                    </a>
+                                </div>
                             </form>
                         </div>
                     `;
-                    bindModalEvents();
+
+                    // копирование ссылки при нажатии
+                    document
+                        .getElementById("testLink")
+                        .addEventListener("click", function (event) {
+                            event.preventDefault();
+                            const link =
+                                document.getElementById("testLink").innerText;
+                            navigator.clipboard
+                                .writeText(link)
+                                .then(() => {
+                                    alert("Ссылка скопирована в буфер обмена!");
+                                })
+                                .catch((err) => {
+                                    console.error(
+                                        "Не удалось скопировать ссылку: ",
+                                        err
+                                    );
+                                });
+                        });
+
+                    // при закрытии модалки, пользователя перекинет в профиль
+                    const modal = document.querySelector("#modal200");
+                    modal.addEventListener("click", (event) => {
+                        if (event.target === this) {
+                            window.location.href = "/profile";
+                        }
+                    });
+                } else {
+                    errorModal(data.message);
                 }
             })
             .catch((error) => {
@@ -63,13 +97,10 @@ document.getElementById("saveTest").addEventListener("click", function (event) {
     }
     // если не авторизован
     else {
-        document.body.innerHTML += `
-            <div class="modalka modalka--wrapper modalka-open" id="modal99" style="display: flex">
-                <form class="form">
-                    <h1>Чтоб создать тест, зарегистрируйтесь или войдите в аккаунт</h1>
-                </form>
-            </div>
-        `;
-        bindModalEvents();
+        errorModal(
+            "Чтоб создать тест, зарегистрируйтесь или войдите в аккаунт"
+        );
     }
-});
+}
+
+window.saveTest = saveTest;

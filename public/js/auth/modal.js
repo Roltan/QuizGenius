@@ -32,5 +32,21 @@ function closeModalHandler(event) {
     }
 }
 
+function errorModal(error) {
+    let modal = document.querySelector("#modal99");
+    if (modal) {
+        modal.remove();
+    }
+
+    document.body.innerHTML += `
+        <div class="modalka modalka--wrapper modalka-open" id="modal99" style="display: flex">
+            <form class="form">
+                <h1>${error}</h1>
+            </form>
+        </div>
+    `;
+    bindModalEvents();
+}
+
 bindModalEvents();
-export { bindModalEvents };
+export { bindModalEvents, errorModal };

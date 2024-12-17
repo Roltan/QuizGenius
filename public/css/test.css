@@ -617,4 +617,8 @@ body.modalka-open {
 }
 .test--add__light {
   color: #e0eafa;
+}
+
+#testLink {
+  cursor: pointer;
 }/*# sourceMappingURL=test.css.map */

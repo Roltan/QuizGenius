@@ -27,7 +27,7 @@ class TestServices
         if ($test == null) return response(['status' => false, 'error' => 'Тест не найден'], 404);
 
         if ($test->only_user == true and !Auth::check())
-            return response(['status' => false, 'error' => 'У вас нет пара посещать ту страницу'], 403);
+            return response(['status' => false, 'error' => 'У вас нет прав посещать ту страницу'], 403);
 
         return new TestResource($test);
     }
@@ -70,7 +70,7 @@ class TestServices
                 'type_quest' => $quest['type']
             ]);
         }
-        return response(['status' => true]);
+        return response(['status' => true, 'url' => $data['url']]);
     }
 
     public function deleteTest(int $id): Response
@@ -79,7 +79,7 @@ class TestServices
         if ($test == null)
             return response(['status' => false, 'error' => 'Тест не найден'], 404);
         if ($test->user_id != Auth::user()->id)
-            return response(['status' => false, 'error' => 'У вас нет права удалять этот тест'], 403);
+            return response(['status' => false, 'error' => 'У вас нет прав удалять этот тест'], 403);
         $test->delete();
         return response(['status' => true]);
     }

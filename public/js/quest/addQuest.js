@@ -1,4 +1,4 @@
-import { bindModalEvents } from "../modal.js";
+import { bindModalEvents } from "../auth/modal.js";
 
 const addQuestionButton = document.querySelector("#add_quest");
 const topicInput = document.getElementById("topic");

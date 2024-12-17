@@ -1,4 +1,4 @@
-import { bindModalEvents } from "./auth/modal.js";
+import { errorModal } from "./auth/modal.js";
 const startTime = new Date().getTime();
 let isUserAway = false;
 let isClick = false;
@@ -161,49 +161,53 @@ function getAnswer(questElements) {
     return questData;
 }
 
+function bindSaveAnswer() {
+    document
+        .getElementById("finish_test")
+        .addEventListener("click", function () {
+            saveAnswer();
+        });
+}
+
 // обработка события завершения теста
-document
-    .getElementById("finish_test")
-    .addEventListener("click", async function (event) {
-        if (!isClick) {
-            isClick = true;
-            // получить все вопросы
-            const questElements = document.querySelectorAll(".quest");
+function saveAnswer() {
+    if (!isClick) {
+        isClick = true;
+        // получить все вопросы
+        const questElements = document.querySelectorAll(".quest");
 
-            // Собираем данные формы
-            var data = {
-                test_alias: getAlias(),
-                time: (new Date().getTime() - startTime) / 1000,
-                is_escape: isUserAway,
-                answer: getAnswer(questElements),
-            };
+        // Собираем данные формы
+        var data = {
+            test_alias: getAlias(),
+            time: (new Date().getTime() - startTime) / 1000,
+            is_escape: isUserAway,
+            answer: getAnswer(questElements),
+        };
 
-            // Отправляем запрос на сервер
-            fetch("/api/test/solved/save", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
+        // Отправляем запрос на сервер
+        fetch("/api/test/solved/save", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => {
+                return response.json();
             })
-                .then((response) => {
-                    return response.json();
-                })
-                .then((result) => {
-                    if (result.status == true) {
-                        // Успешная отправка
-                        window.location.href = "/solved/" + result.solved_id;
-                    } else {
-                        // Обрабатываем ошибки валидации
-                        document.body.innerHTML += `
-                            <div class="modalka modalka--wrapper modalka-open" id="modal99" style="display: flex">
-                                <form class="form">
-                                    <h1>${result.error}</h1>
-                                </form>
-                            </div>
-                        `;
-                        bindModalEvents();
-                    }
-                });
-        }
-    });
+            .then((result) => {
+                if (result.status == true) {
+                    // Успешная отправка
+                    window.location.href = "/solved/" + result.solved_id;
+                } else {
+                    // Обрабатываем ошибки валидации
+                    errorModal(result.message);
+                    isClick = false;
+                }
+            });
+
+        bindSaveAnswer();
+    }
+}
+
+bindSaveAnswer();

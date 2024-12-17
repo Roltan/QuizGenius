@@ -1,40 +1,49 @@
-import { bindModalEvents } from "./modal.js";
+import { errorModal } from "./modal.js";
 
-document
-    .getElementById("login")
-    .addEventListener("submit", async function (event) {
-        event.preventDefault(); // Предотвращаем стандартное поведение формы
+document.getElementById("login").addEventListener("submit", function (event) {
+    event.preventDefault(); // Предотвращаем стандартное поведение формы
 
-        // Собираем данные формы
-        const formData = new FormData(this);
-        const data = Object.fromEntries(formData.entries());
+    // Собираем данные формы
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData.entries());
 
-        // Отправляем запрос на сервер
-        fetch("/api/auth/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
+    // Отправляем запрос на сервер
+    fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    })
+        .then((response) => {
+            return response.json();
         })
-            .then((response) => {
-                return response.json();
-            })
-            .then((result) => {
-                if (result.status == true) {
-                    // Успешная отправка
-                    window.location.reload();
-                } else {
-                    // Обрабатываем ошибки валидации
-                    console.log(result);
-                    document.body.innerHTML += `
-                        <div class="modalka modalka--wrapper modalka-open" id="modal99" style="display: flex">
-                            <form class="form">
-                                <h1>${result.message}</h1>
-                            </form>
-                        </div>
-                    `;
-                    bindModalEvents();
-                }
-            });
-    });
+        .then(async (result) => {
+            if (result.status == true) {
+                // Успешная отправка
+                await login();
+            } else {
+                // Обрабатываем ошибки валидации
+                console.log(result);
+                errorModal(result.message);
+            }
+        });
+});
+
+function login() {
+    let headerBtn = document
+        .querySelector("header")
+        .querySelector(".header--buttons");
+
+    document.querySelector("#modal1").style.display = "none";
+    document.body.classList.remove("modalka-open");
+
+    headerBtn.innerHTML = `
+        <a class="button button__blue button__image" href="/profile">
+            <span>Личный кабинет</span>
+            <img src="/img/human.png" alt="" />
+        </a>
+    `;
+}
+
+export { login };

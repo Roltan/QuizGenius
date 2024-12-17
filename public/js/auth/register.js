@@ -1,8 +1,9 @@
-import { bindModalEvents } from "./modal.js";
+import { errorModal } from "./modal.js";
+import { login } from "./login.js";
 
 document
     .getElementById("register")
-    .addEventListener("submit", async function (event) {
+    .addEventListener("submit", function (event) {
         event.preventDefault(); // Предотвращаем стандартное поведение формы
 
         // Собираем данные формы
@@ -20,21 +21,14 @@ document
             .then((response) => {
                 return response.json();
             })
-            .then((result) => {
+            .then(async (result) => {
                 if (result.status == true) {
                     // Успешная отправка
-                    window.location.reload();
+                    await login();
                 } else {
                     // Обрабатываем ошибки валидации
                     console.log(result);
-                    document.body.innerHTML += `
-                        <div class="modalka modalka--wrapper modalka-open" id="modal99" style="display: flex">
-                            <form class="form">
-                                <h1>${result.error}</h1>
-                            </form>
-                        </div>
-                    `;
-                    bindModalEvents();
+                    errorModal(result.message);
                 }
             });
     });
