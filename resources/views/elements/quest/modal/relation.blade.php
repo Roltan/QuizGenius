@@ -13,7 +13,7 @@
     @endfor
 </div>
 <div class="test--button test--button__max">
-    <button type="button" class="test--add test--add__light test--add__relation">
+    <button type="button" class="test--add test--add__light test--add__relation" onclick="addAnswerRelation(this)">
         <div>
             <img src="/img/edit/add.png" alt="" />
         </div>

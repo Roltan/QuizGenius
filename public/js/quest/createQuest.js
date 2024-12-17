@@ -91,11 +91,12 @@ function getChoiceRequestBody(form, questId) {
             )}value`
         ).value;
 
-        if (toggle.checked) {
-            correct.push(value);
-        } else {
-            uncorrect.push(value);
-        }
+        if (value != "")
+            if (toggle.checked) {
+                correct.push(value);
+            } else {
+                uncorrect.push(value);
+            }
     });
 
     return {
@@ -115,7 +116,7 @@ function getBlankRequestBody(form, questId) {
 }
 
 // Функция для формирования тела запроса для типа вопроса "relation"
-function getRelationRequestBody(form, questId) {
+function getRelationRequestBody(form) {
     const firstColumnInputs = form.querySelectorAll(
         ".input--field.FirstColumn"
     );
@@ -123,6 +124,7 @@ function getRelationRequestBody(form, questId) {
         ".input--field.SecondColumn"
     );
 
+    // собираем значения строк
     const firstColumn = Array.from(firstColumnInputs).map(
         (input) => input.value
     );
@@ -130,9 +132,22 @@ function getRelationRequestBody(form, questId) {
         (input) => input.value
     );
 
+    // Удаляем строки с пустыми элементами
+    const filteredData = firstColumn.reduce(
+        (acc, value, index) => {
+            if (value.trim() === "" || secondColumn[index].trim() === "") {
+                return acc; // Пропускаем элементы, если хотя бы одно из значений пустое
+            }
+            acc.firstColumn.push(value);
+            acc.secondColumn.push(secondColumn[index]);
+            return acc;
+        },
+        { firstColumn: [], secondColumn: [] }
+    );
+
     return {
-        first_column: firstColumn,
-        second_column: secondColumn,
+        first_column: filteredData.firstColumn,
+        second_column: filteredData.secondColumn,
     };
 }
 

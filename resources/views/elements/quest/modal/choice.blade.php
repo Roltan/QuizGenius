@@ -26,7 +26,7 @@
     @endforeach
 </div>
 <div class="test--button test--button__max">
-    <button type="button" class="test--add test--add__light test--add__choice">
+    <button type="button" class="test--add test--add__light test--add__choice" onclick="addAnswerChoice(this)">
         <div>
             <img src="/img/edit/add.png" alt="" />
         </div>
