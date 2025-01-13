@@ -4,14 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Test\CreateTestRequest;
 use App\Http\Requests\Test\GenerateTestRequest;
-use App\Http\Resources\Test\QuestResource;
 use App\Http\Resources\Test\TestResource;
 use App\Services\GenerateServices;
 use App\Services\TestServices;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Contracts\View\View;
 
 class TestController extends Controller
 {

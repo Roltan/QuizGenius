@@ -13,9 +13,14 @@ class TestSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 1; $i <= 1000; $i++) {
+        $total = 1000;
+        $progressBar = $this->command->getOutput()->createProgressBar($total);
+
+        for ($i = 1; $i <= $total; $i++) {
             Test::factory()->create();
-            $this->command->info("Created test #$i");
+            $progressBar->advance();
         }
+        $progressBar->finish();
+        $this->command->info("\nCreated tests");
     }
 }
