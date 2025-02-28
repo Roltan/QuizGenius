@@ -3,19 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Test\GenerateTestRequest;
-use App\Http\Requests\Auth\LoginRequest;
-use App\Http\Requests\Auth\RegRequest;
-use App\Http\Resources\Card\SolvedResource;
-use App\Http\Resources\Card\StatisticResource;
-use App\Models\SolvedTest;
-use App\Models\Test;
-use App\Models\Topic;
 use App\Services\ViewServices;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 
 class ViewController extends Controller
 {

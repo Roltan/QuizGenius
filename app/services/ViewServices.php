@@ -139,7 +139,12 @@ class ViewServices
         }
 
         // Фильтрация по дате
-        $solvedTest = $this->applyDateFilter($solvedTest, $request->input('day'), $request->input('month'), $request->input('year'));
+        $solvedTest = $this->applyDateFilter(
+            $solvedTest,
+            $request->input('day'),
+            $request->input('month'),
+            $request->input('year')
+        );
 
         $solvedTest = $solvedTest->get();
 
