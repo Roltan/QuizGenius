@@ -13,9 +13,14 @@ class FillQuestSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 1; $i <= 10000; $i++) {
+        $total = 10000;
+        $progressBar = $this->command->getOutput()->createProgressBar($total);
+
+        for ($i = 1; $i <= $total; $i++) {
             FillQuest::factory()->create();
-            $this->command->info("Created fill quest #$i");
+            $progressBar->advance();
         }
+        $progressBar->finish();
+        $this->command->info("\nCreated fill quests");
     }
 }

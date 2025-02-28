@@ -15,6 +15,12 @@ class QuestsTestSeeder extends Seeder
     public function run(): void
     {
         $tests = Test::all();
+        $totalQuests = $tests->count() * 10; // Общее количество вопросов (10 на каждый тест)
+
+        // Создаем прогресс-бар
+        $progressBar = $this->command->getOutput()->createProgressBar($totalQuests);
+        $progressBar->start(); // Запускаем прогресс-бар
+
         $j = 1;
 
         foreach ($tests as $test) {
@@ -22,9 +28,13 @@ class QuestsTestSeeder extends Seeder
                 QuestsTest::factory()->create([
                     'test_id' => $test->id,
                 ]);
-                $this->command->info("Created quests test  #" . $j);
+
+                $progressBar->advance(); // Обновляем прогресс-бар
                 $j++;
             }
         }
+
+        $progressBar->finish(); // Завершаем прогресс-бар
+        $this->command->info("\nCreated QuestTest");
     }
 }
